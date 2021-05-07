@@ -34,7 +34,7 @@ const api_login_call= async (username, password, navigation)=>{
   console.log(username);
   console.log(password);
     try{
-      await fetch('http://192.168.1.90:8081/api/login', {
+      await fetch('http://192.168.1.12:8081/api/login', {
         method: 'post',
         mode: 'no-cors',
         headers:{
@@ -60,7 +60,7 @@ const api_login_call= async (username, password, navigation)=>{
       console.log("erroreeee");
       console.log(e);
     }
-  
+
    }
 
 
@@ -68,37 +68,37 @@ export const LoginScreen = ({ navigation }) => {
 
   var username = "";
   var password = "";
-  let passwordRef = null;  
+  let passwordRef = null;
 
- 
+
   const [hidePass, setHidePass] = useState(true);
 
-  
+
   return (
-    
-     
+
+
       <View style={{ width: "100%", height: "100%", justifyContent: "center", alignSelf: "center", alignContent: "center", alignItems: "center"}}>
 
-      <View style={styles.userSection}>  
+      <View style={styles.userSection}>
         <TextInput placeholder={"Inserisci username"}
         onChangeText={(value) => username=value}
-        
+
         style={{height: 42, width: "80%", borderBottomWidth: 1}}
         />
      </View>
 
-       <View style={styles.passSection}>  
+       <View style={styles.passSection}>
         <TextInput placeholder={"Inserisci password"}
          style={styles.input}
         onChangeText={(value) => password = value}
         style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%"}}
-        secureTextEntry={hidePass ? true : false}/>  
+        secureTextEntry={hidePass ? true : false}/>
         <Icon style={styles.iconStyle} name={state.iconName} size={30} color='#900' onPress={() => {
                   setHidePass(!hidePass);
                   }
         } />
       </View>
-   
+
 
       <View style={{marginTop: "10%", width: "80%"}}>
           <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
@@ -123,7 +123,7 @@ export const LoginScreen = ({ navigation }) => {
     </View>
 
   );
-    
+
 };
 
 const styles = StyleSheet.create({
