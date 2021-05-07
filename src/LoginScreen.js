@@ -57,7 +57,7 @@ const api_login_call= async (username, password, navigation)=>{
       });
 
     }catch(e){
-      console.log("erroreeee");
+      console.log("ERRORE");
       console.log(e);
     }
   
