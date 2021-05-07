@@ -12,7 +12,7 @@ const validate_field=(username, password)=>{
 
   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/; //aggiunta claudia
   if (reg.test(username) === false) {
-    alert("Inserire un indirizzo email valido");
+    alert("Inserire un indirizzo email validoooooooo");
     return false;
   }
 
@@ -57,7 +57,7 @@ const api_login_call= async (username, password, navigation)=>{
       });
 
     }catch(e){
-      console.log("ERROREEEEEEEEEEE");
+      console.log("erroreeee");
       console.log(e);
     }
   
