@@ -1,10 +1,10 @@
 import { WebView } from 'react-native-webview';
-import React, { Component, useState} from 'react';
+import React, { Component, useState, setState} from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import PasswordInputText from 'react-native-hide-show-password-input';
-import Icon  from 'react-native-vector-icons/AntDesign';
+import Icon  from 'react-native-vector-icons/FontAwesome';
 
 
 
@@ -12,7 +12,7 @@ const validate_field=(username, password)=>{
 
   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/; //aggiunta claudia
   if (reg.test(username) === false) {
-    alert("Inserire un indirizzo email validoooooooo");
+    alert("Inserire un indirizzo email valido");
     return false;
   }
 
@@ -60,7 +60,7 @@ const api_login_call= async (username, password, navigation)=>{
       console.log("erroreeee");
       console.log(e);
     }
-
+  
    }
 
 
@@ -68,37 +68,48 @@ export const LoginScreen = ({ navigation }) => {
 
   var username = "";
   var password = "";
-  let passwordRef = null;
+  let passwordRef = null;  
 
-
+ 
   const [hidePass, setHidePass] = useState(true);
+  
+  const [stato, setName] = useState(false);
+
+  const setNameIcon = () => {
+    setName(!stato);
+  }
 
 
   return (
-
-
+    
+     
       <View style={{ width: "100%", height: "100%", justifyContent: "center", alignSelf: "center", alignContent: "center", alignItems: "center"}}>
 
-      <View style={styles.userSection}>
+      <View style={styles.userSection}>  
         <TextInput placeholder={"Inserisci username"}
         onChangeText={(value) => username=value}
-
+        
         style={{height: 42, width: "80%", borderBottomWidth: 1}}
         />
      </View>
 
-       <View style={styles.passSection}>
+       <View style={styles.passSection}>  
         <TextInput placeholder={"Inserisci password"}
          style={styles.input}
         onChangeText={(value) => password = value}
         style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%"}}
-        secureTextEntry={hidePass ? true : false}/>
-        <Icon style={styles.iconStyle} name={state.iconName} size={30} color='#900' onPress={() => {
+        secureTextEntry={hidePass ? true : false}/>  
+ 
+        <Icon style={styles.iconStyle} name={stato ? 'eye' : 'eye-slash'} size={30} color='black' onPress={() => {
                   setHidePass(!hidePass);
-                  }
-        } />
-      </View>
+                  setNameIcon()
+                  }}
+         />
 
+      
+
+      </View>
+   
 
       <View style={{marginTop: "10%", width: "80%"}}>
           <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
@@ -123,7 +134,7 @@ export const LoginScreen = ({ navigation }) => {
     </View>
 
   );
-
+    
 };
 
 const styles = StyleSheet.create({
