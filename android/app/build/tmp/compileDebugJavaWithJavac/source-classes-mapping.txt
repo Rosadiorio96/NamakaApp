@@ -1,0 +1,14 @@
+com/namaka/BuildConfig.java
+ com.namaka.BuildConfig
+com/namaka/ReactNativeFlipper.java
+ com.namaka.ReactNativeFlipper
+ com.namaka.ReactNativeFlipper$1
+ com.namaka.ReactNativeFlipper$2
+ com.namaka.ReactNativeFlipper$2$1
+com/namaka/MainActivity.java
+ com.namaka.MainActivity
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList
+com/namaka/MainApplication.java
+ com.namaka.MainApplication
+ com.namaka.MainApplication$1
