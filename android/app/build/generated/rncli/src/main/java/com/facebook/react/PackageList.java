@@ -19,8 +19,6 @@ import org.reactnative.camera.RNCameraPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-// react-native-permissions
-import com.zoontek.rnpermissions.RNPermissionsPackage;
 // react-native-reanimated
 import com.swmansion.reanimated.ReanimatedPackage;
 // react-native-safe-area-context
@@ -80,7 +78,6 @@ public class PackageList {
       new RNCameraPackage(),
       new RNFusedLocationPackage(),
       new RNGestureHandlerPackage(),
-      new RNPermissionsPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),

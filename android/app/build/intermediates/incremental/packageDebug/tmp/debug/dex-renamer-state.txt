@@ -1,4 +1,4 @@
-#Sun May 09 16:26:29 CEST 2021
+#Mon May 10 16:04:16 CEST 2021
 base.2=C\:\\Users\\Rosa d'Iorio\\Desktop\\prova200\\NamakaApp\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\classes_0.dex
 base.1=C\:\\Users\\Rosa d'Iorio\\Desktop\\prova200\\NamakaApp\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\classes.dex
 base.0=C\:\\Users\\Rosa d'Iorio\\Desktop\\prova200\\NamakaApp\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
@@ -22,11 +22,8 @@ renamed.2=classes3.dex
 path.0=classes.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex
-renamed.12=classes13.dex
 renamed.11=classes12.dex
 renamed.10=classes11.dex
-path.12=classes_9.dex
-base.12=C\:\\Users\\Rosa d'Iorio\\Desktop\\prova200\\NamakaApp\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\classes_9.dex
 path.11=classes_8.dex
 base.11=C\:\\Users\\Rosa d'Iorio\\Desktop\\prova200\\NamakaApp\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\classes_8.dex
 path.10=classes_7.dex

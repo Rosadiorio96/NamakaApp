@@ -1,9 +1,5 @@
-import { WebView } from 'react-native-webview';
-import React, { Component, useState, setState} from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import PasswordInputText from 'react-native-hide-show-password-input';
+import React, { useState, setState} from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native'
 import Icon  from 'react-native-vector-icons/FontAwesome';
 
 
@@ -34,7 +30,7 @@ const api_login_call= async (username, password, navigation)=>{
   console.log(username);
   console.log(password);
     try{
-      await fetch('http://192.168.1.90:8081/api/login', {
+      await fetch('http://192.168.1.12:8081/api/login', {
         method: 'post',
         mode: 'no-cors',
         headers:{

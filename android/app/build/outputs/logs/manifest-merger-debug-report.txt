@@ -13,7 +13,6 @@ MERGED from [:react-native-community_masked-view] C:\Users\Rosa d'Iorio\Desktop\
 MERGED from [:react-native-camera] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:2:1-18:12
 MERGED from [:react-native-geolocation-service] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-geolocation-service\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-gesture-handler] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-gesture-handler\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
-MERGED from [:react-native-permissions] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-permissions\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-safe-area-context] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-safe-area-context\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-screens\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-webview] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-23:12
@@ -227,8 +226,6 @@ MERGED from [:react-native-geolocation-service] C:\Users\Rosa d'Iorio\Desktop\pr
 MERGED from [:react-native-geolocation-service] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-geolocation-service\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-gesture-handler] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-gesture-handler\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-gesture-handler] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-gesture-handler\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-permissions] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-permissions\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
-MERGED from [:react-native-permissions] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-permissions\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-safe-area-context\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-safe-area-context\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-screens] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-screens\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41

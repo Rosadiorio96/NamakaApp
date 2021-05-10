@@ -14,6 +14,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {LoginScreen} from './src/LoginScreen';
 import {SignUpScreen} from './src/SignupScreen';
 import {HomePage} from './src/HomePage'
+import { AddBottleScreen } from './src/AddBottleScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ export default function App() {
         />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="HomePage" component={HomePage} />
+        <Stack.Screen name="AddBottlePage" component={AddBottleScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

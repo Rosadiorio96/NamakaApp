@@ -20,7 +20,7 @@ const api_login_call= async (username, password, altezza, peso, navigation)=>{
   console.log(username);
   console.log(password);
     try{
-      await fetch('http://192.168.1.90:8081/api/registrazione', {
+      await fetch('http://192.168.1.12:8081/api/registrazione', {
         method: 'post',
         mode: 'no-cors',
         headers:{
@@ -87,7 +87,7 @@ export const SignUpScreen = ({ navigation }) => {
         justifyContent: "center", alignItems: "center", borderRadius: 40,
         backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
         onPress={() => { if (validate_field(username, password)){
-            api_login_call(username, password, navigation);}
+            api_login_call(username, password, altezza, peso, navigation);}
           }}>
 
             <Text style={{color: "white"}}> Login </Text>
