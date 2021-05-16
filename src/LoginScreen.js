@@ -30,7 +30,7 @@ const api_login_call= async (username, password, navigation)=>{
   console.log(username);
   console.log(password);
     try{
-      await fetch('http://192.168.1.12:8081/api/login', {
+      await fetch('http://192.168.1.90:8081/api/login', {
         method: 'post',
         mode: 'no-cors',
         headers:{

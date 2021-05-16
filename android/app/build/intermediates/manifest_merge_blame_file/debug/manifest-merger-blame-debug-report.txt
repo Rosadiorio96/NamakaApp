@@ -9,119 +9,119 @@
 9        android:targetSdkVersion="29" />
 10
 11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-11-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\debug\AndroidManifest.xml:5:5-77
-11-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\debug\AndroidManifest.xml:5:22-75
+11-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\debug\AndroidManifest.xml:5:5-77
+11-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\debug\AndroidManifest.xml:5:22-75
 12    <uses-permission android:name="android.permission.INTERNET" />
-12-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:4:5-67
-12-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:4:22-64
+12-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:4:5-67
+12-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:4:22-64
 13    <uses-permission android:name="android.permission.VIBRATE" />
-13-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:5:5-65
-13-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:5:22-63
+13-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:5:5-65
+13-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:5:22-63
 14    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-14-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:6:5-78
-14-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:6:22-76
+14-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:6:5-78
+14-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:6:22-76
 15    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-15-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:7:5-80
-15-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:7:22-78
+15-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:7:5-80
+15-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:7:22-78
 16    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-16-->[com.facebook.flipper:flipper:0.75.1] C:\Users\Rosa d'Iorio\.gradle\caches\transforms-2\files-2.1\a8f6015f96666ab8d93bfe5b64998bc8\jetified-flipper-0.75.1\AndroidManifest.xml:16:5-76
-16-->[com.facebook.flipper:flipper:0.75.1] C:\Users\Rosa d'Iorio\.gradle\caches\transforms-2\files-2.1\a8f6015f96666ab8d93bfe5b64998bc8\jetified-flipper-0.75.1\AndroidManifest.xml:16:22-73
+16-->[com.facebook.flipper:flipper:0.75.1] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\a8f6015f96666ab8d93bfe5b64998bc8\jetified-flipper-0.75.1\AndroidManifest.xml:16:5-76
+16-->[com.facebook.flipper:flipper:0.75.1] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\a8f6015f96666ab8d93bfe5b64998bc8\jetified-flipper-0.75.1\AndroidManifest.xml:16:22-73
 17    <uses-permission android:name="android.permission.CAMERA" />
-17-->[:react-native-camera] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:9:5-65
-17-->[:react-native-camera] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:9:22-62
+17-->[:react-native-camera] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:9:5-65
+17-->[:react-native-camera] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:9:22-62
 18
 19    <uses-feature
-19-->[:react-native-camera] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:11:5-13:36
+19-->[:react-native-camera] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:11:5-13:36
 20        android:name="android.hardware.camera"
-20-->[:react-native-camera] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:12:9-47
+20-->[:react-native-camera] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:12:9-47
 21        android:required="false" />
-21-->[:react-native-camera] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:13:9-33
+21-->[:react-native-camera] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:13:9-33
 22    <uses-feature
-22-->[:react-native-camera] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:14:5-16:36
+22-->[:react-native-camera] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:14:5-16:36
 23        android:name="android.hardware.camera.autofocus"
-23-->[:react-native-camera] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:15:9-57
+23-->[:react-native-camera] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:15:9-57
 24        android:required="false" />
-24-->[:react-native-camera] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:16:9-33
+24-->[:react-native-camera] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-camera\android\build\intermediates\library_manifest\generalDebug\AndroidManifest.xml:16:9-33
 25
 26    <application
-26-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:9:5-27:19
+26-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:9:5-27:19
 27        android:name="com.namaka.MainApplication"
-27-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:10:7-38
+27-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:10:7-38
 28        android:allowBackup="false"
-28-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:14:7-34
+28-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:14:7-34
 29        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-29-->[androidx.core:core:1.1.0] C:\Users\Rosa d'Iorio\.gradle\caches\transforms-2\files-2.1\d67cd79abd1ca209502f51c69d23182b\core-1.1.0\AndroidManifest.xml:24:18-86
+29-->[androidx.core:core:1.1.0] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\d67cd79abd1ca209502f51c69d23182b\core-1.1.0\AndroidManifest.xml:24:18-86
 30        android:debuggable="true"
 31        android:icon="@mipmap/ic_launcher"
-31-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:12:7-41
+31-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:12:7-41
 32        android:label="@string/app_name"
-32-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:11:7-39
+32-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:11:7-39
 33        android:roundIcon="@mipmap/ic_launcher_round"
-33-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:13:7-52
+33-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:13:7-52
 34        android:theme="@style/AppTheme"
-34-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:15:7-38
+34-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:15:7-38
 35        android:usesCleartextTraffic="true" >
-35-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\debug\AndroidManifest.xml:8:9-44
+35-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\debug\AndroidManifest.xml:8:9-44
 36        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-36-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\debug\AndroidManifest.xml:11:9-86
-36-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\debug\AndroidManifest.xml:11:19-83
+36-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\debug\AndroidManifest.xml:11:9-86
+36-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\debug\AndroidManifest.xml:11:19-83
 37        <activity
-37-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:16:7-26:18
+37-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:16:7-26:18
 38            android:name="com.namaka.MainActivity"
-38-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:17:9-37
+38-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:17:9-37
 39            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
-39-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:19:9-86
+39-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:19:9-86
 40            android:label="@string/app_name"
-40-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:18:9-41
+40-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:18:9-41
 41            android:launchMode="singleTask"
-41-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:20:9-40
+41-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:20:9-40
 42            android:windowSoftInputMode="adjustResize" >
-42-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:21:9-51
+42-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:21:9-51
 43            <intent-filter>
-43-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:22:9-25:25
+43-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:22:9-25:25
 44                <action android:name="android.intent.action.MAIN" />
-44-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:23:13-65
-44-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:23:21-62
+44-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:23:13-65
+44-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:23:21-62
 45
 46                <category android:name="android.intent.category.LAUNCHER" />
-46-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:24:13-73
-46-->C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\android\app\src\main\AndroidManifest.xml:24:23-70
+46-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:24:13-73
+46-->C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\android\app\src\main\AndroidManifest.xml:24:23-70
 47            </intent-filter>
 48        </activity>
 49
 50        <provider
-50-->[:react-native-webview] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:9-20:20
+50-->[:react-native-webview] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:9-20:20
 51            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
-51-->[:react-native-webview] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-83
+51-->[:react-native-webview] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-83
 52            android:authorities="com.namaka.fileprovider"
-52-->[:react-native-webview] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-64
+52-->[:react-native-webview] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-64
 53            android:exported="false"
-53-->[:react-native-webview] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-37
+53-->[:react-native-webview] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-37
 54            android:grantUriPermissions="true" >
-54-->[:react-native-webview] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:13-47
+54-->[:react-native-webview] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:13-47
 55            <meta-data
-55-->[:react-native-webview] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:13-19:63
+55-->[:react-native-webview] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:13-19:63
 56                android:name="android.support.FILE_PROVIDER_PATHS"
-56-->[:react-native-webview] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:17-67
+56-->[:react-native-webview] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:17-67
 57                android:resource="@xml/file_provider_paths" />
-57-->[:react-native-webview] C:\Users\Rosa d'Iorio\Desktop\prova200\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:17-60
+57-->[:react-native-webview] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:17-60
 58        </provider>
 59
 60        <activity
-60-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Rosa d'Iorio\.gradle\caches\transforms-2\files-2.1\2631375de80937c90cd3a1032ab35871\jetified-play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
+60-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\2631375de80937c90cd3a1032ab35871\jetified-play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
 61            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-61-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Rosa d'Iorio\.gradle\caches\transforms-2\files-2.1\2631375de80937c90cd3a1032ab35871\jetified-play-services-base-17.0.0\AndroidManifest.xml:24:13-79
+61-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\2631375de80937c90cd3a1032ab35871\jetified-play-services-base-17.0.0\AndroidManifest.xml:24:13-79
 62            android:exported="false"
-62-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Rosa d'Iorio\.gradle\caches\transforms-2\files-2.1\2631375de80937c90cd3a1032ab35871\jetified-play-services-base-17.0.0\AndroidManifest.xml:25:13-37
+62-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\2631375de80937c90cd3a1032ab35871\jetified-play-services-base-17.0.0\AndroidManifest.xml:25:13-37
 63            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-63-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Rosa d'Iorio\.gradle\caches\transforms-2\files-2.1\2631375de80937c90cd3a1032ab35871\jetified-play-services-base-17.0.0\AndroidManifest.xml:26:13-72
+63-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\2631375de80937c90cd3a1032ab35871\jetified-play-services-base-17.0.0\AndroidManifest.xml:26:13-72
 64
 65        <meta-data
-65-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Rosa d'Iorio\.gradle\caches\transforms-2\files-2.1\dcffa74d8d015470a7eae32b9eb648c7\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
+65-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\dcffa74d8d015470a7eae32b9eb648c7\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
 66            android:name="com.google.android.gms.version"
-66-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Rosa d'Iorio\.gradle\caches\transforms-2\files-2.1\dcffa74d8d015470a7eae32b9eb648c7\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
+66-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\dcffa74d8d015470a7eae32b9eb648c7\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
 67            android:value="@integer/google_play_services_version" />
-67-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Rosa d'Iorio\.gradle\caches\transforms-2\files-2.1\dcffa74d8d015470a7eae32b9eb648c7\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
+67-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\dcffa74d8d015470a7eae32b9eb648c7\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
 68    </application>
 69
 70</manifest>

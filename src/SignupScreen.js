@@ -1,5 +1,5 @@
 import { WebView } from 'react-native-webview';
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -8,6 +8,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 
 const validate_field=(username, password, peso, altezza)=>{
+
+  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/; //aggiunta claudia
+  if (reg.test(username) === false) {
+    alert("Inserire un indirizzo email valido");
+    return false;
+  }
 
   if(username == "" || password =="" || peso=="" || altezza==""){
     alert("Per favore completa tutti i campi")
@@ -20,7 +26,7 @@ const api_login_call= async (username, password, altezza, peso, navigation)=>{
   console.log(username);
   console.log(password);
     try{
-      await fetch('http://192.168.1.12:8081/api/registrazione', {
+      await fetch('http://192.168.1.90:8081/api/registrazione', {
         method: 'post',
         mode: 'no-cors',
         headers:{
@@ -57,6 +63,7 @@ export const SignUpScreen = ({ navigation }) => {
   var password = "";
   var peso = "";
   var altezza = "";
+  const [hidePass, setHidePass] = useState(true);
 
   return (
       <View style={{ width: "100%", height: "100%", justifyContent: "center", alignSelf: "center", alignContent: "center", alignItems: "center"}}>
@@ -69,6 +76,7 @@ export const SignUpScreen = ({ navigation }) => {
 
         <TextInput placeholder={"Inserisci password"}
         onChangeText={(value) => password = value}
+        secureTextEntry={hidePass ? true : false}
         style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%"}}
         />
 

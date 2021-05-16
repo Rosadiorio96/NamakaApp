@@ -16,6 +16,7 @@ import {SignUpScreen} from './src/SignupScreen';
 import {HomePage} from './src/HomePage'
 import { AddBottleScreen } from './src/AddBottleScreen';
 
+
 const Stack = createStackNavigator();
 
 export default function App() {

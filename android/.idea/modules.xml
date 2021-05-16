@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/namaka.iml" filepath="$PROJECT_DIR$/.idea/modules/namaka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/namaka.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/namaka.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/263204938/namaka.react-native-camera.iml" filepath="$PROJECT_DIR$/.idea/modules/263204938/namaka.react-native-camera.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1892939414/namaka.react-native-community_masked-view.iml" filepath="$PROJECT_DIR$/.idea/modules/1892939414/namaka.react-native-community_masked-view.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1892339543/namaka.react-native-geolocation-service.iml" filepath="$PROJECT_DIR$/.idea/modules/-1892339543/namaka.react-native-geolocation-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1953076479/namaka.react-native-gesture-handler.iml" filepath="$PROJECT_DIR$/.idea/modules/-1953076479/namaka.react-native-gesture-handler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-437938565/namaka.react-native-reanimated.iml" filepath="$PROJECT_DIR$/.idea/modules/-437938565/namaka.react-native-reanimated.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/645580586/namaka.react-native-safe-area-context.iml" filepath="$PROJECT_DIR$/.idea/modules/645580586/namaka.react-native-safe-area-context.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1094923202/namaka.react-native-screens.iml" filepath="$PROJECT_DIR$/.idea/modules/1094923202/namaka.react-native-screens.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1554877323/namaka.react-native-vector-icons.iml" filepath="$PROJECT_DIR$/.idea/modules/-1554877323/namaka.react-native-vector-icons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/353865780/namaka.react-native-webview.iml" filepath="$PROJECT_DIR$/.idea/modules/353865780/namaka.react-native-webview.iml" />
+    </modules>
+  </component>
+</project>
