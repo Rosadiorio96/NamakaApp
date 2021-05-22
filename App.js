@@ -15,6 +15,7 @@ import {LoginScreen} from './src/LoginScreen';
 import {SignUpScreen} from './src/SignupScreen';
 import {HomePage} from './src/HomePage'
 import { AddBottleScreen } from './src/AddBottleScreen';
+import {Graph} from './src/graph'
 
 
 const Stack = createStackNavigator();
@@ -31,6 +32,7 @@ export default function App() {
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="HomePage" component={HomePage} />
         <Stack.Screen name="AddBottlePage" component={AddBottleScreen} />
+        <Stack.Screen name="graph" component={Graph} />
       </Stack.Navigator>
     </NavigationContainer>
   );

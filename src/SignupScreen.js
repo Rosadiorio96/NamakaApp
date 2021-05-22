@@ -1,13 +1,24 @@
 import { WebView } from 'react-native-webview';
-import React, { Component, useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native';
+import React, { Component, useState, useRef, useEffect } from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button, SafeAreaView, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Icon  from 'react-native-vector-icons/FontAwesome';
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 
-
+var username = "";
+var password = "";
+var peso = 0;
+var altezza= 0;
 
 
 const validate_field=(username, password, peso, altezza)=>{
+
+
+  if(username == "" || password =="" || peso=="" || altezza==""){
+    alert("Per favore completa tutti i campi")
+    return false
+  }
 
   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/; //aggiunta claudia
   if (reg.test(username) === false) {
@@ -15,10 +26,11 @@ const validate_field=(username, password, peso, altezza)=>{
     return false;
   }
 
-  if(username == "" || password =="" || peso=="" || altezza==""){
-    alert("Per favore completa tutti i campi")
-    return false
+  if(isNaN(peso) || isNaN(altezza)){
+    alert("Il peso o l'altezza non è un numero");
+    return false;
   }
+  
   return true
 }
 
@@ -59,42 +71,59 @@ const api_login_call= async (username, password, altezza, peso, navigation)=>{
 
 export const SignUpScreen = ({ navigation }) => {
 
-  var username = "";
-  var password = "";
-  var peso = "";
-  var altezza = "";
   const [hidePass, setHidePass] = useState(true);
 
+  const [stato, setName] = useState(false);
+
+  const setNameIcon = () => {
+    setName(!stato);
+  }
+
+ 
+
   return (
+     
       <View style={{ width: "100%", height: "100%", justifyContent: "center", alignSelf: "center", alignContent: "center", alignItems: "center"}}>
 
-        <TextInput placeholder={"Inserisci email"}
+     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: "center" }}>
+     <TextInput placeholder={"Inserisci email"}
         onChangeText={(value) => username=value}
-        style={{height: 42, width: "80%", borderBottomWidth: 1}}
+        style={{height: 42, width: "80%", borderBottomWidth: 1, fontFamily:'monospace'}}
         />
 
 
+      <View style={styles.passSection}>  
         <TextInput placeholder={"Inserisci password"}
-        onChangeText={(value) => password = value}
         secureTextEntry={hidePass ? true : false}
-        style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%"}}
-        />
+        style={styles.input} 
+        onChangeText={(value) => password = value}
+        />  
+ 
+        <Icon style={styles.iconStyle} name={stato ? 'eye' : 'eye-slash'} size={30} color='black' onPress={() => {
+                  setHidePass(!hidePass);
+                  setNameIcon()
+                  }}
+         />
 
-        <TextInput placeholder={"Altezza"}
+      </View>
+
+        <TextInput placeholder={"Inserisci altezza in cm"}
         onChangeText={(value) => altezza = value}
-        style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%"}}
+        keyboardType='numeric'
+        style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%", fontFamily:'monospace'}}
         />       
 
-        <TextInput placeholder={"Peso"}
+        <TextInput placeholder={"Inserisci peso in kg"}
         onChangeText={(value) => peso = value}
-        style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%"}}
+        keyboardType='numeric'
+        style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%", fontFamily:'monospace'}}
         />       
 
       <View style={{marginTop: "10%", width: "80%"}}>
           <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
         justifyContent: "center", alignItems: "center", borderRadius: 40,
         backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
-        onPress={() => { if (validate_field(username, password)){
+        onPress={() => { if (validate_field(username, password, peso, altezza)){
             api_login_call(username, password, altezza, peso, navigation);}
           }}>
 
@@ -102,9 +131,55 @@ export const SignUpScreen = ({ navigation }) => {
           </TouchableOpacity>
 
       </View>
+     </ScrollView>
+  
+
+        
     
-    </View>
+      </View>
+
 
   );
     
 };
+
+const styles = StyleSheet.create({
+  passSection: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 30,
+},
+userSection: {
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingLeft: 5,
+  paddingRight: 25,
+},
+iconStyle: {
+    padding: 10,
+    paddingTop: 30,
+},
+input: {
+    paddingTop: 10,
+    paddingRight: 50,
+    paddingBottom: 10,
+    color: '#424242',
+    fontFamily:'monospace',
+    height: 42,
+    width: "80%", 
+    borderBottomWidth: 1, 
+    marginTop: "5%"
+},
+container: {
+  flex: 1,
+},
+scrollView: {
+  backgroundColor: 'pink',
+  marginHorizontal: 20,
+},
+text: {
+  fontSize: 42,
+},
+});

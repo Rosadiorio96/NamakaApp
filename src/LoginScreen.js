@@ -1,4 +1,4 @@
-import React, { useState, setState} from 'react';
+import React, { useState, setState,  useRef, useEffect} from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native'
 import Icon  from 'react-native-vector-icons/FontAwesome';
 
@@ -6,23 +6,23 @@ import Icon  from 'react-native-vector-icons/FontAwesome';
 
 const validate_field=(username, password)=>{
 
+  if(username == "" && password == ""){
+    alert("Per favore completa tutti i campi")
+    return false
+  }
+  if(username == ""){
+    alert("Per favore inserisci l'email")
+    return false
+  } if(password == ""){
+    alert("Per favore inserisci la password")
+    return false
+  }
   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/; //aggiunta claudia
   if (reg.test(username) === false) {
     alert("Inserire un indirizzo email valido");
     return false;
   }
 
-  if(username == ""){
-    alert("please fill username")
-    return false
-  } if(password == ""){
-    alert("please fill password")
-    return false
-  }
-  if(username == "" && password == ""){
-    alert("Per favore completa tutti i campi")
-    return false
-  }
   return true
 }
 
@@ -64,7 +64,6 @@ export const LoginScreen = ({ navigation }) => {
 
   var username = "";
   var password = "";
-  let passwordRef = null;  
 
  
   const [hidePass, setHidePass] = useState(true);
@@ -82,10 +81,10 @@ export const LoginScreen = ({ navigation }) => {
       <View style={{ width: "100%", height: "100%", justifyContent: "center", alignSelf: "center", alignContent: "center", alignItems: "center"}}>
 
       <View style={styles.userSection}>  
-        <TextInput placeholder={"Inserisci username"}
+        <TextInput placeholder={"Inserisci email"}
         onChangeText={(value) => username=value}
         
-        style={{height: 42, width: "80%", borderBottomWidth: 1}}
+        style={{height: 42, width: "80%", borderBottomWidth: 1, fontFamily:'monospace'}}
         />
      </View>
 
@@ -101,8 +100,6 @@ export const LoginScreen = ({ navigation }) => {
                   setNameIcon()
                   }}
          />
-
-      
 
       </View>
    
