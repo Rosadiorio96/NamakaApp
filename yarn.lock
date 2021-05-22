@@ -1161,7 +1161,7 @@
 
 "@react-navigation/native@^5.9.4":
   version "5.9.4"
-  resolved "https://registry.npmjs.org/@react-navigation/native/-/native-5.9.4.tgz"
+  resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-5.9.4.tgz#414c044423c58aa1cdde1b6494309e0b51da08b8"
   integrity sha512-BUCrOXfZDdKWBqM8OhOKQhCX5we4HUo5XG6tCQtVqQAep+7UcApZmMUuemUXDxVe8NPESUpoUlB0RaEpyIdfTQ==
   dependencies:
     "@react-navigation/core" "^5.15.3"

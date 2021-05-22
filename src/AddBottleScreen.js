@@ -9,13 +9,13 @@ import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
 
 var name;
-
+var navigation2;
 
 
 const api_add_Bottle = async (payload)=>{
   console.log(payload);
   console.log(name);
-  var url_2 = "http://192.168.1.90:8081/api/borracciaprop/"+ String(name["name"]);
+  var url_2 = "http://192.168.1.14:8081/api/borracciaprop/"+ String(name["name"]);
   console.log(url_2);
   try{
     await fetch(url_2, {
@@ -30,6 +30,8 @@ const api_add_Bottle = async (payload)=>{
       console.log(response['status']);
       if(response['status']==200){
         console.log("ok");
+        console.log(name['name'])
+        navigation2.navigate('HomePage', { name: name['name'] })
         alert("Borraccia aggiunta correttamente");
       }
       else{
@@ -66,7 +68,7 @@ const find_position_bottle = async (e)=>{
       alert("Location permission denied");
     }
   } catch (err) {
-    console.warn(err)
+    console.warn("warn")
   } 
   }
 
@@ -74,6 +76,7 @@ const find_position_bottle = async (e)=>{
 
 export const AddBottleScreen = ({ route, navigation }) => {
   name = route.params;
+  navigation2 = navigation;
   return (
     <QRCodeScanner
     onRead={find_position_bottle}
