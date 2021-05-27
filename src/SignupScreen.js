@@ -1,10 +1,7 @@
-import { WebView } from 'react-native-webview';
 import React, { Component, useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button, SafeAreaView, ScrollView } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import Icon  from 'react-native-vector-icons/FontAwesome';
-import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
+import { Var } from './Var.js';
 
 var username = "";
 var password = "";
@@ -87,7 +84,7 @@ export const SignUpScreen = ({ navigation }) => {
 
      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: "center" }}>
      <TextInput placeholder={"Inserisci email"}
-        onChangeText={(value) => username=value}
+        onChangeText={(value) => Var.username=value}
         style={{height: 42, width: "80%", borderBottomWidth: 1, fontFamily:'monospace'}}
         />
 
@@ -96,7 +93,7 @@ export const SignUpScreen = ({ navigation }) => {
         <TextInput placeholder={"Inserisci password"}
         secureTextEntry={hidePass ? true : false}
         style={styles.input} 
-        onChangeText={(value) => password = value}
+        onChangeText={(value) => Var.password = value}
         />  
  
         <Icon style={styles.iconStyle} name={stato ? 'eye' : 'eye-slash'} size={30} color='black' onPress={() => {
@@ -108,13 +105,13 @@ export const SignUpScreen = ({ navigation }) => {
       </View>
 
         <TextInput placeholder={"Inserisci altezza in cm"}
-        onChangeText={(value) => altezza = value}
+        onChangeText={(value) => Var.altezza = value}
         keyboardType='numeric'
         style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%", fontFamily:'monospace'}}
         />       
 
         <TextInput placeholder={"Inserisci peso in kg"}
-        onChangeText={(value) => peso = value}
+        onChangeText={(value) => Var.peso = value}
         keyboardType='numeric'
         style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%", fontFamily:'monospace'}}
         />       
@@ -123,8 +120,8 @@ export const SignUpScreen = ({ navigation }) => {
           <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
         justifyContent: "center", alignItems: "center", borderRadius: 40,
         backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
-        onPress={() => { if (validate_field(username, password, peso, altezza)){
-            api_login_call(username, password, altezza, peso, navigation);}
+        onPress={() => { if (validate_field(Var.username, Var.password, Var.peso, Var.altezza)){
+            api_login_call(Var.username, Var.password, Var.altezza, Var.peso, navigation);}
           }}>
 
             <Text style={{color: "white"}}> Login </Text>

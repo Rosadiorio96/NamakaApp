@@ -8,7 +8,6 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
-import { Borracce } from './Borracce.js';
 
 var stringify;
 var myJSON;
@@ -41,7 +40,7 @@ export const HomePage = ({ route, navigation}) => {
 
   getData = async () =>{
     console.log("getData")
-    const apiURL ="http://192.168.1.14:8081/api/borracciaprop/"+name["name"]
+    const apiURL ="http://192.168.1.90:8081/api/borracciaprop/"+name["name"]
     fetch(apiURL).then((res)=>res.json()).then((resJson)=>{
      setData(resJson['borracce']);
      setDataSearch(resJson['borracce']);
@@ -50,7 +49,7 @@ export const HomePage = ({ route, navigation}) => {
   }
 
   const renderItem = ({item}) => {
-    console.log("renderItem")
+    //console.log("renderItem")
     return (
       <View style={style.itemRow}>
         <Text style={{color: "black"}}>Nome: {item.id_borraccia}</Text>
@@ -66,8 +65,8 @@ export const HomePage = ({ route, navigation}) => {
   }
 
   const renderFooter = () =>{
-    console.log("renderFooter")
-    console.log(isFocused)
+    //console.log("renderFooter")
+    //console.log(isFocused)
     return (
       isLoading ? 
     <View style = {style.loader}>
@@ -106,7 +105,7 @@ export const HomePage = ({ route, navigation}) => {
   }
 
   return (
-    <View  style={{height: "100%"}}>
+    <View  style={{height: "95%"}}>
          <TextInput
       style = {style.textInputStyle}
       value = {search}
@@ -138,8 +137,19 @@ export const HomePage = ({ route, navigation}) => {
       </TouchableOpacity>
 
 
-     
+      <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
+                        justifyContent: "center", alignItems: "center", borderRadius: 40,
+                        backgroundColor: "black", alignSelf: "center", textAlign: "center", marginTop: 5}}
+                        onPress={() => {navigation.navigate('GraphPage', { name: name["name"] })}}>
+              <Text style={{color: "white"}}> Progressi</Text>
+      </TouchableOpacity>
 
+      <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
+                        justifyContent: "center", alignItems: "center", borderRadius: 40,
+                        backgroundColor: "black", alignSelf: "center", textAlign: "center", marginTop: 5}}
+                        onPress={() => {navigation.navigate('MapPage', { name: name["name"] })}}>
+              <Text style={{color: "white"}}> Mappa</Text>
+      </TouchableOpacity>
   
     
     </View>

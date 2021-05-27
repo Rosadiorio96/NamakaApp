@@ -1,7 +1,7 @@
 import React, { useState, setState,  useRef, useEffect} from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native'
 import Icon  from 'react-native-vector-icons/FontAwesome';
-
+import { Var } from './Var.js';
 
 
 const validate_field=(username, password)=>{
@@ -62,9 +62,6 @@ const api_login_call= async (username, password, navigation)=>{
 
 export const LoginScreen = ({ navigation }) => {
 
-  var username = "";
-  var password = "";
-
  
   const [hidePass, setHidePass] = useState(true);
   
@@ -82,7 +79,7 @@ export const LoginScreen = ({ navigation }) => {
 
       <View style={styles.userSection}>  
         <TextInput placeholder={"Inserisci email"}
-        onChangeText={(value) => username=value}
+        onChangeText={(value) => Var.username=value}
         
         style={{height: 42, width: "80%", borderBottomWidth: 1, fontFamily:'monospace'}}
         />
@@ -91,11 +88,12 @@ export const LoginScreen = ({ navigation }) => {
        <View style={styles.passSection}>  
         <TextInput placeholder={"Inserisci password"}
          style={styles.input}
-        onChangeText={(value) => password = value}
+        onChangeText={(value) => Var.password = value}
         style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%"}}
         secureTextEntry={hidePass ? true : false}/>  
  
         <Icon style={styles.iconStyle} name={stato ? 'eye' : 'eye-slash'} size={30} color='black' onPress={() => {
+                  console.log("uuuuuuuuuuu", Var.username)
                   setHidePass(!hidePass);
                   setNameIcon()
                   }}
@@ -108,8 +106,8 @@ export const LoginScreen = ({ navigation }) => {
           <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
                             justifyContent: "center", alignItems: "center", borderRadius: 40,
                             backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
-                            onPress={() => { if (validate_field(username, password)){
-                            api_login_call(username, password,navigation);}}}>
+                            onPress={() => { if (validate_field(Var.username, Var.password)){
+                            api_login_call(Var.username, Var.password,navigation);}}}>
                  <Text style={{color: "white"}}> Login </Text>
           </TouchableOpacity>
 
@@ -118,7 +116,7 @@ export const LoginScreen = ({ navigation }) => {
           <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
                             justifyContent: "center", alignItems: "center", borderRadius: 40,
                             backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
-                            onPress={() => {navigation.navigate('SignUp', { name: username })}}>
+                            onPress={() => {navigation.navigate('SignUp', { name: Var.username })}}>
                   <Text style={{color: "white"}}> Registrati</Text>
           </TouchableOpacity>
 

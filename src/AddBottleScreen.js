@@ -15,7 +15,7 @@ var navigation2;
 const api_add_Bottle = async (payload)=>{
   console.log(payload);
   console.log(name);
-  var url_2 = "http://192.168.1.14:8081/api/borracciaprop/"+ String(name["name"]);
+  var url_2 = "http://192.168.1.90:8081/api/borracciaprop/"+ String(name["name"]);
   console.log(url_2);
   try{
     await fetch(url_2, {
