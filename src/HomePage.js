@@ -96,37 +96,20 @@ BackgroundTimer.runBackgroundTimer(() => {
 export const HomePage = ({ route, navigation}) => {
   name = route.params;
   
-  const [dataSearch, setDataSearch]=useState([])
-  const [data, setData]=useState([])
-  const [isLoading, setisLoading]=useState(false)
-  const [pageCurrent, setPageCurrent] = useState(1)
-  const isFocused = useIsFocused();
-  const [search, setSearch]=useState('');
-  const [position, setPosition]=useState([])
+ 
 
 
   useEffect(()=>{
     console.log("Useeffect")
-    setisLoading(true)
-    getData()
+   
     find_position_user();
     return () => {
 
     }
 
-  }, [isFocused])
+  }, [])
 
-  getData = async () =>{
-    console.log("getData")
-    const apiURL ="http://192.168.1.90:8081/api/borracciaprop/"+name["name"]
-    fetch(apiURL).then((res)=>res.json()).then((resJson)=>{
-     setData(resJson['borracce']);
-     setDataSearch(resJson['borracce']);
-      setisLoading(false)
-    })
-
-
-  }
+  
 
   console.log("getData Position")
   console.log(name["name"])
@@ -138,93 +121,18 @@ export const HomePage = ({ route, navigation}) => {
   })
   }
 
-  const renderItem = ({item}) => {
-    //console.log("renderItem")
-    return (
-      <View style={style.itemRow}>
-        <Text style={{color: "black"}}>Nome: {item.id_borraccia}</Text>
-        <Text style={{color: "black"}}>Colore: {item.colore}</Text>
-        <Text style={{color: "black"}}>Capacità: {item.capacita}</Text>
-        <Text style={{color: "black"}}>Latitudine: {item.lat_borr}</Text>
-        <Text style={{color: "black"}}>Longitudine: {item.lon_borr}</Text>
-        <Text style={{color: "black"}}>Livello attuale: {item.livello_attuale}</Text>
-       
-
-      </View>
-    )
-  }
-
-  const renderFooter = () =>{
-    //console.log("renderFooter")
-    //console.log(isFocused)
-    return (
-      isLoading ? 
-    <View style = {style.loader}>
-      <ActivityIndicator size="large"/>
-    </View> : null
-    )
-    
-  }
-
-  
-  const searchFilter=(text)=>{
-    console.log(search);
-    console.log("Ok");
-    console.log(text)
-    if(text != ''){
-      
-      const newData = data.filter((item)=>{
-        const itemData = item.id_borraccia ? 
-                    item.id_borraccia.toUpperCase(): ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
-      setData(newData);
-      setSearch(text);
-  } else {
-    console.log("ELSE")
-    setData(dataSearch);
-    console.log(data);
-    setSearch(text);
-  }
-}
-
-  const handleLoadMore = () => {
-    setPageCurrent(pageCurrent+1)
-    setisLoading(true)
-  }
+ 
 
   return (
     <View  style={{height: "95%"}}>
-         <TextInput
-      style = {style.textInputStyle}
-      value = {search}
-      placeholder= "search here"
-      underlineColorAndroid="transparent"
-      onChangeText = {(value)=>searchFilter(value)}
-      />
-    <View style={{ flex: 1}}>
-      
-      <FlatList
-      style={style.container}
-      data = {data}
-      renderItem = {renderItem}
-      ListFooterComponent = {renderFooter}
-      keyExtractor={(item, index) => index.toString()}
-      onEndReached = {handleLoadMore}
-      onEndReachedThreshold={0.5}
-      
-      />
-     
-    
-    
-      </View>
-      <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
+
+            <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
                         justifyContent: "center", alignItems: "center", borderRadius: 40,
                         backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
-                        onPress={() => {navigation.navigate('AddBottlePage', { name: name["name"] })}}>
-              <Text style={{color: "white"}}> Aggiungi borraccia</Text>
+                        onPress={() => {navigation.navigate('BorraccePage', { name: name["name"] })}}>
+              <Text style={{color: "white"}}> Visualizza le tue borracce</Text>
       </TouchableOpacity>
+
 
 
       <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",

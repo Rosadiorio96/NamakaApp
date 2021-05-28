@@ -31,7 +31,7 @@ const api_add_Bottle = async (payload)=>{
       if(response['status']==200){
         console.log("ok");
         console.log(name['name'])
-        navigation2.navigate('HomePage', { name: name['name'] })
+        navigation2.navigate('BorraccePage', { name: name['name'] })
         alert("Borraccia aggiunta correttamente");
       }
       else{

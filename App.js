@@ -17,6 +17,7 @@ import {HomePage} from './src/HomePage'
 import { AddBottleScreen } from './src/AddBottleScreen';
 import {GraphScreen} from './src/GraphScreen'
 import {MapScreen} from './src/MapScreen'
+import {BorracceScreen} from './src/BorracceScreen'
 
 
 const Stack = createStackNavigator();
@@ -35,6 +36,7 @@ export default function App() {
         <Stack.Screen name="AddBottlePage" component={AddBottleScreen} />
         <Stack.Screen name="GraphPage" component={GraphScreen} />
         <Stack.Screen name="MapPage" component={MapScreen} />
+        <Stack.Screen name="BorraccePage" component={BorracceScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
