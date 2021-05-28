@@ -5,35 +5,52 @@ import { useIsFocused } from "@react-navigation/native";
 import { Var } from './Var.js';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
+var name;
+var get_done = false;
+
 
 
 
 export const MapScreen = ({ route, navigation }) => {
+    name = route.params;
 
      return(
+      <View style={{  width: "100%", height: "100%", flexDirection:'row', justifyContent: 'center',
+      flexWrap: 'wrap', alignItems: 'center', }} >
+        <Text style={styles.textGraph}> Dove sono tue borracce?</Text>
         <View style={styles.container}>
-        <MapView
-          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-          style={styles.map}
-          region={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}
-        >
+          {
+            name["pos"] != 0
+            ?
+            <MapView
+            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            style={styles.map}
+            region={{
+              latitude: name["pos"][0].coordinates["latitude"],
+              longitude: name["pos"][0].coordinates["longitude"], 
+              latitudeDelta: 0.015,
+              longitudeDelta: 0.0121,
+            }}
+          >
+              {
+                name["pos"].map((marker, index) => (
+   
+                  <MapView.Marker key={index}
+                    coordinate={marker.coordinates}
+                    title={marker.title}
+                  />
+                ))
+  
+             }
+          </MapView>
+          :
+          <Text style={styles.textGraph}> no borracce</Text>
 
-            <Marker
-                coordinate={
-                        {
-                          latitude: 40.97747520000000,
-                          longitude: 14.20598740000000,
-                        }
-                }
+          }
+          
 
-               
-            />
-        </MapView>
+        
+      </View>
       </View>
      )
 
@@ -42,12 +59,19 @@ export const MapScreen = ({ route, navigation }) => {
   const styles = StyleSheet.create({
     container: {
       ...StyleSheet.absoluteFillObject,
-      height: 400,
+      height: "80%",
       width: 400,
       justifyContent: 'flex-end',
       alignItems: 'center',
+      marginTop: 50
     },
     map: {
       ...StyleSheet.absoluteFillObject,
+    },
+    textGraph:{
+      fontSize: 20,
+      fontWeight: "bold",
+      textAlign: 'center',
+      marginTop: 10
     },
    });

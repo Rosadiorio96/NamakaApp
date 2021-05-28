@@ -20,8 +20,10 @@ MERGED from [com.google.android.gms:play-services-flags:16.0.1] C:\Users\claud\.
 MERGED from [com.google.android.gms:play-services-phenotype:16.0.0] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\536bdb994673f2a31dcdc4a368a09ecf\jetified-play-services-phenotype-16.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.gms:play-services-base:17.2.1] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\b14783c54f0a0561f542100569b19f88\jetified-play-services-base-17.2.1\AndroidManifest.xml:17:1-29:12
 MERGED from [:react-native-vector-icons] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-vector-icons\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
+MERGED from [:react-native-async-storage_async-storage] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-community_datetimepicker] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\@react-native-community\datetimepicker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-13:12
 MERGED from [:react-native-community_masked-view] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\@react-native-community\masked-view\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-background-timer] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-background-timer\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-13:12
 MERGED from [:react-native-gesture-handler] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-gesture-handler\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-safe-area-context] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-safe-area-context\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-screens\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
@@ -271,10 +273,14 @@ MERGED from [com.google.android.gms:play-services-base:17.2.1] C:\Users\claud\.g
 MERGED from [com.google.android.gms:play-services-base:17.2.1] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\b14783c54f0a0561f542100569b19f88\jetified-play-services-base-17.2.1\AndroidManifest.xml:20:5-44
 MERGED from [:react-native-vector-icons] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-vector-icons\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-vector-icons] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-vector-icons\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-async-storage_async-storage] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-async-storage_async-storage] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-community_datetimepicker] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\@react-native-community\datetimepicker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-community_datetimepicker] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\@react-native-community\datetimepicker\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-community_masked-view] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\@react-native-community\masked-view\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-community_masked-view] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\@react-native-community\masked-view\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-background-timer] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-background-timer\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-background-timer] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-background-timer\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-gesture-handler] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-gesture-handler\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-gesture-handler] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-gesture-handler\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-safe-area-context] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-safe-area-context\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
@@ -467,6 +473,10 @@ ADDED from [com.google.android.gms:play-services-base:17.2.1] C:\Users\claud\.gr
 		ADDED from [com.google.android.gms:play-services-base:17.2.1] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\b14783c54f0a0561f542100569b19f88\jetified-play-services-base-17.2.1\AndroidManifest.xml:26:13-72
 	android:name
 		ADDED from [com.google.android.gms:play-services-base:17.2.1] C:\Users\claud\.gradle\caches\transforms-2\files-2.1\b14783c54f0a0561f542100569b19f88\jetified-play-services-base-17.2.1\AndroidManifest.xml:24:13-79
+uses-permission#android.permission.WAKE_LOCK
+ADDED from [:react-native-background-timer] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-background-timer\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-68
+	android:name
+		ADDED from [:react-native-background-timer] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-background-timer\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:22-65
 provider#com.reactnativecommunity.webview.RNCWebViewFileProvider
 ADDED from [:react-native-webview] C:\Users\claud\Desktop\Namaka-mobile\NamakaApp\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:9-20:20
 	android:grantUriPermissions

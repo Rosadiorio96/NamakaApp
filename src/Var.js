@@ -4,4 +4,5 @@ export class Var {
     static password;
     static peso;
     static altezza;
+    static mark;
 }

@@ -8,12 +8,87 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
+import { Var } from './Var.js';
+import BackgroundTimer from 'react-native-background-timer';
+
+
 
 var stringify;
 var myJSON;
 var savedBottle;
 var name;
 
+const api_modify_position = async (payload)=>{
+  console.log(payload);
+  console.log(name);
+  var url_2 = "http://192.168.1.90:8081/api/utenteposizione/"+ String(name["name"]);
+  console.log(url_2);
+  try{
+    await fetch(url_2, {
+      method: 'post',
+      mode: 'no-cors',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).then(response => {
+      console.log(response['status']);
+      if(response['status']==200){
+        console.log("ok");
+      }
+      else{
+        alert("Impossibile modificare posizione utente");
+      }});
+
+  }catch(e){
+    console.log("erroreeee");
+    console.log(e);
+  }
+}
+
+
+const find_position_user = async ()=>{
+  if(name != undefined){
+
+  
+  //console.log(e);
+  var payload = {}
+  try {
+    console.log("try");
+    const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+    console.log("try2");
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log("try3");
+      Geolocation.getCurrentPosition((position) => {
+        console.log("try4");
+          console.log(position["coords"]["latitude"])
+          console.log(position["coords"]["longitude"])
+          payload['latitudine'] =  position["coords"]["latitude"];
+          payload["longitudine"] = position["coords"]["longitude"];
+          api_modify_position(payload);
+        },
+        (error) => {
+          console.log(error.code, error.message);
+        },
+        { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000 }
+    );
+    } else {
+      console.log("location permission denied");
+      alert("Location permission denied");
+    }
+  } catch (err) {
+    console.warn(err);
+  } 
+} else {
+  console.log("name", name);
+}
+  }
+
+BackgroundTimer.runBackgroundTimer(() => { 
+  console.log("Ciao!");
+  find_position_user();
+},60000);
 
 
 
@@ -27,11 +102,14 @@ export const HomePage = ({ route, navigation}) => {
   const [pageCurrent, setPageCurrent] = useState(1)
   const isFocused = useIsFocused();
   const [search, setSearch]=useState('');
+  const [position, setPosition]=useState([])
+
 
   useEffect(()=>{
     console.log("Useeffect")
     setisLoading(true)
     getData()
+    find_position_user();
     return () => {
 
     }
@@ -46,6 +124,18 @@ export const HomePage = ({ route, navigation}) => {
      setDataSearch(resJson['borracce']);
       setisLoading(false)
     })
+
+
+  }
+
+  console.log("getData Position")
+  console.log(name["name"])
+  if (name["name"]!= undefined){
+    const apiURL2 ="http://192.168.1.90:8081/api/allposition/"+name["name"]
+    console.log(apiURL2)
+    fetch(apiURL2).then((res2)=>res2.json()).then((resJson2)=>{
+      Var.mark = resJson2['borracce']
+  })
   }
 
   const renderItem = ({item}) => {
@@ -147,7 +237,8 @@ export const HomePage = ({ route, navigation}) => {
       <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
                         justifyContent: "center", alignItems: "center", borderRadius: 40,
                         backgroundColor: "black", alignSelf: "center", textAlign: "center", marginTop: 5}}
-                        onPress={() => {navigation.navigate('MapPage', { name: name["name"] })}}>
+                        onPress={() => {                        
+                          navigation.navigate('MapPage', { name: name["name"], pos: Var.mark })}}>
               <Text style={{color: "white"}}> Mappa</Text>
       </TouchableOpacity>
   

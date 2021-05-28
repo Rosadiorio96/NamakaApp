@@ -2,6 +2,7 @@ import React, { useState, setState,  useRef, useEffect} from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native'
 import Icon  from 'react-native-vector-icons/FontAwesome';
 import { Var } from './Var.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const validate_field=(username, password)=>{
@@ -42,23 +43,28 @@ const api_login_call= async (username, password, navigation)=>{
           password: password,
 
         })
-      }).then(response => {
-        console.log(response['status']);
-        if(response['status']==200){
+      }).then((res)=>res.json()).then((resJson)=>{
+        console.log(typeof(resJson["access"]));
+
+        if(resJson.hasOwnProperty('access')){
+          try {
+            AsyncStorage.setItem('@storage_tokenAccess', resJson["access"]);
+            AsyncStorage.setItem('@storage_tokenRefresh', resJson["refresh"]);
+          } catch (e) {
+            console.log("Errore salvataggio!")
+          }
           navigation.navigate('HomePage', { name: username })
+        } else {
+          alert("Errore Login");
         }
-        else{
-          alert("login fallito")
-        }
+        
       });
 
     }catch(e){
-      console.log("erroreeee");
-      console.log(e);
+      alert("Errore Login");
     }
   
    }
-
 
 export const LoginScreen = ({ navigation }) => {
 
