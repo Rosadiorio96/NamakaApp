@@ -1,16 +1,12 @@
 import React, { Component, useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button, SafeAreaView, ScrollView } from 'react-native';
 import Icon  from 'react-native-vector-icons/FontAwesome';
-import { Var } from './Var.js';
+import { Var } from './api/Var.js';
+import { api_signup_call } from './api/api';
 
-var username = "";
-var password = "";
-var peso = 0;
-var altezza= 0;
 
 
 const validate_field=(username, password, peso, altezza)=>{
-
 
   if(username == "" || password =="" || peso=="" || altezza==""){
     alert("Per favore completa tutti i campi")
@@ -31,38 +27,7 @@ const validate_field=(username, password, peso, altezza)=>{
   return true
 }
 
-const api_login_call= async (username, password, altezza, peso, navigation)=>{
-  console.log(username);
-  console.log(password);
-    try{
-      await fetch('http://192.168.1.90:8081/api/registrazione', {
-        method: 'post',
-        mode: 'no-cors',
-        headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-          altezza: altezza,
-          peso: peso
-        })
-      }).then(response => {
-        console.log(response['status']);
-        if(response['status']==200){
-          navigation.navigate('HomePage', { name: username })
-        }
-        else{
-          alert("registrazione fallita")
-        }});
 
-    }catch(e){
-      console.log("erroreeee");
-      console.log(e);
-    }
-  
-   }
 
 
 
@@ -121,7 +86,7 @@ export const SignUpScreen = ({ navigation }) => {
         justifyContent: "center", alignItems: "center", borderRadius: 40,
         backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
         onPress={() => { if (validate_field(Var.username, Var.password, Var.peso, Var.altezza)){
-            api_login_call(Var.username, Var.password, Var.altezza, Var.peso, navigation);}
+          api_signup_call(Var.username, Var.password, Var.altezza, Var.peso, navigation);}
           }}>
 
             <Text style={{color: "white"}}> Login </Text>

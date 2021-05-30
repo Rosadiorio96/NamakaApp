@@ -1,7 +1,7 @@
 import React, { Component,useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button, FlatList,  RefreshControl, ActivityIndicator } from 'react-native';
 import { useIsFocused } from "@react-navigation/native";
-
+import {uri} from './api/api.js'
 var name;
 
 export const BorracceScreen = ({ route, navigation }) => {
@@ -28,7 +28,7 @@ export const BorracceScreen = ({ route, navigation }) => {
 
   getData = async () =>{
     console.log("getData")
-    const apiURL ="http://192.168.1.90:8081/api/borracciaprop/"+name["name"]
+    const apiURL = uri+"borracciaprop/"+name["name"]
     fetch(apiURL).then((res)=>res.json()).then((resJson)=>{
      setData(resJson['borracce']);
      setDataSearch(resJson['borracce']);

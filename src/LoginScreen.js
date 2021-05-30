@@ -1,8 +1,9 @@
 import React, { useState, setState,  useRef, useEffect} from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native'
 import Icon  from 'react-native-vector-icons/FontAwesome';
-import { Var } from './Var.js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Var } from './api/Var.js';
+import { api_login_call } from './api/api';
+
 
 
 const validate_field=(username, password)=>{
@@ -27,44 +28,7 @@ const validate_field=(username, password)=>{
   return true
 }
 
-const api_login_call= async (username, password, navigation)=>{
-  console.log(username);
-  console.log(password);
-    try{
-      await fetch('http://192.168.1.90:8081/api/login', {
-        method: 'post',
-        mode: 'no-cors',
-        headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
 
-        })
-      }).then((res)=>res.json()).then((resJson)=>{
-        console.log(typeof(resJson["access"]));
-
-        if(resJson.hasOwnProperty('access')){
-          try {
-            AsyncStorage.setItem('@storage_tokenAccess', resJson["access"]);
-            AsyncStorage.setItem('@storage_tokenRefresh', resJson["refresh"]);
-          } catch (e) {
-            console.log("Errore salvataggio!")
-          }
-          navigation.navigate('HomePage', { name: username })
-        } else {
-          alert("Errore Login");
-        }
-        
-      });
-
-    }catch(e){
-      alert("Errore Login");
-    }
-  
-   }
 
 export const LoginScreen = ({ navigation }) => {
 

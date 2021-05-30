@@ -2,11 +2,11 @@ import React, { Component,useState, useEffect } from 'react';
 import { StyleSheet, Text, Animated, TextInput, View, SafeAreaView} from 'react-native';
 import Svg, {G, Circle} from 'react-native-svg'
 import { useIsFocused } from "@react-navigation/native";
-import { Var } from './Var.js';
+import { Var } from './api/Var.js';
 import Icon  from 'react-native-vector-icons/Fontisto';
 import DatePicker from 'react-native-datepicker';
 import { LogBox } from 'react-native';
-
+import {uri} from './api/api.js'
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle)
 const AnimatedInput = Animated.createAnimatedComponent(TextInput)
@@ -47,7 +47,7 @@ export const GraphScreen = ({ route, navigation }) => {
         console.log("la dataaaaaaaaaaaa", data)
         console.log("nameeeeeeeee", name["name"])
         if (name["name"]!= undefined && data!= undefined){
-          const apiURL ="http://192.168.1.90:8081/api/grafico/"+name["name"]+"/"+data
+          const apiURL = uri + 'grafico/'+ name["name"]+"/"+data
           fetch(apiURL).then((res)=>res.json()).then((resJson)=>{
             tot_sorsi = resJson['info'][0]['totale']
             Var.fabbisogno = resJson['info'][0]['fabbisogno'] * 1000;          

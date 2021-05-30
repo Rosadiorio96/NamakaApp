@@ -2,7 +2,7 @@ import React, { Component,useState, useEffect } from 'react';
 import { StyleSheet, Text, Animated, TextInput, View, SafeAreaView} from 'react-native';
 import Svg, {G, Circle} from 'react-native-svg'
 import { useIsFocused } from "@react-navigation/native";
-import { Var } from './Var.js';
+import { Var } from './api/Var.js';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 var name;

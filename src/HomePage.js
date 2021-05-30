@@ -8,60 +8,27 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
-import { Var } from './Var.js';
+import { Var } from './api/Var.js';
 import BackgroundTimer from 'react-native-background-timer';
-
-
+import { api_modify_position } from './api/api.js';
+import {uri} from './api/api.js'
 
 var stringify;
 var myJSON;
 var savedBottle;
 var name;
 
-const api_modify_position = async (payload)=>{
-  console.log(payload);
-  console.log(name);
-  var url_2 = "http://192.168.1.90:8081/api/utenteposizione/"+ String(name["name"]);
-  console.log(url_2);
-  try{
-    await fetch(url_2, {
-      method: 'post',
-      mode: 'no-cors',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    }).then(response => {
-      console.log(response['status']);
-      if(response['status']==200){
-        console.log("ok");
-      }
-      else{
-        alert("Impossibile modificare posizione utente");
-      }});
 
-  }catch(e){
-    console.log("erroreeee");
-    console.log(e);
-  }
-}
 
 
 const find_position_user = async ()=>{
   if(name != undefined){
 
-  
-  //console.log(e);
   var payload = {}
   try {
-    console.log("try");
     const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
-    console.log("try2");
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log("try3");
       Geolocation.getCurrentPosition((position) => {
-        console.log("try4");
           console.log(position["coords"]["latitude"])
           console.log(position["coords"]["longitude"])
           payload['latitudine'] =  position["coords"]["latitude"];
@@ -114,7 +81,7 @@ export const HomePage = ({ route, navigation}) => {
   console.log("getData Position")
   console.log(name["name"])
   if (name["name"]!= undefined){
-    const apiURL2 ="http://192.168.1.90:8081/api/allposition/"+name["name"]
+    const apiURL2 = uri + "allposition/"+name["name"]
     console.log(apiURL2)
     fetch(apiURL2).then((res2)=>res2.json()).then((resJson2)=>{
       Var.mark = resJson2['borracce']
