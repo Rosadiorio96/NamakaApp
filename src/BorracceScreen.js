@@ -16,7 +16,7 @@ export const BorracceScreen = ({ route, navigation }) => {
 
 
   useEffect(()=>{
-    console.log("Useeffect")
+    console.log("UseEffect Borracce Screen")
     setisLoading(true)
     getData()
     

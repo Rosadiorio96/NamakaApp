@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 
 import { WebView } from 'react-native-webview';
 import React, { Component } from 'react';
@@ -18,7 +11,7 @@ import { AddBottleScreen } from './src/AddBottleScreen';
 import {GraphScreen} from './src/GraphScreen'
 import {MapScreen} from './src/MapScreen'
 import {BorracceScreen} from './src/BorracceScreen'
-
+import {IntroScreen} from './src/IntroScreen'
 
 const Stack = createStackNavigator();
 
@@ -26,6 +19,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      <Stack.Screen name="Intro" component={IntroScreen} />
       <Stack.Screen
           name="Login"
           component= {LoginScreen}
@@ -41,5 +35,4 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
 

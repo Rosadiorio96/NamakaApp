@@ -1,10 +1,9 @@
 import React, { useState, setState,  useRef, useEffect} from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, BackHandler } from 'react-native'
 import Icon  from 'react-native-vector-icons/FontAwesome';
 import { Var } from './api/Var.js';
 import { api_login_call } from './api/api';
-
-
+import { useIsFocused } from "@react-navigation/native";
 
 const validate_field=(username, password)=>{
 
@@ -32,9 +31,8 @@ const validate_field=(username, password)=>{
 
 export const LoginScreen = ({ navigation }) => {
 
- 
+  const isFocused = useIsFocused();
   const [hidePass, setHidePass] = useState(true);
-  
   const [stato, setName] = useState(false);
 
   const setNameIcon = () => {
@@ -42,11 +40,38 @@ export const LoginScreen = ({ navigation }) => {
   }
 
 
+
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("Hold on!", "Are you sure you want to go back?", [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "YES", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [isFocused]);
+  
+  
+  
+
+
+
   return (
+    
     
      
       <View style={{ width: "100%", height: "100%", justifyContent: "center", alignSelf: "center", alignContent: "center", alignItems: "center"}}>
-
+        
       <View style={styles.userSection}>  
         <TextInput placeholder={"Inserisci email"}
         onChangeText={(value) => Var.username=value}

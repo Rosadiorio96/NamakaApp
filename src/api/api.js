@@ -13,6 +13,7 @@ export const api_login_call= async (username, password, navigation)=>{
           headers:{
             'Accept': 'application/json',
             'Content-Type': 'application/json'
+            
           },
           body: JSON.stringify({
             username: username,
@@ -21,13 +22,15 @@ export const api_login_call= async (username, password, navigation)=>{
           })
         }).then((res)=>res.json()).then((resJson)=>{
           console.log(typeof(resJson["access"]));
-  
+          
           if(resJson.hasOwnProperty('access')){
             try {
               AsyncStorage.setItem('@storage_tokenAccess', resJson["access"]);
               AsyncStorage.setItem('@storage_tokenRefresh', resJson["refresh"]);
+              AsyncStorage.setItem('@SignIn', "true");
+              AsyncStorage.setItem('@username', String(username));
             } catch (e) {
-              console.log("Errore salvataggio!")
+              console.log("Errore salvataggio login!")
             }
             navigation.navigate('HomePage', { name: username })
           } else {
@@ -59,80 +62,181 @@ export const api_signup_call = async (username, password, altezza, peso, navigat
                 altezza: altezza,
                 peso: peso
               })
-            }).then(response => {
-              console.log(response['status']);
-              if(response['status']==200){
+            }).then((res)=>res.json()).then((resJson)=>{
+              console.log(typeof(resJson["access"]));
+              if(resJson.hasOwnProperty('access')){
+                try {
+                  AsyncStorage.setItem('@storage_tokenAccess', resJson["access"]);
+                  AsyncStorage.setItem('@storage_tokenRefresh', resJson["refresh"]);
+                  AsyncStorage.setItem('@SignIn', "true");
+                  AsyncStorage.setItem('@username', String(username));
+                } catch (e) {
+                  console.log("Errore salvataggio variabili registrazione!")
+                }
                 navigation.navigate('HomePage', { name: username })
+              } else {
+                alert("Errore registrazione...");
               }
-              else{
-                alert("registrazione fallita")
-              }});
+              
+            });
       
           }catch(e){
-            console.log("erroreeee");
-            console.log(e);
+            alert("Errore registrazione -> server");
           }
         
          }
 
-
+const refresh_Access_Token = async (stringa, navigation)=>{   
+  const tokenRefresh = await AsyncStorage.getItem('@storage_tokenRefresh'); 
+  const signiIn = await AsyncStorage.getItem('@SignIn'); 
+  try{
+    await fetch( uri +'token/refresh/', {
+      method: 'post',
+      mode: 'no-cors',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        refresh : tokenRefresh
+      })
+    }).then((res)=>res.json()).then((resJson)=>{
+      if(resJson.hasOwnProperty('access')){
+        try {
+          AsyncStorage.setItem('@storage_tokenAccess', resJson["access"]);
+          
+          switch (stringa){
+            case "AddBottle":
+              console.log("Token di accesso refreshato -- AddBottle");
+              navigation.navigate("BorraccePage", {name: Var.username})
+              alert("Errore, riprova ad inquadrare il QRcode")
+              break;
+            case "posizione":
+              console.log("Token di accesso refreshato -- posizione");
+              break;
+            case "Login":
+              console.log("Token di accesso refreshato -- Login")
+              break;
+            default:
+              console.log("Token di accesso refreshato -- generico");
+              break;
+          }
+        } catch (e) {
+          console.log("Errore salvataggio nuovo Token!")
+        }
+      } else {
+        if (signiIn != 'false'){
+          navigation.navigate("Login", {name: Var.username});
+          AsyncStorage.setItem('@SignIn', "false");
+          alert("Sessione scaduta! Riesegui il login");
+        }
+        
+      }
+    });
+  }catch(e){
+    if (signiIn != 'false'){
+      navigation.navigate("Login", {name: Var.username})
+      AsyncStorage.setItem('@SignIn', "false");
+      alert("Sessione scaduta! Riesegui il login");
+    }
+  }
+}
+     
 
 export const api_add_Bottle = async (payload, navigation)=>{
-            console.log(payload);
-            var url = uri + "borracciaprop/"+ String(Var.username);
-            console.log(url);
-            try{
-              await fetch(url, {
-                method: 'post',
-                mode: 'no-cors',
-                headers:{
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-              }).then(response => {
-                console.log(response['status']);
-                if(response['status']==200){
-                  console.log("ok");
-                  navigation.navigate('BorraccePage', { name: Var.username })
-                  alert("Borraccia aggiunta correttamente");
-                }
-                else{
-                  alert("Impossibile aggiungere la borraccia");
-                }});
-          
-            }catch(e){
-              console.log("erroreeee");
-              console.log(e);
-            }
-          }
+  var url = uri + "borracciaprop/"+ String(Var.username);
+  const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
+  try{
+    await fetch(url, {
+      method: 'post',
+      mode: 'no-cors',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': tokenAccess
+      },
+      body: JSON.stringify(payload)
+    }).then(response => {
+      console.log(response['status']);
+      if(response['status']==200){
+        navigation.navigate('BorraccePage', { name: Var.username })
+        alert("Borraccia aggiunta correttamente");
+      } else if (response['status'] == 401){
+        refresh_Access_Token("AddBottle", navigation)
+      }
+      else{
+        alert("Impossibile aggiungere la borraccia");
+      }});
+
+  }catch(e){
+    alert("Impossibile aggiungere la borraccia");
+    console.log("Errore nel conttatare server");
+    console.log(e);
+  }
+}
 
 
-export const api_modify_position = async (payload)=>{
-            console.log(payload);
-            var url = uri + "utenteposizione/"+ String(Var.username);
-            console.log(url);
-            try{
-              await fetch(url, {
-                method: 'post',
-                mode: 'no-cors',
-                headers:{
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-              }).then(response => {
-                console.log(response['status']);
-                if(response['status']==200){
-                  console.log("ok");
-                }
-                else{
-                  alert("Impossibile modificare posizione utente");
-                }});
-          
-            }catch(e){
-              console.log("erroreeee");
-              console.log(e);
-            }
-          }
+export const api_modify_position = async (payload, navigation)=>{
+  const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
+  var url = uri + "utenteposizione/"+ String(Var.username);
+  try{
+    await fetch(url, {
+      method: 'post',
+      mode: 'no-cors',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': tokenAccess
+      },
+      body: JSON.stringify(payload)
+    }).then(response => {
+      console.log(response['status']);
+      if(response['status']==200){
+        console.log("-- Posizione aggiornata correttamente! --");
+      } else if (response['status'] == 401){
+          refresh_Access_Token("posizione", navigation)
+      } else{
+          console.log("Impossibile modificare posizione utente. Il server non risponde");
+      }});
 
+  }catch(e){
+    console.log("Errore nel contattare il server");
+    console.log(e);
+  }
+}
+
+
+export const check_token = async ()=>{
+
+  const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
+  var url = uri + "api/token/verify/"
+  try{
+    await fetch(url, {
+      method: 'post',
+      mode: 'no-cors',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': tokenAccess
+      },
+      body: JSON.stringify({'token': tokenAccess})
+    }).then(response => {
+      console.log(response['status']);
+      if(response['status']==200){
+        console.log("-- L'utente è loggatto! --");
+        return true;
+      } else if (response['status'] == 401){
+          refresh_Access_Token("Login", navigation)
+          return true;
+      } else{
+          alert("Impossibile verificare stato utente");
+          return false;
+      }});
+
+  }catch(e){
+    console.log("Errore nel contattare il server");
+    console.log(e);
+    return false;
+  }
+
+}

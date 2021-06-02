@@ -27,6 +27,7 @@
     "react-native-maps": "0.28.0",
     "react-native-modal-datetime-picker": "^9.2.3",
     "react-native-numeric-input": "^1.9.0",
+    "react-native-paper": "^4.9.1",
     "react-native-qrcode-scanner": "^1.5.4",
     "react-native-reanimated": "^2.1.0",
     "react-native-safe-area-context": "^3.2.0",

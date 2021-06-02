@@ -6,3 +6,4 @@ export class Var {
     static altezza;
     static mark;
 }
+
