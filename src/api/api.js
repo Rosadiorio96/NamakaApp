@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Var } from './Var.js';
 
-export const uri = 'http://192.168.1.17:8081/api/'
+export const uri = 'http://192.168.1.90:8081/api/'
 
 export const api_login_call= async (username, password, navigation)=>{
     console.log(username);
@@ -240,3 +240,37 @@ export const check_token = async ()=>{
   }
 
 }
+
+
+export const api_remove_bottle = async (item, name, navigation)=>{
+  console.log("APIIII", item["id_borraccia"]);
+  console.log("name", name);
+
+    try{
+      await fetch(uri + 'remove', {
+        method: 'post',
+        mode: 'no-cors',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id_borraccia: item["id_borraccia"],
+          user: name
+        })
+      }).then(response => {
+        console.log(response['status']);
+        if(response['status']==200){
+          navigation.navigate('BorraccePage', { name: name })
+          console.log("riuscito")
+        }
+        else{
+          alert("non riuscito")
+        }});
+
+    }catch(e){
+      console.log("erroreeee");
+      console.log(e);
+    }
+
+   }

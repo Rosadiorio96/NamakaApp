@@ -67,9 +67,7 @@ export const LoginScreen = ({ navigation }) => {
 
 
   return (
-    
-    
-     
+  
       <View style={{ width: "100%", height: "100%", justifyContent: "center", alignSelf: "center", alignContent: "center", alignItems: "center"}}>
         
       <View style={styles.userSection}>  

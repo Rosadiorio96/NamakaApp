@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert  } from 'react-native';
+import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image  } from 'react-native';
 import { useIsFocused } from "@react-navigation/native";
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
@@ -27,6 +27,10 @@ const find_position_user = async ()=>{
       Geolocation.getCurrentPosition((position) => {
           payload['latitudine'] =  position["coords"]["latitude"];
           payload["longitudine"] = position["coords"]["longitude"];
+          Var.lat_user = position["coords"]["latitude"];
+          Var.lon_user = position["coords"]["longitude"];
+          console.log("AAAAAAAA", Var.lat_user);
+          console.log("BBBBBBBB", Var.lon_user);
           api_modify_position(payload, navigation2);
         },
         (error) => {
@@ -74,24 +78,25 @@ export const HomePage = ({ route, navigation}) => {
       console.log("Use effect HomePage")
       find_position_user();
     }
-    const backAction = () => {
-      Alert.alert("Hold on!", "Are you sure you want to go back?", [
-        {
-          text: "Cancel",
-          onPress: () => null,
-          style: "cancel"
-        },
-        { text: "YES", onPress: () => BackHandler.exitApp() }
-      ]);
-      return true;
-    };
+      const backAction = () => {
+        Alert.alert("Hold on!", "Are you sure you want to go back?", [
+          {
+            text: "Cancel",
+            onPress: () => null,
+            style: "cancel"
+          },
+          { text: "YES", onPress: () => BackHandler.exitApp() }
+        ]);
+        return true;
+      };
+  
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+  
+      return () => backHandler.remove();
 
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-
-    return () => backHandler.remove();
   }, [isFocused]);
 
   
@@ -107,11 +112,12 @@ export const HomePage = ({ route, navigation}) => {
       Var.mark = resJson2['borracce']
   })
   }
+  
 
  
 
   return (
-    <View  style={{height: "95%"}}>
+    <View  style={{height: "90%", justifyContent: 'center' }}>{/*
 <Provider>
       <View
         style={{
@@ -129,30 +135,56 @@ export const HomePage = ({ route, navigation}) => {
           <Menu.Item onPress={() => {}} title="Item 3" />
         </Menu>
       </View>
-    </Provider>
-            <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
-                        justifyContent: "center", alignItems: "center", borderRadius: 40,
-                        backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
-                        onPress={() => {navigation.navigate('BorraccePage', { name: Var.username })}}>
-              <Text style={{color: "white"}}> Visualizza le tue borracce</Text>
+      </Provider>*/}
+    <View style={{flexDirection: "row", width: "90%", height: "30%", marginLeft: 12}}>
+    <TouchableOpacity style={{borderWidth: 1, height: "100%", width: "50%",
+                        justifyContent: "center", alignItems: "center", borderRadius: 7, borderColor: "#D5D5D5",
+                        backgroundColor: "white", alignSelf: "center", textAlign: "center", marginTop: 5}}
+                        onPress={() =>  {navigation.navigate('BorraccePage', { name: Var.username })}}>
+                          <View style={{height: "60%", width: "60%"}}>
+                            <Image style={style.img} source={{uri: 'https://image.flaticon.com/icons/png/512/217/217655.png'}} />
+                          </View>
+              <Text style={{color: "black", marginTop: 10, fontSize: 18, fontWeight: "bold"}}> Le tue borracce</Text>
       </TouchableOpacity>
 
-
-
-      <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
-                        justifyContent: "center", alignItems: "center", borderRadius: 40,
-                        backgroundColor: "black", alignSelf: "center", textAlign: "center", marginTop: 5}}
-                        onPress={() => {navigation.navigate('GraphPage', { name: Var.username })}}>
-              <Text style={{color: "white"}}> Progressi</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
-                        justifyContent: "center", alignItems: "center", borderRadius: 40,
-                        backgroundColor: "black", alignSelf: "center", textAlign: "center", marginTop: 5}}
+      
+  
+      <TouchableOpacity style={{borderWidth: 1, height: "100%", width: "50%", marginLeft: 10, 
+                        justifyContent: "center", alignItems: "center", borderRadius: 7, borderColor: "#D5D5D5",
+                        backgroundColor: "white", alignSelf: "center", textAlign: "center", marginTop: 5}}
                         onPress={() => {                        
-                          navigation.navigate('MapPage', { name:Var.username, pos: Var.mark })}}>
-              <Text style={{color: "white"}}> Mappa</Text>
+                          navigation.navigate('MapPage', { name: Var.username, pos: Var.mark })}}>
+                          <View style={{height: "60%", width: "60%"}}>
+                            <Image style={style.img} source={{uri: 'https://cdn.icon-icons.com/icons2/426/PNG/512/Map_1135px_1195280_42272.png'}} />
+                          </View>
+              <Text style={{color: "black", marginTop: 10, fontSize: 18, fontWeight: "bold"}}> Mappa</Text>
       </TouchableOpacity>
+    </View>
+
+    <View style={{flexDirection: "row", width: "90%", height: "30%", marginLeft: 12, marginTop: 30}}>
+      <TouchableOpacity style={{borderWidth: 1, height: "100%", width: "50%",
+                        justifyContent: "center", alignItems: "center", borderRadius: 7, borderColor: "#D5D5D5",
+                        backgroundColor: "white", alignSelf: "center", textAlign: "center", marginTop: 5}}
+                        onPress={() => {navigation.navigate('GraphPage', { name: Var.username })}}>
+                          <View style={{height: "60%", width: "60%"}}>
+                            <Image style={style.img} source={{uri: 'https://becomebusinessowners.com/wp-content/uploads/2021/03/graph-increase-png-3-Transparent-Images.png'}} />
+                          </View>
+              <Text style={{color: "black", marginTop: 10, fontSize: 18, fontWeight: "bold"}}> Progressi</Text>
+      </TouchableOpacity>
+
+      
+  
+      <TouchableOpacity style={{borderWidth: 1, height: "100%", width: "50%", marginLeft: 10,
+                        justifyContent: "center", alignItems: "center", borderRadius: 7, borderColor: "#D5D5D5",
+                        backgroundColor: "white", alignSelf: "center", textAlign: "center", marginTop: 5}}
+                        onPress={() => {                        
+                          }}>
+                          <View style={{height: "60%", width: "60%"}}>
+                            <Image style={style.img} source={{uri: 'https://w7.pngwing.com/pngs/615/565/png-transparent-riddler-batman-harley-quinn-poison-ivy-robin-batman-heroes-text-logo-thumbnail.png'}} />
+                          </View>
+              <Text style={{color: "black", marginTop: 10, fontSize: 18, fontWeight: "bold"}}> Qualcosa</Text>
+      </TouchableOpacity>
+    </View>
   
     
     </View>
@@ -160,9 +192,6 @@ export const HomePage = ({ route, navigation}) => {
     
 );
 }
-
-
-
 
 
 
@@ -201,6 +230,12 @@ textInputStyle: {
   margin: 5,
   borderColor: '#009688',
   backgroundColor: 'white'
+},
+img:{
+  flex: 1, 
+  width: null, 
+  height: null, 
+  resizeMode: 'contain'
 }
 
 });

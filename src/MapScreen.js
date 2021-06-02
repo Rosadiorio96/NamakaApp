@@ -6,13 +6,18 @@ import { Var } from './api/Var.js';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 var name;
-var get_done = false;
-
-
 
 
 export const MapScreen = ({ route, navigation }) => {
     name = route.params;
+
+    console.log("MAPPA POS",name["pos"])
+    const found = name["pos"].find(element => element.title === "UTENTE");
+    if(found == undefined){
+      name["pos"].push({"coordinates": {"latitude": Var.lat_user, "longitude": Var.lon_user}, "title": "UTENTE", "pinColor": "#474744"})
+    }
+    console.log("aaaaaaaaaaa",Var.lat_user)
+   
 
      return(
       <View style={{  width: "100%", height: "100%", flexDirection:'row', justifyContent: 'center',
@@ -26,8 +31,8 @@ export const MapScreen = ({ route, navigation }) => {
             provider={PROVIDER_GOOGLE} // remove if not using Google Maps
             style={styles.map}
             region={{
-              latitude: name["pos"][0].coordinates["latitude"],
-              longitude: name["pos"][0].coordinates["longitude"], 
+              latitude: Var.lat_user,
+              longitude: Var.lon_user, 
               latitudeDelta: 0.015,
               longitudeDelta: 0.0121,
             }}
@@ -38,18 +43,32 @@ export const MapScreen = ({ route, navigation }) => {
                   <MapView.Marker key={index}
                     coordinate={marker.coordinates}
                     title={marker.title}
+                    pinColor={marker.pinColor}
                   />
+                  
                 ))
-  
              }
           </MapView>
           :
-          <Text style={styles.textGraph}> no borracce</Text>
+          <MapView
+          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+          style={styles.map}
+          region={{
+            latitude: Var.lat_user,
+            longitude: Var.longitude, 
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
+          }}
+        >
+            <MapView.Marker 
+                  coordinate={{"latitude": Var.lat_user, "longitude": Var.longitude}}
+                  title="UTENTE"
+                  pinColor="#474744"
+                />
+        </MapView>
 
           }
-          
 
-        
       </View>
       </View>
      )

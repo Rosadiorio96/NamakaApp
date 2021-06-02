@@ -5,5 +5,7 @@ export class Var {
     static peso;
     static altezza;
     static mark;
+    static lat_user;
+    static lon_user;
 }
 
