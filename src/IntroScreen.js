@@ -24,9 +24,10 @@ export const IntroScreen = ({ navigation}) => {
         console.log("SigniIn", valueString)
         if (valueString == null || valueString == "false"){
           console.log("L'utente non è loggato!")
-          navigation.navigate(navigation.navigate("Login"), {name: ""});
+          navigation.navigate(navigation.navigate("Login"));
         } else {
           console.log("L'utente è loggato!")
+          console.log("Nome", username)
           navigation.navigate('HomePage', { name: String(username) })
         }
       } catch (error) {

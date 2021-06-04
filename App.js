@@ -12,6 +12,7 @@ import {GraphScreen} from './src/GraphScreen'
 import {MapScreen} from './src/MapScreen'
 import {BorracceScreen} from './src/BorracceScreen'
 import {IntroScreen} from './src/IntroScreen'
+import {SocialScreen} from './src/SocialScreen'
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,7 @@ export default function App() {
         />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="HomePage" component={HomePage} />
+        <Stack.Screen name="SocialPage" component={SocialScreen} />
         <Stack.Screen name="AddBottlePage" component={AddBottleScreen} />
         <Stack.Screen name="GraphPage" component={GraphScreen} />
         <Stack.Screen name="MapPage" component={MapScreen} />

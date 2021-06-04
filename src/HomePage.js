@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image  } from 'react-native';
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useFocusEffect } from "@react-navigation/native";
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
 import { Var } from './api/Var.js';
@@ -72,10 +72,10 @@ export const HomePage = ({ route, navigation}) => {
 
   const isFocused = useIsFocused();
 
-  useEffect(() => {
+  useFocusEffect(() => {
     console.log("Var", Var.username)
     if(Var.username != null){
-      console.log("Use effect HomePage")
+      console.log("Use effect HomePage", isFocused)
       find_position_user();
     }
       const backAction = () => {
@@ -97,7 +97,7 @@ export const HomePage = ({ route, navigation}) => {
   
       return () => backHandler.remove();
 
-  }, [isFocused]);
+  });
 
   
 
@@ -117,25 +117,7 @@ export const HomePage = ({ route, navigation}) => {
  
 
   return (
-    <View  style={{height: "90%", justifyContent: 'center' }}>{/*
-<Provider>
-      <View
-        style={{
-          paddingTop: 50,
-          flexDirection: 'row',
-          justifyContent: 'center',
-        }}>
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={<Button onPress={openMenu}>Show menu</Button>}>
-          <Menu.Item onPress={() => {}} title="Item 1" />
-          <Menu.Item onPress={() => {}} title="Item 2" />
-          <Divider />
-          <Menu.Item onPress={() => {}} title="Item 3" />
-        </Menu>
-      </View>
-      </Provider>*/}
+    <View  style={{height: "90%", justifyContent: 'center' }}>
     <View style={{flexDirection: "row", width: "90%", height: "30%", marginLeft: 12}}>
     <TouchableOpacity style={{borderWidth: 1, height: "100%", width: "50%",
                         justifyContent: "center", alignItems: "center", borderRadius: 7, borderColor: "#D5D5D5",
@@ -177,8 +159,7 @@ export const HomePage = ({ route, navigation}) => {
       <TouchableOpacity style={{borderWidth: 1, height: "100%", width: "50%", marginLeft: 10,
                         justifyContent: "center", alignItems: "center", borderRadius: 7, borderColor: "#D5D5D5",
                         backgroundColor: "white", alignSelf: "center", textAlign: "center", marginTop: 5}}
-                        onPress={() => {                        
-                          }}>
+                        onPress={() => {navigation.navigate('SocialPage', { name: Var.username })}}>
                           <View style={{height: "60%", width: "60%"}}>
                             <Image style={style.img} source={{uri: 'https://w7.pngwing.com/pngs/615/565/png-transparent-riddler-batman-harley-quinn-poison-ivy-robin-batman-heroes-text-logo-thumbnail.png'}} />
                           </View>

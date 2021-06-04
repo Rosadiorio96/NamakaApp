@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, BackHandler
 import Icon  from 'react-native-vector-icons/FontAwesome';
 import { Var } from './api/Var.js';
 import { api_login_call } from './api/api';
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused , useFocusEffect} from "@react-navigation/native";
 
 const validate_field=(username, password)=>{
 
@@ -41,7 +41,8 @@ export const LoginScreen = ({ navigation }) => {
 
 
 
-  useEffect(() => {
+  useFocusEffect(() => {
+    console.log("Use effect login ", isFocused)
     const backAction = () => {
       Alert.alert("Hold on!", "Are you sure you want to go back?", [
         {
@@ -59,7 +60,7 @@ export const LoginScreen = ({ navigation }) => {
     );
 
     return () => backHandler.remove();
-  }, [isFocused]);
+  });
   
   
   

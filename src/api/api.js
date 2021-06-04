@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Var } from './Var.js';
 
-export const uri = 'http://192.168.1.90:8081/api/'
+export const uri = 'http://192.168.1.17:8081/api/'
 
 export const api_login_call= async (username, password, navigation)=>{
     console.log(username);
@@ -86,7 +86,8 @@ export const api_signup_call = async (username, password, altezza, peso, navigat
         
          }
 
-const refresh_Access_Token = async (stringa, navigation)=>{   
+const refresh_Access_Token = async (stringa, navigation)=>{  
+  console.log("check refresh token") 
   const tokenRefresh = await AsyncStorage.getItem('@storage_tokenRefresh'); 
   const signiIn = await AsyncStorage.getItem('@SignIn'); 
   try{
@@ -207,7 +208,7 @@ export const api_modify_position = async (payload, navigation)=>{
 
 
 export const check_token = async ()=>{
-
+  console.log("check token Access")
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
   var url = uri + "api/token/verify/"
   try{
@@ -272,5 +273,76 @@ export const api_remove_bottle = async (item, name, navigation)=>{
       console.log("erroreeee");
       console.log(e);
     }
+}
 
-   }
+
+export const visualizzaInviti = async ()=>{
+  const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
+  const name = await AsyncStorage.getItem('@username'); 
+  try{
+    await fetch(uri + 'inviti/'+ name, {
+      method: 'get',
+      mode: 'no-cors',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': tokenAccess
+      }
+    }).then((res)=>res.json()).then((resJson)=>{
+      console.log(resJson['inviti']);
+      return resJson['inviti']
+    });
+
+  }catch(e){
+    console.log("erroreeee");
+    console.log(e);
+  }
+}
+
+export const getTokenFromStore = async ()=>{
+  const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
+  const name = await AsyncStorage.getItem('@username'); 
+  if (tokenAccess != null) {
+    return {"Token": tokenAccess, 'name': name}
+  }
+ 
+
+}
+
+
+export const modificaStatoInvito = async (NEWSTATO, mittente, gruppo)=>{
+  const name = await AsyncStorage.getItem('@username'); 
+  const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
+  try{
+    await fetch(uri + 'modificaStatoInvito/'+ name, {
+      method: 'post',
+      mode: 'no-cors',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': tokenAccess
+      },
+      body: JSON.stringify({
+        'mittente': mittente,
+        'gruppo': gruppo,
+        'stato': NEWSTATO
+      })
+    }).then(response => {
+      console.log(response['status']);
+      if(response['status']==200){
+        alert("Nessun problema")
+      }
+      else{
+        alert("PROBLEMI")
+      }});
+
+  }catch(e){
+    console.log("erroreeee");
+    console.log(e);
+  }
+
+}
+
+
+
+
