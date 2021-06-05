@@ -9,44 +9,61 @@ import { Var } from './api/Var.js';
 export const NotificheScreen = ({ route, navigation}) => {
     const [data, setData]=useState([])
     const [isLoading, setisLoading]=useState(false)
-      
-    useFocusEffect(() => {
-      if(data != undefined){
+    const isFocus = useIsFocused()
+    const [shouldShow, setShouldShow] = useState(false);
+
+    const getInviti = async ()=>{
+      getTokenFromStore().then((dataV) => {
+        const apiURL = uri+"inviti/"+ dataV['name']
+          fetch(apiURL, {
+              method: 'GET',
+              withCredentials: true,
+              credentials: 'include',
+              headers: {
+                  'Authorization': dataV['Token'],
+                  'Content-Type': 'application/json'
+              }
+              }).then((res)=>res.json()).then((resJson)=>{
+                  setData(resJson['inviti']);
+                  console.log("DATAAAAAA-------------",data)
+             })
+      }) 
+    
+    }
+
+
+    useEffect(() => {
+       
+          getInviti()
         
-        getTokenFromStore().then((data) => {
-          const apiURL = uri+"inviti/"+ data['name']
-            fetch(apiURL, {
-                method: 'GET',
-                withCredentials: true,
-                credentials: 'include',
-                headers: {
-                    'Authorization': data['Token'],
-                    'Content-Type': 'application/json'
-                }
-                }).then((res)=>res.json()).then((resJson)=>{
-                    setData(resJson['inviti']);
-                    setisLoading(false)
-               })
-        }) 
-      }
-    });
+        
+    }, [isFocus]);
 
-
-
+ 
+   
 
     const renderItem = ({item}) => {
-        console.log("renderItem")
         return (
           <View style={{ flex: 1, justifyContent: 'center' }}>
             <Text style={style.info}>{item.mittente} ti ha inviato a far parte del gruppo {item.gruppo}  </Text>
+            { item.stato == "NON VISUALIZZATO" || item.stato == "VISUALIZZATO"  ? (
+              <View>
             <Button
               title="Accetta"
-              onPress={() =>modificaStatoInvito("ACCETTATO", item.mittente, item.gruppo)}
+              onPress={() => {modificaStatoInvito("ACCETTATO", item.mittente, item.gruppo).then(() => {getInviti()})
+                              setShouldShow(false);
+                              }
+                              }
               />
               <Button
               title="Rifiuta"
-              onPress={() => modificaStatoInvito("ACCETTATO", item.mittente, item.gruppo)}
+              onPress={() => {modificaStatoInvito("RIFIUTATO", item.mittente, item.gruppo).then(() => {getInviti()}) 
+                              setShouldShow(false)
+                  
+                            }}
               />
+              </View>
+              ) : null }
             </View>
             )
       }
