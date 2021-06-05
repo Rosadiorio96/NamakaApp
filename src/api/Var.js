@@ -7,5 +7,8 @@ export class Var {
     static mark;
     static lat_user;
     static lon_user;
+    static nomegruppo;
+    static prova;
+    static nomepartecipante;
 }
 

@@ -23,7 +23,7 @@ export const BorracceScreen = ({ route, navigation }) => {
     getData()
    
 
-  }, [])
+  }, [isFocused])
 
   if(name["name"]!= undefined){
     getData = async () =>{

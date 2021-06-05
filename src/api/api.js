@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Var } from './Var.js';
 
-export const uri = 'http://192.168.1.17:8081/api/'
+export const uri = 'http://192.168.1.90:8081/api/'
 
 export const api_login_call= async (username, password, navigation)=>{
     console.log(username);
@@ -344,5 +344,77 @@ export const modificaStatoInvito = async (NEWSTATO, mittente, gruppo)=>{
 }
 
 
+export const creaGruppo = async (gruppo)=>{
+  
+  const name = await AsyncStorage.getItem('@username'); 
+  const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
+  try{
+    await fetch(uri + 'creaGruppo/'+ name, {
+      method: 'post',
+      mode: 'no-cors',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': tokenAccess
+      },
+      body: JSON.stringify({
+        'nomeGruppo': gruppo,
+      })
+    }).then(response => {
+      console.log(response['status']);
+      /*
+      if(response['status']==200){
+        Var.prova.push({"nome": gruppo})
+        console.log("NUOVA PROVA", Var.prova)
+      }
+      else{
+        alert("PROBLEMI")
+      }*/
+    
+    });
+
+  }catch(e){
+    console.log("erroreeee");
+    console.log(e);
+  }
+
+}
 
 
+export const creaPartecipante = async (nomepartecipante, namegruppo)=>{
+  
+  const name = await AsyncStorage.getItem('@username'); 
+  const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
+  try{
+    await fetch(uri + 'invita', {
+      method: 'post',
+      mode: 'no-cors',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': tokenAccess
+      },
+      body: JSON.stringify({
+        'mittente': Var.username,
+        'destinatario': nomepartecipante,
+        'gruppo': namegruppo
+      })
+    }).then(response => {
+      console.log(response['status']);
+      /*
+      if(response['status']==200){
+        Var.prova.push({"nome": gruppo})
+        console.log("NUOVA PROVA", Var.prova)
+      }
+      else{
+        alert("PROBLEMI")
+      }*/
+    
+    });
+
+  }catch(e){
+    console.log("erroreeee");
+    console.log(e);
+  }
+
+}

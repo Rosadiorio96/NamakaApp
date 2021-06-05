@@ -161,9 +161,9 @@ export const HomePage = ({ route, navigation}) => {
                         backgroundColor: "white", alignSelf: "center", textAlign: "center", marginTop: 5}}
                         onPress={() => {navigation.navigate('SocialPage', { name: Var.username })}}>
                           <View style={{height: "60%", width: "60%"}}>
-                            <Image style={style.img} source={{uri: 'https://w7.pngwing.com/pngs/615/565/png-transparent-riddler-batman-harley-quinn-poison-ivy-robin-batman-heroes-text-logo-thumbnail.png'}} />
+                            <Image style={style.img} source={{uri: 'https://meatloaf-oifc.com/img/other/72/collection-group-work-cliparts-24.jpg'}} />
                           </View>
-              <Text style={{color: "black", marginTop: 10, fontSize: 18, fontWeight: "bold"}}> Qualcosa</Text>
+              <Text style={{color: "black", marginTop: 10, fontSize: 18, fontWeight: "bold"}}> Social </Text>
       </TouchableOpacity>
     </View>
   

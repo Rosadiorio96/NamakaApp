@@ -1,41 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator  } from 'react-native';
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
-import {visualizzaInviti, uri, getTokenFromStore} from './api/api.js'
+import {visualizzaInviti, uri, getTokenFromStore, creaGruppo} from './api/api.js'
 import { Var } from './api/Var.js';
+import Dialog from "react-native-dialog";
 
 export const GruppiScreen = ({ route, navigation}) => {
     const [data, setData]=useState([])
     const [isLoading, setisLoading]=useState(false)
-      
-    useFocusEffect(() => {
-        getTokenFromStore().then((data) => {
-            const apiURL = uri+"getGruppoByUtente/"+ data['name']
-            fetch(apiURL, {
-                method: 'GET',
-                withCredentials: true,
-                credentials: 'include',
-                headers: {
-                    'Authorization': data['Token'],
-                    'Content-Type': 'application/json'
-                }
-                }).then((res)=>res.json()).then((resJson)=>{
-                    console.log("Gruppi----------------------------",resJson)
-                    setData(resJson['gruppi']);
-                    setisLoading(false)
-               })
-        }) 
-    });
+    const [visible, setVisible] = useState(false);
+    const isFocused = useIsFocused();
+
+    const showDialog = () => {
+      setVisible(true);
+    };
 
 
+    useEffect(()=>{
+      console.log("UseEffect Borracce Screen")
+      setisLoading(true)
+      getData()
+     
+  
+    }, [isFocused])
+  
+    getData = async () =>{
+    console.log("UseEffect Borracce Screen")
+    setisLoading(true)
+    getTokenFromStore().then((dati) => {
+      const apiURL = uri+"getGruppoByUtente/"+ dati['name']
+      fetch(apiURL, {
+          method: 'GET',
+          withCredentials: true,
+          credentials: 'include',
+          headers: {
+              'Authorization': dati['Token'],
+              'Content-Type': 'application/json'
+          }
+          }).then((res)=>res.json()).then((resJson)=>{
+              console.log("Gruppi----------------------------",resJson)
+              setData(resJson['gruppi']);
+              //Var.prova = resJson['gruppi']
+              //console.log("PROVAAAA", Var.prova)
+              setisLoading(false)
+              console.log("DATAAAAAAA", data)
+         })
+  }) 
+}
 
 
     const renderItem = ({item}) => {
         console.log("renderItem")
         return (
-          <View style={{ flex: 1, justifyContent: 'center' }}>
-            <Text style={style.info}> Gruppo: {item.nome} </Text>
-            </View>
+          <View style={{ flex: 1, justifyContent: 'center', alignContent: "center", alignSelf: "center"}}>
+
+          <TouchableOpacity style={style.itemRow} onPress={() => {navigation.navigate('GruppoInfoPage', {'name': item.nome});}}>
+          <View style={{ alignItems: "center",width: 150, alignContent: "center", justifyContent: "center", }}>
+          <View style={{height: "60%", width: "60%"}}>
+            <Image style={style.img} source={{uri: 'https://icons-for-free.com/iconfiles/png/512/person+target+user+icon-1320190816206266307.png'}} />
+          </View>
+          <Text style={style.info}>{item.nome} </Text>
+        </View>
+      </TouchableOpacity>
+    </View>        
             )
       }
 
@@ -54,21 +81,41 @@ export const GruppiScreen = ({ route, navigation}) => {
       const handleLoadMore = () => {
         setisLoading(true)
       }
-    return (<View style={{ flex: 1, width: "95%", marginLeft: 10}}>
-      
-    <FlatList
-    style={style.container}
-    data = {data}
-    renderItem = {renderItem}
-    ListFooterComponent = {renderFooter}
-    keyExtractor={(item, index) => index.toString()}
-    onEndReached = {handleLoadMore}
-    onEndReachedThreshold={0.5}
-    extraData={data}
+
+
+    return (
     
-    />
+      <View  style={{height: "98%"}}>
+          <View style={{ flex: 1, width: "95%", marginLeft: 10}}>
    
-    </View>)
+            <FlatList
+                   numColumns={2}
+                   style={style.container}
+                   data = {data}
+                   renderItem = {renderItem}
+                   ListFooterComponent = {renderFooter}
+                   keyExtractor={(item, index) => index.toString()}
+                   onEndReached = {handleLoadMore}
+                   onEndReachedThreshold={0.5}
+                   extraData={data}
+                   />
+  
+          </View>
+
+        <Dialog.Container visible={visible}>
+          <Dialog.Title>Aggiungi nuovo gruppo</Dialog.Title>
+          <Dialog.Button label="Indietro" onPress={()=>{ setVisible(false);}} />
+          <Dialog.Button label="Aggiungi" onPress={() => {setVisible(false); creaGruppo(Var.nomegruppo).then(()=> {getData();}) }} />
+          <Dialog.Input placeholder="Inserisci nome gruppo" onChangeText={(value) => {Var.nomegruppo = value; 
+                         console.log("NOME GRUPPO",Var.nomegruppo)}} />
+        </Dialog.Container>
+
+          <TouchableOpacity style={style.button} onPress={() => {showDialog()}}>
+              <Text style={{color: "white"}}> Aggiungi gruppo </Text>
+          </TouchableOpacity>
+
+    </View>   
+    )
 
 }
 
@@ -81,14 +128,19 @@ const style = StyleSheet.create({
        paddingBottom: 5 
     },
     itemRow: {
-      borderRadius: 5,
       marginBottom:10,
-      borderRadius: 7, 
+      borderRadius: 100, //100 cerchi
       borderColor: "#D5D5D5",
       backgroundColor: "white",
-      height: 100,
+      height: 150,
       flexDirection: "row",
       alignItems: "center",
+      width: 150,
+      alignContent: "center",
+      textAlign: "center",
+      justifyContent: "center", 
+      alignSelf: "center",
+      marginTop: "10%"
     },
   loader:{
   marginTop: 10,
@@ -106,15 +158,26 @@ const style = StyleSheet.create({
     
   },
   info:{
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
-    color: "black"
+    color: "black",
+
   },
   img:{
     flex: 1, 
     width: null, 
     height: null, 
     resizeMode: 'contain'
+  },
+  containerDialog: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button:{
+    borderWidth: 1, height: 42, width: "80%", backgroundColor: "red",
+        justifyContent: "center", alignItems: "center", borderRadius: 40,
+        backgroundColor: "black", alignSelf: "center", textAlign: "center"
   }
-  
   });
