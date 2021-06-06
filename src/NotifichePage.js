@@ -43,29 +43,75 @@ export const NotificheScreen = ({ route, navigation}) => {
    
 
     const renderItem = ({item}) => {
+
+
+
         return (
-          <View style={{ flex: 1, justifyContent: 'center' }}>
+          <View>
+            { item.stato == "VISUALIZZATO"
+            ?
+            <View style={style.visualizzato}>
+              <View style={{margin: 10}}>
             <Text style={style.info}>{item.mittente} ti ha inviato a far parte del gruppo {item.gruppo}  </Text>
-            { item.stato == "NON VISUALIZZATO" || item.stato == "VISUALIZZATO"  ? (
-              <View>
-            <Button
-              title="Accetta"
-              onPress={() => {modificaStatoInvito("ACCETTATO", item.mittente, item.gruppo).then(() => {getInviti()})
+            <View style={{flexDirection: "row",  }}>
+            <TouchableOpacity style={style.button}
+              
+              onPress={() => {modificaStatoInvito("ACCETTATO", item.mittente, item.gruppo).then(() => {getInviti();  Alert.alert("Invito accettato", "Ora fai parte del gruppo")})
                               setShouldShow(false);
                               }
                               }
-              />
-              <Button
-              title="Rifiuta"
-              onPress={() => {modificaStatoInvito("RIFIUTATO", item.mittente, item.gruppo).then(() => {getInviti()}) 
+              ><Text> Accetta</Text></TouchableOpacity>
+              <TouchableOpacity style={style.button}
+              
+              onPress={() => {modificaStatoInvito("RIFIUTATO", item.mittente, item.gruppo).then(() => {getInviti();  Alert.alert("Invito rifiutato", "Hai rifiutato l'invito")}) 
                               setShouldShow(false)
                   
                             }}
-              />
+              ><Text> Rifiuta</Text></TouchableOpacity>
               </View>
-              ) : null }
             </View>
-            )
+
+
+            </View>
+            :
+            item.stato == "NON VISUALIZZATO"
+            ?
+            <View style={style.nonvisualizzato}>
+              <View style={{margin: 10}}>
+            <Text style={style.info}>{item.mittente} ti ha inviato a far parte del gruppo {item.gruppo}  </Text>
+            <View style={{flexDirection: "row",  }}>
+            <TouchableOpacity style={style.button}
+              
+              onPress={() => {modificaStatoInvito("ACCETTATO", item.mittente, item.gruppo).then(() => {getInviti(); Alert.alert("Invito accettato", "Ora fai parte del gruppo")  })
+                              setShouldShow(false);
+                              }
+                              }
+              ><Text> Accetta</Text></TouchableOpacity>
+              <TouchableOpacity style={style.button}
+              
+              onPress={() => {modificaStatoInvito("RIFIUTATO", item.mittente, item.gruppo).then(() => {getInviti(); Alert.alert("Invito rifiutato", "Hai rifiutato l'invito")}) 
+                              setShouldShow(false)
+                  
+                            }}
+              ><Text> Rifiuta</Text></TouchableOpacity>
+              </View>
+            </View>
+
+
+            </View>
+            :
+            <View opacity={0.6} style={{ flex: 1, justifyContent: 'center', marginBottom: 20, marginTop: 10, backgroundColor: "white",
+            borderRadius: 10, borderWidth: 1, borderColor: "#D5D5D5"}}>
+              <View style={{margin: 10}}>
+            <Text style={style.info}>{item.mittente} ti ha inviato a far parte del gruppo {item.gruppo}  </Text>
+            </View>
+            </View>
+            }
+            </View>
+
+          
+
+                          )
       }
 
       const renderFooter = () =>{
@@ -137,11 +183,30 @@ const style = StyleSheet.create({
     fontWeight: "bold",
     color: "black"
   },
+  infoVis:{
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "red"
+  },
   img:{
     flex: 1, 
     width: null, 
     height: null, 
     resizeMode: 'contain'
+  },
+  button:{
+        borderWidth: 1, height: 42, width: "30%", marginTop: 10,
+        justifyContent: "center", alignItems: "center", borderRadius: 10,
+        backgroundColor: "#4EBDE5", alignSelf: "center", textAlign: "center", marginRight: "40%",
+        borderColor: "#D5D5D5"
+  },
+  visualizzato:{
+    flex: 1, justifyContent: 'center', marginBottom: 20, marginTop: 10, backgroundColor: "white",
+            borderRadius: 10, borderWidth: 1, borderColor: "#D5D5D5"
+  },
+  nonvisualizzato:{
+    flex: 1, justifyContent: 'center', marginBottom: 20, marginTop: 10, backgroundColor: "#D8ECF3",
+    borderRadius: 10, borderWidth: 1, borderColor: "#D5D5D5"
   }
   
   });

@@ -7,6 +7,7 @@ import Dialog from "react-native-dialog";
 import {uri} from './api/api.js'
 
 var name;
+var numero;
 
 export const GruppoInfoScreen = ({ route, navigation}) => {
     name = route.params['name'];
@@ -15,6 +16,8 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
     const [isLoading, setisLoading]=useState(false)
     const [pageCurrent, setPageCurrent] = useState(1)
     const isFocused = useIsFocused();
+
+    
 
     useEffect(() => { 
           console.log("Use effect Gruuppo Info Screen", isFocused)
@@ -29,6 +32,9 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
         const apiURL = uri+"getPartecipanti/"+name
         fetch(apiURL).then((res)=>res.json()).then((resJson)=>{
          setData(resJson['partecipanti']);
+         console.log("partecipanti", resJson['partecipanti']);
+         Var.numpartecipanti = Object.keys(resJson['partecipanti']).length
+         console.log("lunghezza", Var.numpartecipanti);
             setisLoading(false)
         })
     
@@ -40,13 +46,21 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
       };
 
       const renderItem = ({item}) => {
-        console.log("renderItem")
+        console.log("renderItem", item)
         return (
-          <View style={{ flex: 1, justifyContent: 'center' }}>
-    
-           <Text style={style.info}> Nome: {item.nome}</Text>
-          
-        </View>
+
+            <View style={{ flex: 1, justifyContent: 'center', width: "100%"}}>
+
+            <TouchableOpacity style={style.itemRow}>
+            <View style={{height: "95%", width: "26%"}}>
+                <Image style={style.img} source={{uri: 'https://cdn0.iconfinder.com/data/icons/pinterest-ui-flat/48/Pinterest_UI-18-512.png'}} />
+            </View>
+            
+            <Text style={style.info}> {item.nome}</Text>
+        </TouchableOpacity>
+        
+      </View>
+
           
         )
       }
@@ -65,24 +79,31 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
         setPageCurrent(pageCurrent+1)
         setisLoading(true)
       }
+
+      console.log("lunghezzaaaaaaa", Var.numpartecipanti);
+      console.log("data", data)
+
     
     return(
-        <View><Text> Nome gruppo: {name}</Text>
-        <Text> Partecipanti:</Text>
-       <Text> Creatore: {Var.username}</Text>
-       <View>
+        <View  style={{height: "98%"}}>
+        <View style={{height: "30%", width: "100%"}}>
+            <Image style={style.img} source={{uri: 'http://blog.merkatus360.com/wp-content/uploads/2020/08/2.png'}} />
+          </View>
+            <Text style={style.nameGroup}>{name}</Text>
+            <Text style={style.subtitle}> Numero partecipanti: {Object.keys(data).length}</Text>
+            {/*<Text> Creatore: {Var.username}</Text>*/}
+                  
        <FlatList
-      style={style.container}
-      data = {data}
-      renderItem = {renderItem}
-      ListFooterComponent = {renderFooter}
-      keyExtractor={(item, index) => index.toString()}
-      onEndReached = {handleLoadMore}
-      onEndReachedThreshold={0.5}
-      extraData={data}
-      
+            style={style.container}
+            data = {data}
+            renderItem = {renderItem}
+            ListFooterComponent = {renderFooter}
+            keyExtractor={(item, index) => index.toString()}
+            onEndReached = {handleLoadMore}
+            onEndReachedThreshold={0.5}
+            extraData={data}
       />
-      </View>
+    
 
        <Dialog.Container visible={visible}>
           <Dialog.Title>Aggiungi partecipante</Dialog.Title>
@@ -106,8 +127,49 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
 
 const style = StyleSheet.create({
   button:{
-    borderWidth: 1, height: 42, width: "80%", backgroundColor: "red",
+    borderWidth: 1, height: 42, width: "80%",
         justifyContent: "center", alignItems: "center", borderRadius: 40,
-        backgroundColor: "black", alignSelf: "center", textAlign: "center"
-  }
+        backgroundColor: "black", alignSelf: "center", textAlign: "center",
+            position: 'absolute',
+    bottom:0,
+
+  },
+  img:{
+    flex: 1, 
+    width: null, 
+    height: null, 
+    resizeMode: 'contain'
+  },
+  nameGroup:{
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "black",
+    textAlign: "center"
+  },
+  subtitle:{
+    fontSize: 16,
+    color: "black",
+    textAlign: "center"
+  },
+  container:{
+    marginTop:10,
+  },
+  itemRow: {
+    marginBottom:10,
+    borderRadius: 20, 
+    borderColor: "#263472",
+    height: 70,
+    flexDirection: "row",
+    alignItems: "center",
+    alignContent: "center",
+    //alignSelf: "center",
+    backgroundColor: "#F6F6F6"
+  },
+  info:{
+      marginRight: 20,
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "black",
+
+  },
   });

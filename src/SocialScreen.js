@@ -18,7 +18,6 @@ export const SocialScreen = ({ route, navigation}) => {
         <Tab.Navigator>
             <Tab.Screen name="Gruppi" component={GruppiScreen} />
             <Tab.Screen name="Notifiche" component={NotificheScreen} />
-            <Tab.Screen name="Invita" component={InvitaScreen} />
         </Tab.Navigator>
       );
 }

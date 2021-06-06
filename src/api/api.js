@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Var } from './Var.js';
+import { Alert } from 'react-native';
+
 
 export const uri = 'http://192.168.1.90:8081/api/'
 
@@ -329,12 +331,13 @@ export const modificaStatoInvito = async (NEWSTATO, mittente, gruppo)=>{
       })
     }).then(response => {
       console.log(response['status']);
+      /*
       if(response['status']==200){
-        alert("Nessun problema")
+        Alert.alert("Invito accettato", "Ora fai parte del gruppo")
       }
       else{
         alert("PROBLEMI")
-      }});
+      }*/});
 
   }catch(e){
     console.log("erroreeee");
@@ -401,14 +404,13 @@ export const creaPartecipante = async (nomepartecipante, namegruppo)=>{
       })
     }).then(response => {
       console.log(response['status']);
-      /*
+      
       if(response['status']==200){
-        Var.prova.push({"nome": gruppo})
-        console.log("NUOVA PROVA", Var.prova)
+        Alert.alert("Invito inviato", "A breve l'utente riceverà il tuo invito");
       }
       else{
-        alert("PROBLEMI")
-      }*/
+        Alert.alert("Attenzione","L'utente è già stato invitato")
+      }
     
     });
 
