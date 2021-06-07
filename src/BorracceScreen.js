@@ -1,8 +1,8 @@
 import React, { Component,useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button, FlatList, BackHandler, RefreshControl, ActivityIndicator, Image, Alert } from 'react-native';
 import { useIsFocused } from "@react-navigation/native";
-import {uri} from './api/api.js'
-import { api_remove_bottle } from './api/api';
+import {uri, api_remove_bottle, logout} from './api/api.js'
+import { Appbar, Menu, Provider} from 'react-native-paper'; 
 import { Var } from './api/Var.js';
 var name;
 
@@ -15,7 +15,15 @@ export const BorracceScreen = ({ route, navigation }) => {
   const [pageCurrent, setPageCurrent] = useState(1)
   const isFocused = useIsFocused();
   const [search, setSearch]=useState('');
+  const [visible, setVisible] = useState(false);
 
+  const openMenu = () => setVisible(true);
+
+  const closeMenu = () => setVisible(false);
+  
+  const backAction = () => {
+    navigation.navigate("HomePage", name = name)
+  };
 
   useEffect(()=>{
     console.log("UseEffect Borracce Screen")
@@ -47,6 +55,7 @@ export const BorracceScreen = ({ route, navigation }) => {
   const renderItem = ({item}) => {
     console.log("renderItem")
     return (
+      
       <View style={{ flex: 1, justifyContent: 'center' }}>
 
           <TouchableOpacity style={style.itemRow} onPress={ () => {
@@ -136,8 +145,30 @@ export const BorracceScreen = ({ route, navigation }) => {
     setisLoading(true)
   }
 
+
+
+
+
+
   return (
-    <View  style={{height: "95%"}}>
+
+    <View>
+      <Provider>
+      <Appbar.Header>
+      <Appbar.BackAction onPress={backAction} />
+      <Appbar.Content/>
+        <Menu
+        onDismiss={closeMenu}
+        visible={visible}
+        anchor={
+          <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
+        }>
+       <Menu.Item title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
+        </Menu>
+    </Appbar.Header>
+    </Provider>
+    <View  style={{height: "95%", justifyContent: 'center' }}>
+    <View  style={{height: "95%" }}>
          <TextInput
       style = {style.textInputStyle}
       value = {search}
@@ -160,13 +191,14 @@ export const BorracceScreen = ({ route, navigation }) => {
       />
      
       </View>
-      <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%", marginTop: "5%",
+      <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
                         justifyContent: "center", alignItems: "center", borderRadius: 40,
                         backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
                         onPress={() => {navigation.navigate('AddBottlePage', { name: name["name"] })}}>
               <Text style={{color: "white"}}> Aggiungi borraccia</Text>
       </TouchableOpacity>
-  
+      </View>
+    </View>
     </View>
   
 );

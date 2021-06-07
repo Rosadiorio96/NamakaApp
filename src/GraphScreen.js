@@ -6,8 +6,8 @@ import { Var } from './api/Var.js';
 import Icon  from 'react-native-vector-icons/Fontisto';
 import DatePicker from 'react-native-datepicker';
 import { LogBox } from 'react-native';
-import {uri} from './api/api.js'
-
+import {uri, logout} from './api/api.js'
+import { Appbar, Menu, Provider} from 'react-native-paper'; 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle)
 const AnimatedInput = Animated.createAnimatedComponent(TextInput)
 
@@ -28,7 +28,9 @@ export const GraphScreen = ({ route, navigation }) => {
     const isFocused = useIsFocused();
     const [date, setDate] = useState(false);
     name = route.params;
+    const [visible, setVisible] = useState(false);
 
+   
     var radius = 40
     var strokeWidth = 10
     var duration = 500
@@ -41,7 +43,14 @@ export const GraphScreen = ({ route, navigation }) => {
     const circleRef = React.useRef();
     const inputRef = React.useRef();
 
-
+    const openMenu = () => setVisible(true);
+  
+    const closeMenu = () => setVisible(false);
+    
+    const backAction = () => {
+      navigation.navigate("HomePage", name = name)
+    };
+    
     getData = async (data) =>{
         console.log("getData")
         console.log("la dataaaaaaaaaaaa", data)
@@ -102,11 +111,27 @@ export const GraphScreen = ({ route, navigation }) => {
     
 
     return (
+
+      <View>
+      <Provider>
+      <Appbar.Header>
+      
+      <Appbar.BackAction onPress={backAction} />
+      <Appbar.Content/>
+        <Menu
+        onDismiss={closeMenu}
+        visible={visible}
+        anchor={
+          <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
+        }>
+       <Menu.Item title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
+        </Menu>
+    </Appbar.Header>
+    </Provider>
+
+
         <View style={{  width: "100%", height: "80%", flexDirection:'row', justifyContent: 'center',
               flexWrap: 'wrap', alignItems: 'center', marginTop: 30,}} >
-       
-        
-      
           <SafeAreaView style={{marginBottom: 30, marginTop: 30}}>
 
                   <DatePicker
@@ -244,6 +269,7 @@ export const GraphScreen = ({ route, navigation }) => {
         </View>     
             </View>
         }    
+        </View>
         </View>
     );
   }

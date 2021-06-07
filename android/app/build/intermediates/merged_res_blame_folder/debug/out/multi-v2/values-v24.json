@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\claud\\Desktop\\Namaka-mobile\\NamakaApp\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v24\\values-v24.xml",
+            "outputFile": "C:\\Users\\Rosa d'Iorio\\Desktop\\prova200\\NamakaApp\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v24\\values-v24.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\claud\\.gradle\\caches\\transforms-2\\files-2.1\\72501ffe447ffd613fc88578f19a914c\\media-1.0.0\\res\\values-v24\\values-v24.xml",
+                    "source": "C:\\Users\\Rosa d'Iorio\\.gradle\\caches\\transforms-2\\files-2.1\\72501ffe447ffd613fc88578f19a914c\\media-1.0.0\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\claud\\.gradle\\caches\\transforms-2\\files-2.1\\d14dbad7340cad958a2e361a440b498d\\appcompat-1.1.0\\res\\values-v24\\values-v24.xml",
+                    "source": "C:\\Users\\Rosa d'Iorio\\.gradle\\caches\\transforms-2\\files-2.1\\d14dbad7340cad958a2e361a440b498d\\appcompat-1.1.0\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",

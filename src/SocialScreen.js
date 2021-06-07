@@ -8,17 +8,28 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import {NotificheScreen} from './NotifichePage.js'
 import {GruppiScreen} from './GruppiPage'
 import {InvitaScreen} from './InvitaPage'
+import {logout} from './api/api.js'
+import { Appbar, Menu, Provider} from 'react-native-paper'; 
 
-  
 const Tab = createMaterialTopTabNavigator();
 
 export const SocialScreen = ({ route, navigation}) => {
-    
+    const [visible, setVisible] = useState(false);
+
+  const openMenu = () => setVisible(true);
+
+  const closeMenu = () => setVisible(false);
+  
+  const backAction = () => {
+    navigation.navigate("HomePage", name = name)
+  };
+
     return (
-        <Tab.Navigator>
-            <Tab.Screen name="Gruppi" component={GruppiScreen} />
-            <Tab.Screen name="Notifiche" component={NotificheScreen} />
-        </Tab.Navigator>
+        
+
+        <View></View>
+        
+        
       );
 }
 

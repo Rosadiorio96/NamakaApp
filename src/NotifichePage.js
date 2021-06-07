@@ -1,34 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, Button, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator  } from 'react-native';
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
-import {visualizzaInviti, uri, getTokenFromStore, modificaStatoInvito} from './api/api.js'
+import {visualizzaInviti, uri, getTokenFromStore, modificaStatoInvito, logout, getSignIn} from './api/api.js'
 import { Var } from './api/Var.js';
-
+import { Appbar, Menu, Provider } from 'react-native-paper'; 
 
 
 export const NotificheScreen = ({ route, navigation}) => {
+
     const [data, setData]=useState([])
     const [isLoading, setisLoading]=useState(false)
     const isFocus = useIsFocused()
-    const [shouldShow, setShouldShow] = useState(false);
+    const [shouldShow, setShouldShow] = useState(false)
 
+    const [visible, setVisible] = useState(false);
+
+    const openMenu = () => setVisible(true);
+  
+    const closeMenu = () => setVisible(false);
+  
+    const backAction = () => {
+      navigation.navigate('HomePage', { name: Var.username })
+     };
+  
+ 
     const getInviti = async ()=>{
-      getTokenFromStore().then((dataV) => {
-        const apiURL = uri+"inviti/"+ dataV['name']
-          fetch(apiURL, {
+      getSignIn().then((signIn)=>{
+        if (signIn == 'true'){
+          getTokenFromStore().then((dataV) =>{
+            const apiURL = uri+"inviti/"+ dataV['name']
+            fetch(apiURL, {
               method: 'GET',
-              withCredentials: true,
-              credentials: 'include',
-              headers: {
-                  'Authorization': dataV['Token'],
-                  'Content-Type': 'application/json'
-              }
-              }).then((res)=>res.json()).then((resJson)=>{
-                  setData(resJson['inviti']);
-                  console.log("DATAAAAAA-------------",data)
-             })
-      }) 
-    
+            withCredentials: true,
+            credentials: 'include',
+            headers: {
+                'Authorization': dataV['Token'],
+                'Content-Type': 'application/json'
+            }
+            }).then((res)=>res.json()).then((resJson)=>{
+              setData(resJson['inviti']);
+              console.log("DATAAAAAA-------------",data)
+            })
+          })
+        }
+      
+      }
+      )
     }
 
 
@@ -127,7 +144,26 @@ export const NotificheScreen = ({ route, navigation}) => {
       const handleLoadMore = () => {
         setisLoading(true)
       }
-    return (<View style={{ flex: 1, width: "95%", marginLeft: 10}}>
+    return (
+      <View>
+      <Provider>
+      <Appbar.Header>
+      
+      <Appbar.BackAction onPress={backAction} />
+      <Appbar.Content/>
+        <Menu
+        onDismiss={closeMenu}
+        visible={visible}
+        anchor={
+          <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
+        }>
+       <Menu.Item title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
+        </Menu>
+    </Appbar.Header>
+    </Provider>
+    <View  style={{height: "90%", justifyContent: 'center' }}>
+    
+    <View style={{ flex: 1, width: "95%", marginLeft: 10}}>
       
     <FlatList
     style={style.container}
@@ -140,7 +176,8 @@ export const NotificheScreen = ({ route, navigation}) => {
     extraData={data}
     
     />
-   
+   </View>
+   </View>
     </View>)
 
 }

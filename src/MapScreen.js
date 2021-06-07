@@ -4,12 +4,22 @@ import Svg, {G, Circle} from 'react-native-svg'
 import { useIsFocused } from "@react-navigation/native";
 import { Var } from './api/Var.js';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-
+import {logout} from './api/api.js'
+import { Appbar, Menu, Provider} from 'react-native-paper'; 
 var name;
 
 
 export const MapScreen = ({ route, navigation }) => {
     name = route.params;
+    const [visibleMenu, setvisibleMenu] = useState(false);
+
+    const openMenu = () => setvisibleMenu(true);
+
+    const closeMenu = () => setvisibleMenu(false);
+  
+    const backAction = () => {
+     navigation.navigate('HomePage', { name: Var.username })
+    };
 
     console.log("MAPPA POS",name["pos"])
     const found = name["pos"].find(element => element.title === "UTENTE");
@@ -20,12 +30,29 @@ export const MapScreen = ({ route, navigation }) => {
    
 
      return(
+      <View>
+      <Provider>
+      <Appbar.Header>
+      
+      <Appbar.BackAction onPress={backAction} />
+      <Appbar.Content/>
+        <Menu
+        onDismiss={closeMenu}
+        visible={visibleMenu}
+        anchor={
+          <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
+        }>
+       <Menu.Item title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
+        </Menu>
+    </Appbar.Header>
+    </Provider>
+    <View  style={{height: "90%", justifyContent: 'center' }}>
       <View style={{  width: "100%", height: "100%", flexDirection:'row', justifyContent: 'center',
       flexWrap: 'wrap', alignItems: 'center', }} >
         <Text style={styles.textGraph}> Dove sono tue borracce?</Text>
         <View style={styles.container}>
           {
-            name["pos"] != 0
+            name["pos"].length != 0
             ?
             <MapView
             provider={PROVIDER_GOOGLE} // remove if not using Google Maps
@@ -68,7 +95,8 @@ export const MapScreen = ({ route, navigation }) => {
         </MapView>
 
           }
-
+</View>
+      </View>
       </View>
       </View>
      )

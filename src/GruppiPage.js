@@ -1,59 +1,74 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator  } from 'react-native';
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
-import {visualizzaInviti, uri, getTokenFromStore, creaGruppo} from './api/api.js'
+import {visualizzaInviti, uri, getTokenFromStore, creaGruppo, logout, getSignIn} from './api/api.js'
+import Icon  from 'react-native-vector-icons/FontAwesome';
+
+import { Appbar, Menu, Provider} from 'react-native-paper';
 import { Var } from './api/Var.js';
 import Dialog from "react-native-dialog";
-
+var name;
 export const GruppiScreen = ({ route, navigation}) => {
+    name = route.params;
     const [data, setData]=useState([])
     const [isLoading, setisLoading]=useState(false)
     const [visible, setVisible] = useState(false);
     const isFocused = useIsFocused();
+    const [visibleMenu, setvisibleMenu] = useState(false);
 
+    const openMenu = () => setvisibleMenu(true);
+
+    const closeMenu = () => setvisibleMenu(false);
+  
+    const backAction = () => {
+     navigation.navigate('HomePage', { name: Var.username })
+    };
     const showDialog = () => {
       setVisible(true);
     };
 
 
     useEffect(()=>{
-      console.log("UseEffect Borracce Screen")
+      console.log("UseEffect Gruppo page")
       setisLoading(true)
       getData()
      
   
     }, [isFocused])
   
-    getData = async () =>{
-    console.log("UseEffect Borracce Screen")
-    setisLoading(true)
-    getTokenFromStore().then((dati) => {
-      const apiURL = uri+"getGruppoByUtente/"+ dati['name']
-      fetch(apiURL, {
-          method: 'GET',
-          withCredentials: true,
-          credentials: 'include',
-          headers: {
-              'Authorization': dati['Token'],
-              'Content-Type': 'application/json'
+  getData = async () =>{
+    getSignIn().then((signIn)=>{
+    if (signIn == 'true'){
+      getTokenFromStore().then((dati) => {
+        const apiURL = uri+"getGruppoByUtente/"+ dati['name']
+        fetch(apiURL, {
+            method: 'GET',
+            withCredentials: true,
+            credentials: 'include',
+            headers: {
+                'Authorization': dati['Token'],
+                'Content-Type': 'application/json'
+            }
+            }).then((res)=>res.json()).then((resJson)=>{
+                console.log("Gruppi----------------------------",resJson)
+                setData(resJson['gruppi']);
+                //Var.prova = resJson['gruppi']
+                //console.log("PROVAAAA", Var.prova)
+                setisLoading(false)
+                console.log("DATAAAAAAA", data)
+              })
+            })
           }
-          }).then((res)=>res.json()).then((resJson)=>{
-              console.log("Gruppi----------------------------",resJson)
-              setData(resJson['gruppi']);
-              //Var.prova = resJson['gruppi']
-              //console.log("PROVAAAA", Var.prova)
-              setisLoading(false)
-              console.log("DATAAAAAAA", data)
-         })
-  }) 
-}
-
+        
+        }
+        )
+      }
+  
 
     const renderItem = ({item}) => {
         console.log("renderItem")
         return (
           <View style={{ flex: 1, justifyContent: 'center', alignContent: "center", alignSelf: "center"}}>
-
           <TouchableOpacity style={style.itemRow} onPress={() => {navigation.navigate('GruppoInfoPage', {'name': item.nome});}}>
           <View style={{ alignItems: "center",width: 150, alignContent: "center", justifyContent: "center", }}>
           <View style={{height: "60%", width: "60%"}}>
@@ -84,7 +99,29 @@ export const GruppiScreen = ({ route, navigation}) => {
 
 
     return (
-    
+
+
+
+      <View>
+      <Provider>
+      <Appbar.Header>
+      <Appbar.BackAction onPress={backAction} />
+      
+      <Appbar.Content/>
+      <Appbar.Action color="white" icon="bell" onPress={() => {navigation.navigate('NotifichePage')}} > </Appbar.Action>
+        <Menu
+        onDismiss={closeMenu}
+        visible={visibleMenu}
+        anchor={
+          <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
+        }>
+        
+       <Menu.Item title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
+        </Menu>
+        
+    </Appbar.Header>
+    </Provider>
+    <View  style={{height: "90%", justifyContent: 'center' }}>
       <View  style={{height: "98%"}}>
           <View style={{ flex: 1, width: "95%", marginLeft: 10}}>
    
@@ -113,8 +150,9 @@ export const GruppiScreen = ({ route, navigation}) => {
           <TouchableOpacity style={style.button} onPress={() => {showDialog()}}>
               <Text style={{color: "white"}}> Aggiungi gruppo </Text>
           </TouchableOpacity>
-
+          </View> 
     </View>   
+    </View>
     )
 
 }

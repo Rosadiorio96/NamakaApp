@@ -3,7 +3,42 @@ import { Var } from './Var.js';
 import { Alert } from 'react-native';
 
 
-export const uri = 'http://192.168.1.90:8081/api/'
+export const uri = 'http://192.168.1.17:8081/api/'
+
+export const getTokenAccess = async ()=>{
+  try {
+    const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
+    return tokenAccess
+  }catch(e){
+            console.log("Errore Token Access")
+          }
+ 
+  const name = await AsyncStorage.getItem('@username'); 
+}
+
+export const getTokenRefresh = async ()=>{
+  try {
+    const tokenAccess = await AsyncStorage.getItem('@storage_tokenRefresh');
+    return tokenAccess
+  }catch(e){
+    console.log("Errore Token Refresh")
+  }
+ 
+  
+}
+
+export const getSignIn = async ()=>{
+  try {
+    const signiIn = await AsyncStorage.getItem('@SignIn');
+    return signiIn
+  }catch(e){
+    console.log("Errore SignIn")
+  }
+}
+
+
+
+
 
 export const api_login_call= async (username, password, navigation)=>{
     console.log(username);
@@ -420,3 +455,40 @@ export const creaPartecipante = async (nomepartecipante, namegruppo)=>{
   }
 
 }
+
+
+
+export const set_SignInFalse = async () => {
+  try {
+    await AsyncStorage.setItem('@SignIn', 'false');
+    console.log("Rimosso")
+    return true;
+}
+catch(exception) {
+    console.log("Errore set signIn")
+    return false;
+}
+}
+
+
+export const removeItemValue = async (key) =>{
+  try {
+      await AsyncStorage.removeItem(key);
+      console.log("Rimosso")
+      return true;
+  }
+  catch(exception) {
+      console.log("Errore")
+      return false;
+  }
+}
+
+
+export const logout = (navigation)  => {
+  set_SignInFalse().then(()=> 
+  removeItemValue('@storage_tokenRefresh')).then(()=> 
+  removeItemValue('@storage_tokenAccess')).then(()=>navigation.navigate("Login", {name: Var.username}));
+  
+}
+
+

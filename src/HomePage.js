@@ -5,9 +5,9 @@ import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
 import { Var } from './api/Var.js';
 import BackgroundTimer from 'react-native-background-timer';
-import { api_modify_position } from './api/api.js';
-import {uri} from './api/api.js'
-import { Button, Menu, Divider, Provider } from 'react-native-paper';
+import {uri, getSignIn, logout, api_modify_position} from './api/api.js'
+import { Appbar, Menu, Provider } from 'react-native-paper'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 var stringify;
 var myJSON;
@@ -16,10 +16,7 @@ var name;
 var navigation2;
 
 
-
-const find_position_user = async ()=>{
-  if(Var.username != null){
-
+const position_user = async ()=>{
   var payload = {}
   try {
     const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
@@ -45,17 +42,27 @@ const find_position_user = async ()=>{
   } catch (err) {
     console.warn(err);
   } 
-} else {
-  console.log("name", name);
+
+
 }
+
+const find_position_user = async ()=>{
+  getSignIn().then((signIn)=>{
+    console.log("Signin", signIn)
+    if (signIn == 'true'){
+      position_user()
+   } else {
+    console.log("Errore find Position");
+   }
+  })
   }
 
-BackgroundTimer.runBackgroundTimer(() => { 
-  if(Var.username != null){
-    console.log("Var", Var.username)
-  find_position_user();
-  }
-},60000);
+
+  const timer = BackgroundTimer.runBackgroundTimer(() => { 
+  
+    find_position_user();
+  
+},300000);
 
 
 
@@ -72,24 +79,24 @@ export const HomePage = ({ route, navigation}) => {
 
   const isFocused = useIsFocused();
 
+  const backAction = () => {
+    Alert.alert("Hold on!", "Are you sure you want to go back?", [
+      {
+        text: "Cancel",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "YES", onPress: () => BackHandler.exitApp() }
+    ]);
+    return true;
+  };
+
   useFocusEffect(() => {
     console.log("Var", Var.username)
     if(Var.username != null){
       console.log("Use effect HomePage", isFocused)
       find_position_user();
     }
-      const backAction = () => {
-        Alert.alert("Hold on!", "Are you sure you want to go back?", [
-          {
-            text: "Cancel",
-            onPress: () => null,
-            style: "cancel"
-          },
-          { text: "YES", onPress: () => BackHandler.exitApp() }
-        ]);
-        return true;
-      };
-  
       const backHandler = BackHandler.addEventListener(
         "hardwareBackPress",
         backAction
@@ -100,11 +107,6 @@ export const HomePage = ({ route, navigation}) => {
   });
 
   
-
-  
-
-  console.log("getData Position")
-  console.log("Name", Var.username)
   if (Var.username!= undefined){
     const apiURL2 = uri + "allposition/"+Var.username
     console.log(apiURL2)
@@ -113,10 +115,26 @@ export const HomePage = ({ route, navigation}) => {
   })
   }
   
-
+ 
  
 
   return (
+    <View>
+      <Provider>
+      <Appbar.Header>
+      
+      <Appbar.BackAction onPress={backAction} />
+      <Appbar.Content/>
+        <Menu
+        onDismiss={closeMenu}
+        visible={visible}
+        anchor={
+          <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
+        }>
+       <Menu.Item title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
+        </Menu>
+    </Appbar.Header>
+    </Provider>
     <View  style={{height: "90%", justifyContent: 'center' }}>
     <View style={{flexDirection: "row", width: "90%", height: "30%", marginLeft: 12}}>
     <TouchableOpacity style={{borderWidth: 1, height: "100%", width: "50%",
@@ -159,7 +177,7 @@ export const HomePage = ({ route, navigation}) => {
       <TouchableOpacity style={{borderWidth: 1, height: "100%", width: "50%", marginLeft: 10,
                         justifyContent: "center", alignItems: "center", borderRadius: 7, borderColor: "#D5D5D5",
                         backgroundColor: "white", alignSelf: "center", textAlign: "center", marginTop: 5}}
-                        onPress={() => {navigation.navigate('SocialPage', { name: Var.username })}}>
+                        onPress={() => {navigation.navigate('GruppoPage', { name: Var.username })}}>
                           <View style={{height: "60%", width: "60%"}}>
                             <Image style={style.img} source={{uri: 'https://meatloaf-oifc.com/img/other/72/collection-group-work-cliparts-24.jpg'}} />
                           </View>
@@ -167,7 +185,7 @@ export const HomePage = ({ route, navigation}) => {
       </TouchableOpacity>
     </View>
   
-    
+    </View>
     </View>
 
     
