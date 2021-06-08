@@ -1,28 +1,37 @@
 import React, { useState, setState,  useRef, useEffect} from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, BackHandler } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, BackHandler, Image } from 'react-native'
 import Icon  from 'react-native-vector-icons/FontAwesome';
 import { Var } from './api/Var.js';
 import { api_login_call } from './api/api';
 import { useIsFocused , useFocusEffect} from "@react-navigation/native";
 
 const validate_field=(username, password)=>{
-
-  if(username == "" && password == ""){
-    alert("Per favore completa tutti i campi")
-    return false
-  }
-  if(username == ""){
-    alert("Per favore inserisci l'email")
-    return false
-  } if(password == ""){
-    alert("Per favore inserisci la password")
-    return false
-  }
   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/; //aggiunta claudia
-  if (reg.test(username) === false) {
-    alert("Inserire un indirizzo email valido");
+  console.log("username",username);
+  console.log("password",password);
+  console.log("regex",reg.test(username))
+
+
+  if((username == "" || username==undefined) && (password == undefined || password=="")){
+    Alert.alert("Attenzione","Per favore completa tutti i campi")
     return false;
   }
+  if(username == undefined || username == ""){
+    Alert.alert("Attenzione","Per favore inserisci l'email")
+    return false;
+  } 
+  if (reg.test(username) === false && (password == undefined || password == "")) {
+    Alert.alert("Attenzione","Inserire un indirizzo email valido");
+    return false;
+  }
+  if(password == undefined || password==""){
+    Alert.alert("Attenzione","Per favore inserisci la password")
+    return false;
+  }
+
+ 
+  
+
 
   return true
 }
@@ -44,13 +53,13 @@ export const LoginScreen = ({ navigation }) => {
   useFocusEffect(() => {
     console.log("Use effect login ", isFocused)
     const backAction = () => {
-      Alert.alert("Hold on!", "Are you sure you want to go back?", [
+      Alert.alert("Attenzione!", "Sei sicuro di voler uscire?", [
         {
-          text: "Cancel",
+          text: "Indietro",
           onPress: () => null,
           style: "cancel"
         },
-        { text: "YES", onPress: () => BackHandler.exitApp() }
+        { text: "Si", onPress: () => BackHandler.exitApp() }
       ]);
       return true;
     };
@@ -62,16 +71,17 @@ export const LoginScreen = ({ navigation }) => {
     return () => backHandler.remove();
   });
   
-  
-  
-
-
 
   return (
   
       <View style={{ width: "100%", height: "100%", justifyContent: "center", alignSelf: "center", alignContent: "center", alignItems: "center"}}>
+           <View style={{height: "20%", width: "40%"}}>
+              <Image style={styles.img} source={require('./img/logo.png')} />
+            </View>
         
+      
       <View style={styles.userSection}>  
+      
         <TextInput placeholder={"Inserisci email"}
         onChangeText={(value) => Var.username=value}
         
@@ -87,7 +97,6 @@ export const LoginScreen = ({ navigation }) => {
         secureTextEntry={hidePass ? true : false}/>  
  
         <Icon style={styles.iconStyle} name={stato ? 'eye' : 'eye-slash'} size={30} color='black' onPress={() => {
-                  console.log("uuuuuuuuuuu", Var.username)
                   setHidePass(!hidePass);
                   setNameIcon()
                   }}
@@ -102,7 +111,7 @@ export const LoginScreen = ({ navigation }) => {
                             backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
                             onPress={() => { if (validate_field(Var.username, Var.password)){
                             api_login_call(Var.username, Var.password,navigation);}}}>
-                 <Text style={{color: "white"}}> Login </Text>
+                 <Text style={{color: "white", fontSize: 16}}> Login </Text>
           </TouchableOpacity>
 
       </View>
@@ -111,7 +120,7 @@ export const LoginScreen = ({ navigation }) => {
                             justifyContent: "center", alignItems: "center", borderRadius: 40,
                             backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
                             onPress={() => {navigation.navigate('SignUp', { name: Var.username })}}>
-                  <Text style={{color: "white"}}> Registrati</Text>
+                  <Text style={{color: "white", fontSize: 16}}> Registrati</Text>
           </TouchableOpacity>
 
       </View>
@@ -130,6 +139,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
 },
 userSection: {
+  marginTop: 10,
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
@@ -149,5 +159,10 @@ input: {
     backgroundColor: '#fff',
     color: '#424242',
 },
-
+img:{
+  flex: 1, 
+  width: null, 
+  height: null, 
+  resizeMode: 'contain'
+}
 });

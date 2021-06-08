@@ -1,26 +1,34 @@
 import React, { Component, useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Alert,BackHandler, Image } from 'react-native';
 import Icon  from 'react-native-vector-icons/FontAwesome';
 import { Var } from './api/Var.js';
 import { api_signup_call } from './api/api';
+import { useIsFocused , useFocusEffect} from "@react-navigation/native";
 
 
 
 const validate_field=(username, password, peso, altezza)=>{
+  console.log("------------------------")
+  console.log("username", username);
+  console.log("password", password);
+  console.log("peso", peso);
+  console.log("altezza", altezza);
+  console.log("------------------------")
 
-  if(username == "" || password =="" || peso=="" || altezza==""){
-    alert("Per favore completa tutti i campi")
+  if((username == "" || username==undefined) || (password =="" || password==undefined) || 
+      (peso==""|| peso == undefined) || (altezza=="" || altezza==undefined)){
+    Alert.alert("Attenzione","Per favore completa tutti i campi")
     return false
   }
 
   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/; //aggiunta claudia
   if (reg.test(username) === false) {
-    alert("Inserire un indirizzo email valido");
+    Alert.alert("Attenzione","Inserire un indirizzo email valido");
     return false;
   }
 
   if(isNaN(peso) || isNaN(altezza)){
-    alert("Il peso o l'altezza non è un numero");
+    Alert.alert("Attenzione","Il peso o l'altezza non è un numero");
     return false;
   }
   
@@ -37,20 +45,40 @@ export const SignUpScreen = ({ navigation }) => {
 
   const [stato, setName] = useState(false);
 
+  const isFocused = useIsFocused();
+
   const setNameIcon = () => {
     setName(!stato);
   }
 
+  useFocusEffect(() => {
+    console.log("Use effect signup ", isFocused)
+    const backAction = () => {
+      Var.username="";
+      Var.password="";
+      navigation.navigate("Login")
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+  });
  
 
   return (
      
-      <View style={{ width: "100%", height: "100%", justifyContent: "center", alignSelf: "center", alignContent: "center", alignItems: "center"}}>
+      <View  style={{ width: "100%", height: "100%", justifyContent: "center", alignSelf: "center", alignContent: "center", alignItems: "center"}}>
 
      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: "center" }}>
+     <View style={{height: "20%", width: "40%"}}>
+              <Image style={styles.img} source={require('./img/logo.png')} />
+            </View>
      <TextInput placeholder={"Inserisci email"}
+        
         onChangeText={(value) => Var.username=value}
         style={{height: 42, width: "80%", borderBottomWidth: 1, fontFamily:'monospace'}}
+         
         />
 
 
@@ -89,7 +117,7 @@ export const SignUpScreen = ({ navigation }) => {
           api_signup_call(Var.username, Var.password, Var.altezza, Var.peso, navigation);}
           }}>
 
-            <Text style={{color: "white"}}> Login </Text>
+            <Text style={{color: "white", fontSize: 16}}> Registrati </Text>
           </TouchableOpacity>
 
       </View>
@@ -144,4 +172,10 @@ scrollView: {
 text: {
   fontSize: 42,
 },
+img:{
+  flex: 1, 
+  width: null, 
+  height: null, 
+  resizeMode: 'contain'
+}
 });

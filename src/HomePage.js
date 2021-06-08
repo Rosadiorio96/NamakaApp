@@ -80,13 +80,13 @@ export const HomePage = ({ route, navigation}) => {
   const isFocused = useIsFocused();
 
   const backAction = () => {
-    Alert.alert("Hold on!", "Are you sure you want to go back?", [
+    Alert.alert("Attenzione!", "Sei sicuro di voler uscire?", [
       {
-        text: "Cancel",
+        text: "Indietro",
         onPress: () => null,
         style: "cancel"
       },
-      { text: "YES", onPress: () => BackHandler.exitApp() }
+      { text: "Si", onPress: () => BackHandler.exitApp() }
     ]);
     return true;
   };

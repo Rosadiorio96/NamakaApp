@@ -3,7 +3,7 @@ import { Var } from './Var.js';
 import { Alert } from 'react-native';
 
 
-export const uri = 'http://192.168.1.17:8081/api/'
+export const uri = 'http://192.168.1.90:8081/api/'
 
 export const getTokenAccess = async ()=>{
   try {
@@ -71,13 +71,13 @@ export const api_login_call= async (username, password, navigation)=>{
             }
             navigation.navigate('HomePage', { name: username })
           } else {
-            alert("Errore Login");
+            //alert("Errore Login");
           }
           
         });
   
       }catch(e){
-        alert("Errore Login");
+        Alert.alert("Attenzione","L'utente non è registrato oppure l'indirizzo email o la password sono errati");
       }
     
      }
