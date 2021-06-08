@@ -57,6 +57,8 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
             </View>
             
             <Text style={style.info}> {item.nome}</Text>
+            <Text style={style.info}> {item.totale}</Text>
+            <Text style={style.info}> {item.posizione}</Text>
         </TouchableOpacity>
         
       </View>
