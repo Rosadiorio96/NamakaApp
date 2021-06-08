@@ -20,7 +20,7 @@ export const NotificheScreen = ({ route, navigation}) => {
     const closeMenu = () => setVisible(false);
   
     const backAction = () => {
-      navigation.navigate('HomePage', { name: Var.username })
+      navigation.navigate('GruppoPage', { name: Var.username })
      };
   
  
@@ -157,7 +157,8 @@ export const NotificheScreen = ({ route, navigation}) => {
         anchor={
           <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
         }>
-       <Menu.Item title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
+          <Menu.Item icon='account' title={Var.username}/>
+       <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
         </Menu>
     </Appbar.Header>
     </Provider>

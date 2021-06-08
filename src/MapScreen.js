@@ -42,7 +42,8 @@ export const MapScreen = ({ route, navigation }) => {
         anchor={
           <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
         }>
-       <Menu.Item title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
+         <Menu.Item icon='account' title={Var.username}/>
+       <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
         </Menu>
     </Appbar.Header>
     </Provider>

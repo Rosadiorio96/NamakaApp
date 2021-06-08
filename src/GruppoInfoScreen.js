@@ -4,9 +4,9 @@ import { useIsFocused, useFocusEffect, NavigationContainer } from "@react-naviga
 import {creaPartecipante} from './api/api.js'
 import { Var } from './api/Var.js';
 import Dialog from "react-native-dialog";
-import {uri} from './api/api.js'
-import { Appbar, Menu, Provider} from 'react-native-paper'; 
+import {uri, logout, getSignIn} from './api/api.js'
 
+import { Appbar, Menu, Provider} from 'react-native-paper';
 var name;
 var numero;
 
@@ -17,16 +17,16 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
     const [isLoading, setisLoading]=useState(false)
     const [pageCurrent, setPageCurrent] = useState(1)
     const isFocused = useIsFocused();
-    const openMenu = () => setVisible(true);
+    const [visibleMenu, setvisibleMenu] = useState(false);
 
-    const closeMenu = () => setVisible(false);
-    
+    const openMenu = () => setvisibleMenu(true);
+
+    const closeMenu = () => setvisibleMenu(false);
+  
     const backAction = () => {
-      navigation.navigate("HomePage", name = name)
+     navigation.navigate('GruppoPage', { name: Var.username })
     };
-
     
-
     useEffect(() => { 
           console.log("Use effect Gruuppo Info Screen", isFocused)
           getData();
@@ -35,19 +35,21 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
       );
 
 
-    getData = async () =>{
-        console.log("getData")
-        const apiURL = uri+"getPartecipanti/"+name
-        fetch(apiURL).then((res)=>res.json()).then((resJson)=>{
-         setData(resJson['partecipanti']);
-         console.log("partecipanti", resJson['partecipanti']);
-         Var.numpartecipanti = Object.keys(resJson['partecipanti']).length
-         console.log("lunghezza", Var.numpartecipanti);
-            setisLoading(false)
+  
+      getData = async () =>{
+        getSignIn().then((signIn)=>{
+          if (signIn == 'true'){
+          const apiURL = uri+"getPartecipanti/"+name
+          fetch(apiURL).then((res)=>res.json()).then((resJson)=>{
+           setData(resJson['partecipanti']);
+           console.log("partecipanti", resJson['partecipanti']);
+           Var.numpartecipanti = Object.keys(resJson['partecipanti']).length
+           console.log("lunghezza", Var.numpartecipanti);
+              setisLoading(false)
+          })
+        }
         })
-    
-    
-      }
+        }
 
     const showDialog = () => {
         setVisible(true);
@@ -56,6 +58,28 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
       const renderItem = ({item}) => {
         console.log("renderItem", item)
         return (
+
+          <View>
+        
+          <Provider>
+          <Appbar.Header  >
+          <Appbar.BackAction onPress={backAction} />
+          
+          <Appbar.Content/>
+           <Menu
+            onDismiss={closeMenu}
+            visible={visibleMenu}
+            style={{position: 'absolute', zIndex: 100}} 
+            anchor={
+              <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu}  />
+            }>
+            <Menu.Item icon='account' title={Var.username}/>
+           <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
+            </Menu>
+            
+        </Appbar.Header>
+        </Provider>
+        <View  style={{height: "90%", justifyContent: 'center' }}>
 
             <View style={{ flex: 1, justifyContent: 'center', width: "100%"}}>
               
@@ -88,7 +112,8 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
         </TouchableOpacity>
         
       </View>
-
+      </View>
+      </View>
           
         )
       }

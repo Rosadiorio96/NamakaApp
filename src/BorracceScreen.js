@@ -3,6 +3,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button, FlatList, 
 import { useIsFocused } from "@react-navigation/native";
 import {uri, api_remove_bottle, logout} from './api/api.js'
 import { Appbar, Menu, Provider} from 'react-native-paper'; 
+import { SearchBar } from 'react-native-elements';
 import { Var } from './api/Var.js';
 var name;
 
@@ -16,14 +17,20 @@ export const BorracceScreen = ({ route, navigation }) => {
   const isFocused = useIsFocused();
   const [search, setSearch]=useState('');
   const [visible, setVisible] = useState(false);
+  const [visibleSearch, setVisibleSearch] = useState(0);
 
   const openMenu = () => setVisible(true);
 
   const closeMenu = () => setVisible(false);
   
+  const showSearch = () => setVisibleSearch(1);
+
+  const dontshosearch = () => setVisibleSearch(0);
+  
   const backAction = () => {
     navigation.navigate("HomePage", name = name)
   };
+  
 
   useEffect(()=>{
     console.log("UseEffect Borracce Screen")
@@ -153,30 +160,41 @@ export const BorracceScreen = ({ route, navigation }) => {
   return (
 
     <View>
-      <Provider>
-      <Appbar.Header>
-      <Appbar.BackAction onPress={backAction} />
-      <Appbar.Content/>
-        <Menu
-        onDismiss={closeMenu}
-        visible={visible}
-        anchor={
-          <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
-        }>
-       <Menu.Item title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
-        </Menu>
-    </Appbar.Header>
-    </Provider>
-    <View  style={{height: "95%", justifyContent: 'center' }}>
-    <View  style={{height: "95%" }}>
-         <TextInput
+    <Provider>
+    <Appbar.Header>
+   
+    <Appbar.BackAction onPress={backAction} />
+    <Appbar.Content/>
+    
+    <TouchableOpacity >
+    <TextInput
       style = {style.textInputStyle}
       value = {search}
-      placeholder= "Cerca"
-      underlineColorAndroid="transparent"
       onChangeText = {(value)=>searchFilter(value)}
+      opacity={visibleSearch}
       />
-    <View style={{ flex: 1, width: "95%", marginLeft: 10}}>
+    </TouchableOpacity>
+    <Appbar.Action color="white" icon="magnify" onPress={()=>{ 
+      if (visibleSearch == 0){
+        showSearch()
+      } else {
+        dontshosearch()
+        setSearch("")
+      } }} />
+      <Menu
+      onDismiss={closeMenu}
+      visible={visible}
+      anchor={
+        <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
+      }>
+   <Menu.Item icon='account' title={Var.username}/>
+     <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
+      </Menu>
+
+  </Appbar.Header>
+  </Provider>
+  <View  style={{height: "95%", justifyContent: 'center' }}>
+   
       
       <FlatList
       style={style.container}
@@ -198,8 +216,9 @@ export const BorracceScreen = ({ route, navigation }) => {
               <Text style={{color: "white"}}> Aggiungi borraccia</Text>
       </TouchableOpacity>
       </View>
-    </View>
-    </View>
+   
+  
+    
   
 );
 

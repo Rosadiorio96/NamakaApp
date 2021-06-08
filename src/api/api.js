@@ -3,7 +3,7 @@ import { Var } from './Var.js';
 import { Alert } from 'react-native';
 
 
-export const uri = 'http://192.168.1.90:8081/api/'
+export const uri = 'http://192.168.1.17:8081/api/'
 
 export const getTokenAccess = async ()=>{
   try {
