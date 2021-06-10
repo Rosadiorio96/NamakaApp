@@ -102,7 +102,8 @@ export const GruppiScreen = ({ route, navigation}) => {
 
 
 
-      <View>
+      <View  style={{zIndex: 100}}>
+       
       <Provider>
       <Appbar.Header>
       <Appbar.BackAction onPress={backAction} />
@@ -110,6 +111,7 @@ export const GruppiScreen = ({ route, navigation}) => {
       <Appbar.Content/>
       <Appbar.Action color="white" icon="bell" onPress={() => {navigation.navigate('NotifichePage')}} > </Appbar.Action>
         <Menu
+        
         onDismiss={closeMenu}
         visible={visibleMenu}
         anchor={
@@ -122,9 +124,10 @@ export const GruppiScreen = ({ route, navigation}) => {
         
     </Appbar.Header>
     </Provider>
-    <View  style={{height: "90%", justifyContent: 'center' }}>
-      <View  style={{height: "98%"}}>
-          <View style={{ flex: 1, width: "95%", marginLeft: 10}}>
+    
+    <View  style={{height: "90%", justifyContent: 'center', zIndex:1  }}>
+      <View  style={{height: "98%", zIndex:0 }}>
+          <View style={{ flex: 1, width: "95%", marginLeft: 10,}}>
    
             <FlatList
                    numColumns={2}

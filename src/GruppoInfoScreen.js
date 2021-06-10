@@ -59,26 +59,7 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
         console.log("renderItem", item)
         return (
 
-          <View>
-        
-          <Provider>
-          <Appbar.Header  >
-          <Appbar.BackAction onPress={backAction} />
-          
-          <Appbar.Content/>
-           <Menu
-            onDismiss={closeMenu}
-            visible={visibleMenu}
-            style={{position: 'absolute', zIndex: 100}} 
-            anchor={
-              <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu}  />
-            }>
-            <Menu.Item icon='account' title={Var.username}/>
-           <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
-            </Menu>
-            
-        </Appbar.Header>
-        </Provider>
+         
         <View  style={{height: "90%", justifyContent: 'center' }}>
 
             <View style={{ flex: 1, justifyContent: 'center', width: "100%"}}>
@@ -113,7 +94,7 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
         
       </View>
       </View>
-      </View>
+ 
           
         )
       }
@@ -138,7 +119,29 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
 
     
     return(
-        <View  style={{height: "98%"}}>
+
+      <View>
+      
+      <Provider>
+      <Appbar.Header  >
+      <Appbar.BackAction onPress={backAction} />
+      
+      <Appbar.Content/>
+      <Appbar.Action color="white" icon="trophy" onPress={ ()=> {navigation.navigate("VittoriePage", {gruppo: name})} }/>
+       <Menu
+        onDismiss={closeMenu}
+        visible={visibleMenu}
+        style={{position: 'absolute', zIndex: 100}} 
+        anchor={
+          <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu}  />
+        }>
+        <Menu.Item icon='account' title={Var.username}/>
+       <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
+        </Menu>
+        
+    </Appbar.Header>
+    </Provider>
+        <View  style={{height: "98%", }}>
         <View style={{height: "30%", width: "100%"}}>
             <Image style={style.img} source={{uri: 'http://blog.merkatus360.com/wp-content/uploads/2020/08/2.png'}} />
           </View>
@@ -171,7 +174,7 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
               <Text style={{color: "white"}}> INVITA </Text>
           </TouchableOpacity>
      
-      
+          </View>
       
       </View>
 

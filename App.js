@@ -15,7 +15,7 @@ import {IntroScreen} from './src/IntroScreen'
 import {GruppoInfoScreen} from './src/GruppoInfoScreen'
 import {GruppiScreen} from './src/GruppiPage'
 import {NotificheScreen} from './src/NotifichePage'
-
+import {VittorieScreen} from './src/VittorieScreen'
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -37,6 +37,7 @@ export default function App() {
         <Stack.Screen name="GruppoInfoPage" component={GruppoInfoScreen} />
         <Stack.Screen name="GruppoPage" component={GruppiScreen} />
         <Stack.Screen name="NotifichePage" component={NotificheScreen} />
+        <Stack.Screen name="VittoriePage" component={VittorieScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
