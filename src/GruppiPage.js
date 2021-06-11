@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator  } from 'react-native';
+import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator, TouchableHighlight } from 'react-native';
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
 import {visualizzaInviti, uri, getTokenFromStore, creaGruppo, logout, getSignIn} from './api/api.js'
 import Icon  from 'react-native-vector-icons/FontAwesome';
@@ -67,6 +67,7 @@ export const GruppiScreen = ({ route, navigation}) => {
 
     const renderItem = ({item}) => {
         console.log("renderItem")
+        
         return (
           <View style={{ flex: 1, justifyContent: 'center', alignContent: "center", alignSelf: "center"}}>
           <TouchableOpacity style={style.itemRow} onPress={() => {navigation.navigate('GruppoInfoPage', {'name': item.nome});}}>
@@ -84,6 +85,7 @@ export const GruppiScreen = ({ route, navigation}) => {
       const renderFooter = () =>{
         //console.log("renderFooter")
         //console.log(isFocused)
+        
         return (
           isLoading ? 
         <View style = {style.loader}>
@@ -102,8 +104,8 @@ export const GruppiScreen = ({ route, navigation}) => {
 
 
 
-      <View  style={{zIndex: 100}}>
-       
+      <View  style={{  height: "100%"}} >
+        <View style={{ width: "100%", height:'14%', position: 'absolute', zIndex:100}} >
       <Provider>
       <Appbar.Header>
       <Appbar.BackAction onPress={backAction} />
@@ -111,7 +113,7 @@ export const GruppiScreen = ({ route, navigation}) => {
       <Appbar.Content/>
       <Appbar.Action color="white" icon="bell" onPress={() => {navigation.navigate('NotifichePage')}} > </Appbar.Action>
         <Menu
-        
+        style={{ position:'absolute', zIndex:300}}
         onDismiss={closeMenu}
         visible={visibleMenu}
         anchor={
@@ -124,11 +126,9 @@ export const GruppiScreen = ({ route, navigation}) => {
         
     </Appbar.Header>
     </Provider>
+    </View>
     
-    <View  style={{height: "90%", justifyContent: 'center', zIndex:1  }}>
-      <View  style={{height: "98%", zIndex:0 }}>
-          <View style={{ flex: 1, width: "95%", marginLeft: 10,}}>
-   
+          <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
             <FlatList
                    numColumns={2}
                    style={style.container}
@@ -140,23 +140,22 @@ export const GruppiScreen = ({ route, navigation}) => {
                    onEndReachedThreshold={0.5}
                    extraData={data}
                    />
-  
+          <TouchableOpacity style={style.button} onPress={() => {showDialog()}}>
+              <Text style={{color: "white"}}> Aggiungi gruppo </Text>
+              
+          </TouchableOpacity>
           </View>
+     
 
-        <Dialog.Container visible={visible}>
+          <Dialog.Container visible={visible}>
           <Dialog.Title>Aggiungi nuovo gruppo</Dialog.Title>
           <Dialog.Button label="Indietro" onPress={()=>{ setVisible(false);}} />
           <Dialog.Button label="Aggiungi" onPress={() => {setVisible(false); creaGruppo(Var.nomegruppo).then(()=> {getData();}) }} />
           <Dialog.Input placeholder="Inserisci nome gruppo" onChangeText={(value) => {Var.nomegruppo = value; 
                          console.log("NOME GRUPPO",Var.nomegruppo)}} />
         </Dialog.Container>
-
-          <TouchableOpacity style={style.button} onPress={() => {showDialog()}}>
-              <Text style={{color: "white"}}> Aggiungi gruppo </Text>
-          </TouchableOpacity>
-          </View> 
-    </View>   
-    </View>
+          </View>  
+          
     )
 
 }
@@ -167,7 +166,8 @@ const style = StyleSheet.create({
       marginTop:20,
       backgroundColor: '#f5fcff',
       flex: 1,
-       paddingBottom: 5 
+      paddingBottom: 5,
+      zIndex: 70 
     },
     itemRow: {
       marginBottom:10,
@@ -218,8 +218,8 @@ const style = StyleSheet.create({
     justifyContent: "center",
   },
   button:{
-    borderWidth: 1, height: 42, width: "80%", backgroundColor: "red",
+    borderWidth: 1, height: 50, width: "80%", backgroundColor: "red",
         justifyContent: "center", alignItems: "center", borderRadius: 40,
-        backgroundColor: "black", alignSelf: "center", textAlign: "center"
+        backgroundColor: "black", alignSelf: "center", textAlign: "center", marginBottom:20, marginTop:10
   }
   });

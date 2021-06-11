@@ -30,7 +30,8 @@ export const MapScreen = ({ route, navigation }) => {
    
 
      return(
-      <View>
+      <View  style={{  height: "100%"}} >
+        <View style={{ width: "100%", height:'14%', position: 'absolute', zIndex:100}} >
       <Provider>
       <Appbar.Header>
       
@@ -47,9 +48,8 @@ export const MapScreen = ({ route, navigation }) => {
         </Menu>
     </Appbar.Header>
     </Provider>
-    <View  style={{height: "90%", justifyContent: 'center' }}>
-      <View style={{  width: "100%", height: "100%", flexDirection:'row', justifyContent: 'center',
-      flexWrap: 'wrap', alignItems: 'center', }} >
+    </View>
+    <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
         <Text style={styles.textGraph}> Dove sono tue borracce?</Text>
         <View style={styles.container}>
           {
@@ -97,7 +97,6 @@ export const MapScreen = ({ route, navigation }) => {
 
           }
 </View>
-      </View>
       </View>
       </View>
      )

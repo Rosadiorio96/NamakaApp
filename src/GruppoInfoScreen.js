@@ -59,13 +59,10 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
         console.log("renderItem", item)
         return (
 
-         
-        <View  style={{height: "90%", justifyContent: 'center' }}>
-
             <View style={{ flex: 1, justifyContent: 'center', width: "100%"}}>
               
 
-            <TouchableOpacity style={style.itemRow}>
+            <View style={style.itemRow}>
             <View style={{height: "95%", width: "15%"}}>
                 <Image style={style.img} source={{uri: 'https://cdn0.iconfinder.com/data/icons/pinterest-ui-flat/48/Pinterest_UI-18-512.png'}} />
            
@@ -77,22 +74,29 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
 
             <View style={{height: "95%", width: "35%", flexDirection: "row",
                     alignItems: "center"}} >
-            <Text style={style.infoChallenge}> {item.totale} ml  {item.posizione}°</Text>
+            <Text style={style.infoChallenge}> {item.totale} ml  </Text>
             {
               item.posizione == 1
               ?
               
-              <View style={{height: "95%", width: "30%"}}>
+              <View style={{height: "95%", width: "30%", marginLeft:"10%"}}>
               <Image style={style.img} source={{uri: 'https://www.pinclipart.com/picdir/middle/6-67022_computer-icons-award-medal-clip-art-winner-trophy.png'}} />
               </View>
               :
-              null
+              item.posizione == 2
+              ?
+              <View style={{height: "95%", width: "30%", marginLeft:"10%"}}>
+              <Image style={style.img} source={{uri: 'https://www.pinclipart.com/picdir/big/68-680886_image-pose-png-object-multiverse-wiki-fandom-juara.png'}} />
+              </View>
+              :
+              <View style={{ marginLeft:"15%"}}>
+              <Text style={style.infoChallenge} >{item.posizione}° </Text>
+              </View>
              
             }
             </View>
-        </TouchableOpacity>
+        </View>
         
-      </View>
       </View>
  
           
@@ -120,8 +124,8 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
     
     return(
 
-      <View>
-      
+      <View  style={{  height: "100%"}} >
+      <View style={{ width: "100%", height:'25%', position: 'absolute', zIndex:100}} >
       <Provider>
       <Appbar.Header  >
       <Appbar.BackAction onPress={backAction} />
@@ -141,10 +145,11 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
         
     </Appbar.Header>
     </Provider>
-        <View  style={{height: "98%", }}>
-        <View style={{height: "30%", width: "100%"}}>
+    </View>
+    <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:80}} onTouchStart={() => closeMenu()}>
+          
             <Image style={style.img} source={{uri: 'http://blog.merkatus360.com/wp-content/uploads/2020/08/2.png'}} />
-          </View>
+          
             <Text style={style.nameGroup}>{name}</Text>
             <Text style={style.subtitle}> Numero partecipanti: {Object.keys(data).length}</Text>
             {/*<Text> Creatore: {Var.username}</Text>*/}
@@ -175,8 +180,8 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
           </TouchableOpacity>
      
           </View>
+          </View>
       
-      </View>
 
     )
 }
@@ -186,8 +191,7 @@ const style = StyleSheet.create({
     borderWidth: 1, height: 42, width: "80%",
         justifyContent: "center", alignItems: "center", borderRadius: 40,
         backgroundColor: "black", alignSelf: "center", textAlign: "center",
-            position: 'absolute',
-    bottom:0,
+            marginBottom:20, marginTop:10
 
   },
   img:{
@@ -200,7 +204,7 @@ const style = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     color: "black",
-    textAlign: "center"
+    textAlign: "center",
   },
   subtitle:{
     fontSize: 16,

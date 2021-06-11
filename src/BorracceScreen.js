@@ -19,7 +19,7 @@ export const BorracceScreen = ({ route, navigation }) => {
   const [visible, setVisible] = useState(false);
   const [visibleSearch, setVisibleSearch] = useState(0);
 
-  const openMenu = () => setVisible(true);
+  const openMenu = () => {setVisible(true), dontshosearch()};
 
   const closeMenu = () => setVisible(false);
   
@@ -49,8 +49,6 @@ export const BorracceScreen = ({ route, navigation }) => {
        setDataSearch(resJson['borracce']);
         setisLoading(false)
       })
-  
-  
     }
   }
 
@@ -113,15 +111,12 @@ export const BorracceScreen = ({ route, navigation }) => {
   }
 
   const renderFooter = () =>{
-    //console.log("renderFooter")
-    //console.log(isFocused)
     return (
       isLoading ? 
     <View style = {style.loader}>
       <ActivityIndicator size="large"/>
     </View> : null
     )
-    
   }
 
   
@@ -159,7 +154,8 @@ export const BorracceScreen = ({ route, navigation }) => {
 
   return (
 
-    <View>
+    <View  style={{  height: "100%"}} >
+        <View style={{ width: "100%", height:'14%', position: 'absolute', zIndex:100}} >
     <Provider>
     <Appbar.Header>
    
@@ -193,9 +189,8 @@ export const BorracceScreen = ({ route, navigation }) => {
 
   </Appbar.Header>
   </Provider>
-  <View  style={{height: "95%", justifyContent: 'center' }}>
-   
-      
+  </View>
+  <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => {closeMenu(), dontshosearch()}}>
       <FlatList
       style={style.container}
       data = {data}
@@ -211,7 +206,7 @@ export const BorracceScreen = ({ route, navigation }) => {
       </View>
       <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
                         justifyContent: "center", alignItems: "center", borderRadius: 40,
-                        backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
+                        backgroundColor: "black", alignSelf: "center", textAlign: "center",  marginBottom:20, marginTop:10}}
                         onPress={() => {navigation.navigate('AddBottlePage', { name: name["name"] })}}>
               <Text style={{color: "white"}}> Aggiungi borraccia</Text>
       </TouchableOpacity>
@@ -248,12 +243,13 @@ const style = StyleSheet.create({
   
   textInputStyle: {
     height: 50,
+    width: 200,
     borderWidth: 1,
     paddingLeft: 20,
     margin: 5,
     borderColor: '#009688',
     backgroundColor: 'white',
-    fontSize: 18,
+    fontSize: 18, 
     
   },
   info:{
