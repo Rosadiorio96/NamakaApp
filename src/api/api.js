@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Var } from './Var.js';
 import { Alert } from 'react-native';
-
+import { BackHandler } from 'react-native';
 
 export const uri = 'http://192.168.1.17:8081/api/'
 
@@ -36,6 +36,17 @@ export const getSignIn = async ()=>{
   }
 }
 
+export const exit_app = () =>{
+  Alert.alert("Attenzione!", "Sei sicuro di voler uscire?", [
+    {
+      text: "Indietro",
+      onPress: () => null,
+      style: "cancel"
+    },
+    { text: "Si", onPress: () => BackHandler.exitApp() }
+  ]);
+  return true;
+}
 
 
 
@@ -98,8 +109,19 @@ export const api_signup_call = async (username, password, altezza, peso, navigat
                 altezza: altezza,
                 peso: peso
               })
-            }).then((res)=>res.json()).then((resJson)=>{
-              console.log(typeof(resJson["access"]));
+            }).then((res)=>{
+              console.log("RES", res)
+              if(res['status']==200){
+              console.log("La registrazione è andata a buon fine!");
+              return res.json();
+            } else if (res['status'] == 405){
+                alert("Scegli una password più complessa")
+                return false;
+            } else{
+              console.log("La registrazione non è andata a buon fine!");
+              return false;
+            }}).then((resJson)=>{
+              if(resJson){
               if(resJson.hasOwnProperty('access')){
                 try {
                   AsyncStorage.setItem('@storage_tokenAccess', resJson["access"]);
@@ -110,10 +132,7 @@ export const api_signup_call = async (username, password, altezza, peso, navigat
                   console.log("Errore salvataggio variabili registrazione!")
                 }
                 navigation.navigate('HomePage', { name: username })
-              } else {
-                alert("Errore registrazione...");
-              }
-              
+              }}
             });
       
           }catch(e){
@@ -163,7 +182,7 @@ export const refresh_Access_Token = async (stringa, navigation)=>{
                 console.log("Token di accesso refreshato -- Inviti")
                 break;
             case "Gruppipage":
-                console.log("Token di accesso refreshato -- Grppipage")
+                console.log("Token di accesso refreshato -- Gruppipage")
                 break;
             case "GruppoInfo":
                 console.log("Token di accesso refreshato -- GruppoInfo")
@@ -214,6 +233,9 @@ export const api_add_Bottle = async (payload, navigation)=>{
         alert("Borraccia aggiunta correttamente");
       } else if (response['status'] == 401){
         refresh_Access_Token("AddBottle", navigation)
+      }else if (response['status'] == 403){
+        navigation.navigate('BorraccePage', { name: Var.username })
+        alert("Questa borraccia e' già associata a qualcuno!")
       }
       else{
         alert("Impossibile aggiungere la borraccia");

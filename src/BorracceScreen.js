@@ -1,6 +1,6 @@
 import React, { Component,useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button, FlatList, BackHandler, RefreshControl, ActivityIndicator, Image, Alert } from 'react-native';
-import { useIsFocused } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import {uri, api_remove_bottle, logout, getSignIn, getTokenFromStore, refresh_Access_Token} from './api/api.js'
 import { Appbar, Menu, Provider} from 'react-native-paper'; 
 import { SearchBar } from 'react-native-elements';
@@ -28,7 +28,8 @@ export const BorracceScreen = ({ route, navigation }) => {
   const dontshosearch = () => setVisibleSearch(0);
   
   const backAction = () => {
-    navigation.navigate("HomePage", name = name)
+    console.log("back")
+    navigation.navigate("HomePage", name = Var.username)
   };
   
 
@@ -36,6 +37,27 @@ export const BorracceScreen = ({ route, navigation }) => {
     console.log("UseEffect Borracce Screen")
     setisLoading(true)
     getData()
+
+    const backAction2 = () => {
+      console.log("Back 2")
+    Alert.alert("Attenzione!", "Sei sicuro di voler uscire?", [
+      {
+        text: "Indietro",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "Si", onPress: () => BackHandler.exitApp() }
+    ]);
+    return true;
+  };
+    
+
+    const backHandler_borracce = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction2
+    );
+
+    return () => backHandler_borracce.remove();
    
 
   }, [isFocused])

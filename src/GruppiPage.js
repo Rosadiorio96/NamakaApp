@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator, TouchableHighlight } from 'react-native';
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
-import {refresh_Access_Token, uri, getTokenFromStore, creaGruppo, logout, getSignIn} from './api/api.js'
+import {refresh_Access_Token, uri, getTokenFromStore, creaGruppo, logout, getSignIn, exit_app} from './api/api.js'
 import Icon  from 'react-native-vector-icons/FontAwesome';
 
 import { Appbar, Menu, Provider} from 'react-native-paper';
@@ -32,7 +32,12 @@ export const GruppiScreen = ({ route, navigation}) => {
       console.log("UseEffect Gruppo page")
       setisLoading(true)
       getData()
-     
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        exit_app
+      );
+  
+      return () => backHandler.remove();
   
     }, [isFocused])
   

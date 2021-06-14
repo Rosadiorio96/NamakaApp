@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React, { useState, useEffect } from 'react';
 import { Var } from "./api/Var";
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
-import {uri, getSignIn, getTokenFromStore, logout} from './api/api.js'
+import {uri, getSignIn, getTokenFromStore, logout, exit_app} from './api/api.js'
 import { StyleSheet, BackHandler, TouchableOpacity,Image, FlatList, ActivityIndicator  } from 'react-native';
 import Dialog from "react-native-dialog";
 import { Appbar, Menu, Provider} from 'react-native-paper';
@@ -86,6 +86,12 @@ export const VittorieScreen = ({ route, navigation}) => {
     useEffect(() => { 
         console.log("Use effect Vittorie screen", isFocused)
         getData();
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          exit_app
+        );
+    
+        return () => backHandler.remove();
     },[isFocused]);
 
 

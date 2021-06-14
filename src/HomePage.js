@@ -5,7 +5,7 @@ import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
 import { Var } from './api/Var.js';
 import BackgroundTimer from 'react-native-background-timer';
-import {uri, getSignIn, logout, api_modify_position} from './api/api.js'
+import {uri, getSignIn, logout, api_modify_position, exit_app} from './api/api.js'
 import { Appbar, Menu, Provider } from 'react-native-paper'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -80,6 +80,7 @@ export const HomePage = ({ route, navigation}) => {
   const isFocused = useIsFocused();
 
   const backAction = () => {
+    console.log("Back 2")
     Alert.alert("Attenzione!", "Sei sicuro di voler uscire?", [
       {
         text: "Indietro",

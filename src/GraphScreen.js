@@ -1,12 +1,12 @@
 import React, { Component,useState, useEffect } from 'react';
-import { StyleSheet, Text, Animated, TextInput, View, SafeAreaView} from 'react-native';
+import { StyleSheet, Text, Animated, TextInput, View, SafeAreaView, BackHandler} from 'react-native';
 import Svg, {G, Circle} from 'react-native-svg'
 import { useIsFocused } from "@react-navigation/native";
 import { Var } from './api/Var.js';
 import Icon  from 'react-native-vector-icons/Fontisto';
 import DatePicker from 'react-native-datepicker';
 import { LogBox } from 'react-native';
-import {uri, logout, getSignIn, getTokenFromStore, refresh_Access_Token} from './api/api.js'
+import {uri, logout, getSignIn, getTokenFromStore, refresh_Access_Token, exit_app} from './api/api.js'
 import { Appbar, Menu, Provider} from 'react-native-paper'; 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle)
 const AnimatedInput = Animated.createAnimatedComponent(TextInput)
@@ -107,9 +107,8 @@ getData = async (data) =>{
 
     
 
-    React.useEffect(()=>{
+    useEffect(()=>{
         animation(tot_sorsi);
-
         animatedValue.addListener(v => {
             if(circleRef?.current){
                 const maxPerc = 100 * v.value / max;
@@ -126,9 +125,16 @@ getData = async (data) =>{
                 })
             }
         });
+       
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          exit_app
+        );
+    
 
         return() => {
             animatedValue.removeAllListeners();
+            backHandler.remove();
         };
     }, [max, tot_sorsi ]);
 

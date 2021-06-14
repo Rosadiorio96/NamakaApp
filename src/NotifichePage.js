@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, Button, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator  } from 'react-native';
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
-import {refresh_Access_Token, uri, getTokenFromStore, modificaStatoInvito, logout, getSignIn} from './api/api.js'
+import {refresh_Access_Token, uri, getTokenFromStore, modificaStatoInvito, logout, getSignIn, exit_app} from './api/api.js'
 import { Var } from './api/Var.js';
 import { Appbar, Menu, Provider } from 'react-native-paper'; 
 
@@ -65,7 +65,12 @@ export const NotificheScreen = ({ route, navigation}) => {
     useEffect(() => {
        
           getInviti()
-        
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            exit_app
+          );
+      
+          return () => backHandler.remove();
         
     }, [isFocus]);
 

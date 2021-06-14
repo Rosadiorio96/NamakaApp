@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator  } from 'react-native';
+import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator } from 'react-native';
 import { useIsFocused, useFocusEffect, NavigationContainer } from "@react-navigation/native";
 import {creaPartecipante} from './api/api.js'
 import { Var } from './api/Var.js';
 import Dialog from "react-native-dialog";
-import {uri, logout, getSignIn, refresh_Access_Token, getTokenFromStore} from './api/api.js'
+import {uri, logout, getSignIn, refresh_Access_Token, getTokenFromStore, exit_app} from './api/api.js'
 
 import { Appbar, Menu, Provider} from 'react-native-paper';
 var name;
@@ -30,6 +30,15 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
     useEffect(() => { 
           console.log("Use effect Gruuppo Info Screen", isFocused)
           getData();
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            exit_app
+          );
+      
+          return () => backHandler.remove();
+
+
+
         },[isFocused]
     
       );
