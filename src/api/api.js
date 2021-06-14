@@ -3,7 +3,7 @@ import { Var } from './Var.js';
 import { Alert } from 'react-native';
 
 
-export const uri = 'http://192.168.1.90:8081/api/'
+export const uri = 'http://192.168.1.17:8081/api/'
 
 export const getTokenAccess = async ()=>{
   try {
@@ -50,7 +50,6 @@ export const api_login_call= async (username, password, navigation)=>{
           headers:{
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            
           },
           body: JSON.stringify({
             username: username,
@@ -123,7 +122,7 @@ export const api_signup_call = async (username, password, altezza, peso, navigat
         
          }
 
-const refresh_Access_Token = async (stringa, navigation)=>{  
+export const refresh_Access_Token = async (stringa, navigation)=>{  
   console.log("check refresh token") 
   const tokenRefresh = await AsyncStorage.getItem('@storage_tokenRefresh'); 
   const signiIn = await AsyncStorage.getItem('@SignIn'); 
@@ -142,7 +141,6 @@ const refresh_Access_Token = async (stringa, navigation)=>{
       if(resJson.hasOwnProperty('access')){
         try {
           AsyncStorage.setItem('@storage_tokenAccess', resJson["access"]);
-          
           switch (stringa){
             case "AddBottle":
               console.log("Token di accesso refreshato -- AddBottle");
@@ -155,6 +153,21 @@ const refresh_Access_Token = async (stringa, navigation)=>{
             case "Login":
               console.log("Token di accesso refreshato -- Login")
               break;
+            case "Borracce":
+                console.log("Token di accesso refreshato -- Borracce")
+                break;
+            case "Grafico":
+                console.log("Token di accesso refreshato -- Grafico")
+                break;
+            case "Inviti":
+                console.log("Token di accesso refreshato -- Inviti")
+                break;
+            case "Gruppipage":
+                console.log("Token di accesso refreshato -- Grppipage")
+                break;
+            case "GruppoInfo":
+                console.log("Token di accesso refreshato -- GruppoInfo")
+                break;
             default:
               console.log("Token di accesso refreshato -- generico");
               break;
@@ -283,14 +296,15 @@ export const check_token = async ()=>{
 export const api_remove_bottle = async (item, name, navigation)=>{
   console.log("APIIII", item["id_borraccia"]);
   console.log("name", name);
-
+  const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
     try{
       await fetch(uri + 'remove', {
         method: 'post',
         mode: 'no-cors',
         headers:{
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': tokenAccess
         },
         body: JSON.stringify({
           id_borraccia: item["id_borraccia"],
@@ -301,9 +315,11 @@ export const api_remove_bottle = async (item, name, navigation)=>{
         if(response['status']==200){
           navigation.navigate('BorraccePage', { name: name })
           console.log("riuscito")
-        }
-        else{
-          alert("non riuscito")
+        } else if (response['status'] == 401){
+          refresh_Access_Token("Borracce", navigation)
+          return true;
+      } else{
+          alert("Eliminazione borraccia non riuscita")
         }});
 
     }catch(e){
@@ -325,11 +341,20 @@ export const visualizzaInviti = async ()=>{
         'Content-Type': 'application/json',
         'Authorization': tokenAccess
       }
-    }).then((res)=>res.json()).then((resJson)=>{
+    }).then((res)=>{
+      if(res['status']==200){
+          console.log("-- L'utente è loggato! --");
+          return res.json();
+      } else if (res['status'] == 401){
+          refresh_Access_Token("Inviti", navigation)
+          return false;
+      } else{
+          console.log("Impossibile visualizzare gli inviti! Riprova più tardi");
+          return false;
+      }}).then((resJson)=>{
       console.log(resJson['inviti']);
       return resJson['inviti']
     });
-
   }catch(e){
     console.log("erroreeee");
     console.log(e);
@@ -347,7 +372,7 @@ export const getTokenFromStore = async ()=>{
 }
 
 
-export const modificaStatoInvito = async (NEWSTATO, mittente, gruppo)=>{
+export const modificaStatoInvito = async (NEWSTATO, mittente, gruppo, navigation)=>{
   const name = await AsyncStorage.getItem('@username'); 
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
   try{
@@ -366,13 +391,16 @@ export const modificaStatoInvito = async (NEWSTATO, mittente, gruppo)=>{
       })
     }).then(response => {
       console.log(response['status']);
-      /*
+      
       if(response['status']==200){
-        Alert.alert("Invito accettato", "Ora fai parte del gruppo")
+        console.log("Invito accettato")
+      } else if (res['status'] == 401){
+        refresh_Access_Token("Inviti", navigation)
+        console.log("Problemi modifica stato Invito")
       }
       else{
-        alert("PROBLEMI")
-      }*/});
+        console.log("Problemi vari modifica stato invito")
+      }});
 
   }catch(e){
     console.log("erroreeee");
@@ -382,7 +410,7 @@ export const modificaStatoInvito = async (NEWSTATO, mittente, gruppo)=>{
 }
 
 
-export const creaGruppo = async (gruppo)=>{
+export const creaGruppo = async (gruppo, navigation)=>{
   
   const name = await AsyncStorage.getItem('@username'); 
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
@@ -400,14 +428,17 @@ export const creaGruppo = async (gruppo)=>{
       })
     }).then(response => {
       console.log(response['status']);
-      /*
+      
       if(response['status']==200){
-        Var.prova.push({"nome": gruppo})
-        console.log("NUOVA PROVA", Var.prova)
+        console.log("Creazione gruppo riuscita")
+      }
+      else if (res['status'] == 401){
+        console.log("Creazione gruppo non riuscita causa token")
+        refresh_Access_Token("Gruppipage", navigation)
       }
       else{
         alert("PROBLEMI")
-      }*/
+      }
     
     });
 
@@ -419,7 +450,7 @@ export const creaGruppo = async (gruppo)=>{
 }
 
 
-export const creaPartecipante = async (nomepartecipante, namegruppo)=>{
+export const creaPartecipante = async (nomepartecipante, namegruppo, navigation)=>{
   
   const name = await AsyncStorage.getItem('@username'); 
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
@@ -442,6 +473,9 @@ export const creaPartecipante = async (nomepartecipante, namegruppo)=>{
       
       if(response['status']==200){
         Alert.alert("Invito inviato", "A breve l'utente riceverà il tuo invito");
+      } else if (response['status'] == 401){
+        console.log("Invito non riuscito causa token")
+        refresh_Access_Token("CreaPartecipante", navigation)
       }
       else{
         Alert.alert("Attenzione","L'utente è già stato invitato")

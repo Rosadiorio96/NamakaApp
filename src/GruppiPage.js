@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator, TouchableHighlight } from 'react-native';
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
-import {visualizzaInviti, uri, getTokenFromStore, creaGruppo, logout, getSignIn} from './api/api.js'
+import {refresh_Access_Token, uri, getTokenFromStore, creaGruppo, logout, getSignIn} from './api/api.js'
 import Icon  from 'react-native-vector-icons/FontAwesome';
 
 import { Appbar, Menu, Provider} from 'react-native-paper';
@@ -49,13 +49,23 @@ export const GruppiScreen = ({ route, navigation}) => {
                 'Authorization': dati['Token'],
                 'Content-Type': 'application/json'
             }
-            }).then((res)=>res.json()).then((resJson)=>{
-                console.log("Gruppi----------------------------",resJson)
-                setData(resJson['gruppi']);
-                //Var.prova = resJson['gruppi']
-                //console.log("PROVAAAA", Var.prova)
-                setisLoading(false)
-                console.log("DATAAAAAAA", data)
+            }).then((res)=>{
+              if(res['status']==200){
+              console.log("-- L'utente è loggato! --");
+              return res.json();
+            } else if (res['status'] == 401){
+                refresh_Access_Token("Grppipage", navigation)
+                return false;
+            } else{
+              console.log("Impossibile visualizzare i gruppi! Riprova più tardi");
+              return false;
+            }
+          }).then((resJson)=>{
+                if (resJson){
+                  setData(resJson['gruppi']);
+                  setisLoading(false)
+                }
+               
               })
             })
           }
@@ -70,7 +80,7 @@ export const GruppiScreen = ({ route, navigation}) => {
         
         return (
           <View style={{ flex: 1, justifyContent: 'center', alignContent: "center", alignSelf: "center"}}>
-          <TouchableOpacity style={style.itemRow} onPress={() => {navigation.navigate('GruppoInfoPage', {'name': item.nome});}}>
+          <TouchableOpacity style={style.itemRow} onPress={() => {Var.gruppo_pass = item.nome; navigation.navigate('GruppoInfoPage', {'name': item.nome});}}>
           <View style={{ alignItems: "center",width: 150, alignContent: "center", justifyContent: "center", }}>
           <View style={{height: "60%", width: "60%"}}>
             <Image style={style.img} source={{uri: 'https://icons-for-free.com/iconfiles/png/512/person+target+user+icon-1320190816206266307.png'}} />
@@ -150,7 +160,7 @@ export const GruppiScreen = ({ route, navigation}) => {
           <Dialog.Container visible={visible}>
           <Dialog.Title>Aggiungi nuovo gruppo</Dialog.Title>
           <Dialog.Button label="Indietro" onPress={()=>{ setVisible(false);}} />
-          <Dialog.Button label="Aggiungi" onPress={() => {setVisible(false); creaGruppo(Var.nomegruppo).then(()=> {getData();}) }} />
+          <Dialog.Button label="Aggiungi" onPress={() => {setVisible(false); creaGruppo(Var.nomegruppo, navigation).then(()=> {getData();}) }} />
           <Dialog.Input placeholder="Inserisci nome gruppo" onChangeText={(value) => {Var.nomegruppo = value; 
                          console.log("NOME GRUPPO",Var.nomegruppo)}} />
         </Dialog.Container>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, Button, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator  } from 'react-native';
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
-import {visualizzaInviti, uri, getTokenFromStore, modificaStatoInvito, logout, getSignIn} from './api/api.js'
+import {refresh_Access_Token, uri, getTokenFromStore, modificaStatoInvito, logout, getSignIn} from './api/api.js'
 import { Var } from './api/Var.js';
 import { Appbar, Menu, Provider } from 'react-native-paper'; 
 
@@ -28,7 +28,7 @@ export const NotificheScreen = ({ route, navigation}) => {
       getSignIn().then((signIn)=>{
         if (signIn == 'true'){
           getTokenFromStore().then((dataV) =>{
-            const apiURL = uri+"inviti/"+ dataV['name']
+            const apiURL = uri+"inviti/"+ Var.username
             fetch(apiURL, {
               method: 'GET',
             withCredentials: true,
@@ -37,9 +37,22 @@ export const NotificheScreen = ({ route, navigation}) => {
                 'Authorization': dataV['Token'],
                 'Content-Type': 'application/json'
             }
-            }).then((res)=>res.json()).then((resJson)=>{
-              setData(resJson['inviti']);
-              console.log("DATAAAAAA-------------",data)
+            }).then((res)=>{
+              if(res['status']==200){
+                console.log("-- L'utente è loggato! --");
+                return res.json();
+              } else if (res['status'] == 401){
+                  refresh_Access_Token("Inviti", navigation)
+                  return false;
+              } else{
+                console.log("Impossibile visualizzare le borracce! Riprova più tardi");
+                return false;
+              }
+            }).then((resJson)=>{
+              if (resJson){
+                console.log("AAAAAAAAAAAAAA-----", resJson)
+                setData(resJson['inviti']);
+              }
             })
           })
         }
@@ -73,14 +86,14 @@ export const NotificheScreen = ({ route, navigation}) => {
             <View style={{flexDirection: "row",  }}>
             <TouchableOpacity style={style.button}
               
-              onPress={() => {modificaStatoInvito("ACCETTATO", item.mittente, item.gruppo).then(() => {getInviti();  Alert.alert("Invito accettato", "Ora fai parte del gruppo")})
+              onPress={() => {modificaStatoInvito("ACCETTATO", item.mittente, item.gruppo, navigation).then(() => {getInviti(); })
                               setShouldShow(false);
                               }
                               }
               ><Text> Accetta</Text></TouchableOpacity>
               <TouchableOpacity style={style.button}
               
-              onPress={() => {modificaStatoInvito("RIFIUTATO", item.mittente, item.gruppo).then(() => {getInviti();  Alert.alert("Invito rifiutato", "Hai rifiutato l'invito")}) 
+              onPress={() => {modificaStatoInvito("RIFIUTATO", item.mittente, item.gruppo, navigation).then(() => {getInviti(); }) 
                               setShouldShow(false)
                   
                             }}

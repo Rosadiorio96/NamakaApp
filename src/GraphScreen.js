@@ -6,7 +6,7 @@ import { Var } from './api/Var.js';
 import Icon  from 'react-native-vector-icons/Fontisto';
 import DatePicker from 'react-native-datepicker';
 import { LogBox } from 'react-native';
-import {uri, logout} from './api/api.js'
+import {uri, logout, getSignIn, getTokenFromStore, refresh_Access_Token} from './api/api.js'
 import { Appbar, Menu, Provider} from 'react-native-paper'; 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle)
 const AnimatedInput = Animated.createAnimatedComponent(TextInput)
@@ -51,22 +51,46 @@ export const GraphScreen = ({ route, navigation }) => {
       navigation.navigate("HomePage", name = name)
     };
     
-    getData = async (data) =>{
-        console.log("getData")
-        console.log("la dataaaaaaaaaaaa", data)
-        console.log("nameeeeeeeee", name["name"])
-        if (name["name"]!= undefined && data!= undefined){
-          const apiURL = uri + 'grafico/'+ name["name"]+"/"+data
-          fetch(apiURL).then((res)=>res.json()).then((resJson)=>{
-            tot_sorsi = resJson['info'][0]['totale']
-            Var.fabbisogno = resJson['info'][0]['fabbisogno'] * 1000;          
-            setData(resJson['info']);
 
+getData = async (data) =>{
+  getSignIn().then((signIn)=>{
+  if (signIn == 'true'){
+    getTokenFromStore().then((dati) => {
+      const apiURL = uri+"grafico/"+ Var.username +'/'+ data
+      fetch(apiURL, {
+          method: 'GET',
+          withCredentials: true,
+          credentials: 'include',
+          headers: {
+              'Authorization': dati['Token'],
+              'Content-Type': 'application/json'
+          }
+          }).then((res)=>{
+            if(res['status']==200){
+              console.log("-- L'utente è loggato! --");
+              return res.json();
+            } else if (res['status'] == 401){
+                refresh_Access_Token("Grafico", navigation)
+                return false;
+      } else{
+          console.log("Impossibile visualizzare le borracce! Riprova più tardi");
+          return false;
+          }
+          }).then((resJson)=>{
+            if(resJson){
+                tot_sorsi = resJson['info'][0]['totale']
+                Var.fabbisogno = resJson['info'][0]['fabbisogno'] * 1000;          
+                setData(resJson['info']);        
+            }
+            
+          })
         })
-        }
-
+      }
     }
- 
+    )
+  }
+
+
     max = Var.fabbisogno;
     percentuale = ((Var.fabbisogno/2)*5)/100;
 

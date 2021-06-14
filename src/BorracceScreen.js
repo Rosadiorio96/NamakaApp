@@ -1,7 +1,7 @@
 import React, { Component,useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button, FlatList, BackHandler, RefreshControl, ActivityIndicator, Image, Alert } from 'react-native';
 import { useIsFocused } from "@react-navigation/native";
-import {uri, api_remove_bottle, logout} from './api/api.js'
+import {uri, api_remove_bottle, logout, getSignIn, getTokenFromStore, refresh_Access_Token} from './api/api.js'
 import { Appbar, Menu, Provider} from 'react-native-paper'; 
 import { SearchBar } from 'react-native-elements';
 import { Var } from './api/Var.js';
@@ -40,17 +40,47 @@ export const BorracceScreen = ({ route, navigation }) => {
 
   }, [isFocused])
 
-  if(name["name"]!= undefined){
-    getData = async () =>{
-      console.log("getData")
-      const apiURL = uri+"borracciaprop/"+name["name"]
-      fetch(apiURL).then((res)=>res.json()).then((resJson)=>{
-       setData(resJson['borracce']);
-       setDataSearch(resJson['borracce']);
-        setisLoading(false)
-      })
-    }
-  }
+
+  getData = async () =>{
+    getSignIn().then((signIn)=>{
+    if (signIn == 'true'){
+      getTokenFromStore().then((dati) => {
+        const apiURL = uri+"borracciaprop/"+ dati['name']
+        fetch(apiURL, {
+            method: 'GET',
+            withCredentials: true,
+            credentials: 'include',
+            headers: {
+                'Authorization': dati['Token'],
+                'Content-Type': 'application/json'
+            }
+            }).then((res)=>{
+              if(res['status']==200){
+                console.log("-- L'utente è loggatto! --");
+                return res.json();
+              } else if (res['status'] == 401){
+                  refresh_Access_Token("Borracce", navigation)
+                  return false;
+              } else{
+                  console.log("Impossibile visualizzare le borracce! Riprova più tardi");
+                  return false;
+              }
+              }).then((resJson)=>{
+                if(resJson){
+                setData(resJson['borracce']);
+                setDataSearch(resJson['borracce']);
+                setisLoading(false)
+                }
+                
+              })
+            })
+          }
+        }
+        )
+      }
+
+
+
 
   deleteItemById = (id) =>{
     const filteredData = data.filter(item => item.id_borraccia !== id['id_borraccia']);
@@ -162,7 +192,7 @@ export const BorracceScreen = ({ route, navigation }) => {
     <Appbar.BackAction onPress={backAction} />
     <Appbar.Content/>
     
-    <TouchableOpacity >
+    <TouchableOpacity style={{ width: "50%"}}>
     <TextInput
       style = {style.textInputStyle}
       value = {search}
@@ -243,7 +273,7 @@ const style = StyleSheet.create({
   
   textInputStyle: {
     height: 50,
-    width: 200,
+    width: "100%",
     borderWidth: 1,
     paddingLeft: 20,
     margin: 5,

@@ -4,7 +4,7 @@ import { useIsFocused, useFocusEffect, NavigationContainer } from "@react-naviga
 import {creaPartecipante} from './api/api.js'
 import { Var } from './api/Var.js';
 import Dialog from "react-native-dialog";
-import {uri, logout, getSignIn} from './api/api.js'
+import {uri, logout, getSignIn, refresh_Access_Token, getTokenFromStore} from './api/api.js'
 
 import { Appbar, Menu, Provider} from 'react-native-paper';
 var name;
@@ -34,22 +34,47 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
     
       );
 
-
-  
       getData = async () =>{
         getSignIn().then((signIn)=>{
-          if (signIn == 'true'){
-          const apiURL = uri+"getPartecipanti/"+name
-          fetch(apiURL).then((res)=>res.json()).then((resJson)=>{
-           setData(resJson['partecipanti']);
-           console.log("partecipanti", resJson['partecipanti']);
-           Var.numpartecipanti = Object.keys(resJson['partecipanti']).length
-           console.log("lunghezza", Var.numpartecipanti);
-              setisLoading(false)
-          })
-        }
-        })
-        }
+        if (signIn == 'true'){
+          getTokenFromStore().then((dati) => {
+            const apiURL = uri+"getPartecipanti/"+ Var.gruppo_pass
+            fetch(apiURL, {
+                method: 'GET',
+                withCredentials: true,
+                credentials: 'include',
+                headers: {
+                    'Authorization': dati['Token'],
+                    'Content-Type': 'application/json'
+                }
+                }).then((res)=>{
+                  if(res['status']==200){
+                  console.log("-- L'utente è loggato! --");
+                  return res.json();
+                } else if (res['status'] == 401){
+                    refresh_Access_Token("GruppoInfo", navigation)
+                    return false;
+                } else{
+                  console.log("Impossibile visualizzare i gruppi! Riprova più tardi");
+                  return false;
+                }
+              }).then((resJson)=>{
+                    if (resJson){
+                      setData(resJson['partecipanti']);
+                      Var.numpartecipanti = Object.keys(resJson['partecipanti']).length
+                     setisLoading(false)
+                    }
+                   
+                  })
+                })
+              }
+            
+            }
+            )
+          }
+      
+  
+   
 
     const showDialog = () => {
         setVisible(true);
@@ -151,8 +176,13 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
             <Image style={style.img} source={{uri: 'http://blog.merkatus360.com/wp-content/uploads/2020/08/2.png'}} />
           
             <Text style={style.nameGroup}>{name}</Text>
-            <Text style={style.subtitle}> Numero partecipanti: {Object.keys(data).length}</Text>
-            {/*<Text> Creatore: {Var.username}</Text>*/}
+            {
+              Object.keys(data).length != 0
+              ?
+              <Text style={style.subtitle}> Numero partecipanti: {Object.keys(data).length}</Text>
+              :
+              null
+            }
                   
        <FlatList
             style={style.container}
@@ -169,7 +199,7 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
        <Dialog.Container visible={visible}>
           <Dialog.Title>Aggiungi partecipante</Dialog.Title>
           <Dialog.Button label="Indietro" onPress={()=>{ setVisible(false);}} />
-          <Dialog.Button label="Aggiungi" onPress={() => {setVisible(false); creaPartecipante(Var.nomepartecipante,name) }} />
+          <Dialog.Button label="Aggiungi" onPress={() => {setVisible(false); creaPartecipante(Var.nomepartecipante,name, navigation) }} />
           <Dialog.Input placeholder="Inserisci nome partecipante" onChangeText={(value) => {Var.nomepartecipante = value; 
 
                          console.log("NOME GRUPPO",Var.nomepartecipante )}} />

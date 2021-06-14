@@ -2,9 +2,10 @@ import { View, Text } from "react-native";
 import React, { useState, useEffect } from 'react';
 import { Var } from "./api/Var";
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
-import {uri, getSignIn, getTokenFromStore} from './api/api.js'
+import {uri, getSignIn, getTokenFromStore, logout} from './api/api.js'
 import { StyleSheet, BackHandler, TouchableOpacity,Image, FlatList, ActivityIndicator  } from 'react-native';
 import Dialog from "react-native-dialog";
+import { Appbar, Menu, Provider} from 'react-native-paper';
 
 export const VittorieScreen = ({ route, navigation}) => {
 
@@ -15,6 +16,15 @@ export const VittorieScreen = ({ route, navigation}) => {
     const isFocused = useIsFocused()
     const [isLoading, setisLoading]=useState(false)
     const [visible, setVisible] = useState(false);
+    const [visibleMenu, setvisibleMenu] = useState(false);
+
+    const openMenu = () => setvisibleMenu(true);
+
+    const closeMenu = () => setvisibleMenu(false);
+  
+    const backAction = () => {
+     navigation.navigate('HomePage', { name: Var.username })
+    };
 
     const showDialog = () => {
       setVisible(true);
@@ -118,7 +128,31 @@ export const VittorieScreen = ({ route, navigation}) => {
 
 
     return(
-      <View style={{ flex: 1, width: "95%", marginLeft: 10}}>
+       <View  style={{  height: "100%"}} >
+        <View style={{ width: "100%", height:'14%', position: 'absolute', zIndex:100}} >
+      <Provider>
+      <Appbar.Header>
+      <Appbar.BackAction onPress={backAction} />
+      
+      <Appbar.Content/>
+        <Menu
+        style={{ position:'absolute', zIndex:300}}
+        onDismiss={closeMenu}
+        visible={visibleMenu}
+        anchor={
+          <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
+        }>
+        
+        <Menu.Item icon='account' title={Var.username}/>
+       <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
+        </Menu>
+        
+    </Appbar.Header>
+    </Provider>
+    </View>
+    
+          <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
+           
           <Text style={styles.textGraph}> LE TUE VITTORIE</Text>
           <FlatList
             numColumns={2}
@@ -154,6 +188,7 @@ export const VittorieScreen = ({ route, navigation}) => {
           <View>{lista_codici}</View>
           <Dialog.Button label="Ok" onPress={() => {setVisible(false); }} />
         </Dialog.Container>
+      </View>
       </View>
   )
 
@@ -195,7 +230,7 @@ img:{
 button:{
   borderWidth: 1, height: 42, width: "80%", marginBottom:"8%",
       justifyContent: "center", alignItems: "center", borderRadius: 40,
-      backgroundColor: "black", alignSelf: "center", textAlign: "center"
+      backgroundColor: "black", alignSelf: "center", textAlign: "center",  marginBottom:20, marginTop:10
 },
 textGraph:{
   fontSize: 18,

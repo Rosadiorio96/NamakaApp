@@ -11,5 +11,6 @@ export class Var {
     static prova;
     static nomepartecipante;
     static numpartecipanti;
+    static gruppo_pass;
 }
 
