@@ -199,7 +199,7 @@ export const BorracceScreen = ({ route, navigation }) => {
     setisLoading(true)
   }
 
-
+  console.log("dataaaa", data)
 
 
 
@@ -242,7 +242,15 @@ export const BorracceScreen = ({ route, navigation }) => {
   </Appbar.Header>
   </Provider>
   </View>
+
   <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => {closeMenu(), dontshosearch()}}>
+    {
+      data.length == 0
+      ?
+      <View style={{height: "50%", width: "100%", marginTop:"40%"}}>
+      <Image style={style.img} source={require('./img/add2.png')} />
+    </View>
+      :
       <FlatList
       style={style.container}
       data = {data}
@@ -254,6 +262,8 @@ export const BorracceScreen = ({ route, navigation }) => {
       extraData={data}
       
       />
+    }
+
      
       </View>
       <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",

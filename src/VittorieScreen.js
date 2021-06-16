@@ -133,6 +133,7 @@ export const VittorieScreen = ({ route, navigation}) => {
     }
 
 
+    
     return(
        <View  style={{  height: "100%"}} >
         <View style={{ width: "100%", height:'14%', position: 'absolute', zIndex:100}} >
@@ -157,19 +158,31 @@ export const VittorieScreen = ({ route, navigation}) => {
     </Provider>
     </View>
     
-          <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
-           
-          <Text style={styles.textGraph}> LE TUE VITTORIE</Text>
-          <FlatList
-            numColumns={2}
-            data = {dataVittorie}
-            renderItem = {renderItem}
-            ListFooterComponent = {renderFooter}
-            keyExtractor={(item, index) => index.toString()}
-            onEndReached = {handleLoadMore}
-            onEndReachedThreshold={0.5}
-            extraData={dataVittorie}
-          />
+          
+          {
+            dataVittorie.length == 0
+            ?
+            <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
+            <View style={{height: "40%", width: "100%", marginTop:"40%"}}>
+            <Image style={styles.img} source={require('./img/novict.png')} />
+          </View>
+          </View>
+            :
+            <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
+            <Text style={styles.textGraph}> LE TUE VITTORIE</Text>
+            <FlatList
+              numColumns={2}
+              data = {dataVittorie}
+              renderItem = {renderItem}
+              ListFooterComponent = {renderFooter}
+              keyExtractor={(item, index) => index.toString()}
+              onEndReached = {handleLoadMore}
+              onEndReachedThreshold={0.5}
+              extraData={dataVittorie}
+            />
+            </View>
+          }
+
 
         {
           dataSconti > 0
@@ -194,7 +207,6 @@ export const VittorieScreen = ({ route, navigation}) => {
           <View>{lista_codici}</View>
           <Dialog.Button label="Ok" onPress={() => {setVisible(false); }} />
         </Dialog.Container>
-      </View>
       </View>
   )
 

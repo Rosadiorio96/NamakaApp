@@ -117,8 +117,6 @@ export const GruppiScreen = ({ route, navigation}) => {
 
     return (
 
-
-
       <View  style={{  height: "100%"}} >
         <View style={{ width: "100%", height:'14%', position: 'absolute', zIndex:100}} >
       <Provider>
@@ -144,24 +142,34 @@ export const GruppiScreen = ({ route, navigation}) => {
     </View>
     
           <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
+          {
+            data.length == 0
+            ?
+            <View style={{height: "60%", width: "100%", marginTop:"30%"}}>
+            <Image style={style.img} source={require('./img/winner.png')} />
+          </View>
+            :
             <FlatList
-                   numColumns={2}
-                   style={style.container}
-                   data = {data}
-                   renderItem = {renderItem}
-                   ListFooterComponent = {renderFooter}
-                   keyExtractor={(item, index) => index.toString()}
-                   onEndReached = {handleLoadMore}
-                   onEndReachedThreshold={0.5}
-                   extraData={data}
-                   />
+            numColumns={2}
+            style={style.container}
+            data = {data}
+            renderItem = {renderItem}
+            ListFooterComponent = {renderFooter}
+            keyExtractor={(item, index) => index.toString()}
+            onEndReached = {handleLoadMore}
+            onEndReachedThreshold={0.5}
+            extraData={data}
+            />
+          }
+
+
+
+          </View>
+     
           <TouchableOpacity style={style.button} onPress={() => {showDialog()}}>
               <Text style={{color: "white"}}> Aggiungi gruppo </Text>
               
           </TouchableOpacity>
-          </View>
-     
-
           <Dialog.Container visible={visible}>
           <Dialog.Title>Aggiungi nuovo gruppo</Dialog.Title>
           <Dialog.Button label="Indietro" onPress={()=>{ setVisible(false);}} />

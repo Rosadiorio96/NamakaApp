@@ -162,6 +162,8 @@ export const NotificheScreen = ({ route, navigation}) => {
       const handleLoadMore = () => {
         setisLoading(true)
       }
+
+      console.log("dati notifiche", data)
     return (
       <View  style={{  height: "100%"}} >
       <View style={{ width: "100%", height:'14%', position: 'absolute', zIndex:100}} >
@@ -183,7 +185,13 @@ export const NotificheScreen = ({ route, navigation}) => {
     </Provider>
     </View>
     <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
-          
+    {
+    data.length == 0
+    ?
+    <View style={{height: "50%", width: "100%", marginTop:"40%"}}>
+    <Image style={style.img} source={require('./img/inviti.png')} />
+  </View>
+    :
     <FlatList
     style={style.container}
     data = {data}
@@ -195,6 +203,8 @@ export const NotificheScreen = ({ route, navigation}) => {
     extraData={data}
     
     />
+  }
+
    </View>
    </View>
     )

@@ -90,7 +90,7 @@ export const AddBottleScreen = ({ route, navigation }) => {
   </Appbar.Header>
   </Provider>
   </View>
-  <View  style={{height: "90%", justifyContent: 'center', marginTop:"20%" }}>
+  <View  style={{height: "100%", justifyContent: 'center', marginTop:"20%" }}>
     <QRCodeScanner
     onRead={find_position_bottle}
     topContent={
