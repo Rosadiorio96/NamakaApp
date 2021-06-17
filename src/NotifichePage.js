@@ -78,9 +78,7 @@ export const NotificheScreen = ({ route, navigation}) => {
    
 
     const renderItem = ({item}) => {
-
-
-
+        console.log("ITEM", item.creatore)
         return (
           <View>
             { item.stato == "VISUALIZZATO"
@@ -91,14 +89,14 @@ export const NotificheScreen = ({ route, navigation}) => {
             <View style={{flexDirection: "row",  }}>
             <TouchableOpacity style={style.button}
               
-              onPress={() => {modificaStatoInvito("ACCETTATO", item.mittente, item.gruppo, navigation).then(() => {getInviti(); })
+              onPress={() => {modificaStatoInvito("ACCETTATO", item.mittente, item.gruppo, item.creatore, navigation).then(() => {getInviti(); })
                               setShouldShow(false);
                               }
                               }
               ><Text> Accetta</Text></TouchableOpacity>
               <TouchableOpacity style={style.button}
               
-              onPress={() => {modificaStatoInvito("RIFIUTATO", item.mittente, item.gruppo, navigation).then(() => {getInviti(); }) 
+              onPress={() => {modificaStatoInvito("RIFIUTATO", item.mittente, item.gruppo, item.creatore, navigation).then(() => {getInviti(); }) 
                               setShouldShow(false)
                   
                             }}
@@ -117,14 +115,14 @@ export const NotificheScreen = ({ route, navigation}) => {
             <View style={{flexDirection: "row",  }}>
             <TouchableOpacity style={style.button}
               
-              onPress={() => {modificaStatoInvito("ACCETTATO", item.mittente, item.gruppo).then(() => {getInviti(); Alert.alert("Invito accettato", "Ora fai parte del gruppo")  })
+              onPress={() => {modificaStatoInvito("ACCETTATO", item.mittente, item.gruppo, item.creatore, navigation).then(() => {getInviti(); Alert.alert("Invito accettato", "Ora fai parte del gruppo")  })
                               setShouldShow(false);
                               }
                               }
               ><Text> Accetta</Text></TouchableOpacity>
               <TouchableOpacity style={style.button}
               
-              onPress={() => {modificaStatoInvito("RIFIUTATO", item.mittente, item.gruppo).then(() => {getInviti(); Alert.alert("Invito rifiutato", "Hai rifiutato l'invito")}) 
+              onPress={() => {modificaStatoInvito("RIFIUTATO", item.mittente, item.gruppo, item.creatore, navigation).then(() => {getInviti(); Alert.alert("Invito rifiutato", "Hai rifiutato l'invito")}) 
                               setShouldShow(false)
                   
                             }}
@@ -185,13 +183,6 @@ export const NotificheScreen = ({ route, navigation}) => {
     </Provider>
     </View>
     <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
-    {
-    data.length == 0
-    ?
-    <View style={{height: "50%", width: "100%", marginTop:"40%"}}>
-    <Image style={style.img} source={require('./img/inviti.png')} />
-  </View>
-    :
     <FlatList
     style={style.container}
     data = {data}
@@ -203,8 +194,6 @@ export const NotificheScreen = ({ route, navigation}) => {
     extraData={data}
     
     />
-  }
-
    </View>
    </View>
     )

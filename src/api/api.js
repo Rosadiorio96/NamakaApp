@@ -2,8 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Var } from './Var.js';
 import { Alert } from 'react-native';
 import { BackHandler } from 'react-native';
+import { createAnimatedPropAdapter } from 'react-native-reanimated';
 
-export const uri = 'http://192.168.1.90:8081/api/'
+export const uri = 'http://192.168.1.17:8081/api/'
 
 export const getTokenAccess = async ()=>{
   try {
@@ -394,7 +395,9 @@ export const getTokenFromStore = async ()=>{
 }
 
 
-export const modificaStatoInvito = async (NEWSTATO, mittente, gruppo, navigation)=>{
+export const modificaStatoInvito = async (NEWSTATO, mittente, gruppo, creatore, navigation)=>{
+  console.log("CREATORE-------------------", creatore)
+  console.log("GRUPPO-------------------", gruppo)
   const name = await AsyncStorage.getItem('@username'); 
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
   try{
@@ -409,14 +412,15 @@ export const modificaStatoInvito = async (NEWSTATO, mittente, gruppo, navigation
       body: JSON.stringify({
         'mittente': mittente,
         'gruppo': gruppo,
-        'stato': NEWSTATO
+        'stato': NEWSTATO,
+        'creatore': creatore
       })
     }).then(response => {
       console.log(response['status']);
       
       if(response['status']==200){
         console.log("Invito accettato")
-      } else if (res['status'] == 401){
+      } else if (response['status'] == 401){
         refresh_Access_Token("Inviti", navigation)
         console.log("Problemi modifica stato Invito")
       }
@@ -472,7 +476,7 @@ export const creaGruppo = async (gruppo, navigation)=>{
 }
 
 
-export const creaPartecipante = async (nomepartecipante, namegruppo, navigation)=>{
+export const creaPartecipante = async (nomepartecipante, namegruppo,creatore, navigation)=>{
   
   const name = await AsyncStorage.getItem('@username'); 
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
@@ -488,7 +492,8 @@ export const creaPartecipante = async (nomepartecipante, namegruppo, navigation)
       body: JSON.stringify({
         'mittente': Var.username,
         'destinatario': nomepartecipante,
-        'gruppo': namegruppo
+        'gruppo': namegruppo,
+        'creatore':creatore
       })
     }).then(response => {
       console.log(response['status']);

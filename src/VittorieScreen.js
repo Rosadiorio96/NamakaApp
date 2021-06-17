@@ -23,7 +23,7 @@ export const VittorieScreen = ({ route, navigation}) => {
     const closeMenu = () => setvisibleMenu(false);
   
     const backAction = () => {
-     navigation.navigate('HomePage', { name: Var.username })
+     navigation.navigate('GruppoInfoPage', { name: Var.gruppo_pass })
     };
 
     const showDialog = () => {
@@ -158,17 +158,7 @@ export const VittorieScreen = ({ route, navigation}) => {
     </Provider>
     </View>
     
-          
-          {
-            dataVittorie.length == 0
-            ?
-            <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
-            <View style={{height: "40%", width: "100%", marginTop:"40%"}}>
-            <Image style={styles.img} source={require('./img/novict.png')} />
-          </View>
-          </View>
-            :
-            <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
+    <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
             <Text style={styles.textGraph}> LE TUE VITTORIE</Text>
             <FlatList
               numColumns={2}
@@ -181,8 +171,6 @@ export const VittorieScreen = ({ route, navigation}) => {
               extraData={dataVittorie}
             />
             </View>
-          }
-
 
         {
           dataSconti > 0

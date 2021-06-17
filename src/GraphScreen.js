@@ -30,7 +30,6 @@ export const GraphScreen = ({ route, navigation }) => {
     name = route.params;
     const [visible, setVisible] = useState(false);
 
-   
     var radius = 40
     var strokeWidth = 10
     var duration = 500
@@ -53,6 +52,14 @@ export const GraphScreen = ({ route, navigation }) => {
     
 
 getData = async (data) =>{
+  if (data == undefined){
+    var today = new Date()
+    var date = today.getFullYear() +'-'+(today.getMonth()+1)+'-'+today.getDate()
+    console.log("Date", date)
+    data_sorsi = date
+    selected = true
+    data = date
+  }
   getSignIn().then((signIn)=>{
   if (signIn == 'true'){
     getTokenFromStore().then((dati) => {
@@ -78,6 +85,7 @@ getData = async (data) =>{
           }
           }).then((resJson)=>{
             if(resJson){
+              console.log("DAAAA", date)
                 tot_sorsi = resJson['info'][0]['totale']
                 Var.fabbisogno = resJson['info'][0]['fabbisogno'] * 1000;          
                 setData(resJson['info']);        
@@ -108,6 +116,7 @@ getData = async (data) =>{
     
 
     useEffect(()=>{
+      getData()
         animation(tot_sorsi);
         animatedValue.addListener(v => {
             if(circleRef?.current){
@@ -148,6 +157,35 @@ getData = async (data) =>{
       
       <Appbar.BackAction onPress={backAction} />
       <Appbar.Content/>
+      <DatePicker
+                    style={styles.datePickerStyle}
+                    mode="date"
+                    placeholder="Seleziona giorno"
+                    format="YYYY-MM-DD"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        marginLeft: 0,
+                        
+                        position:'absolute'
+                      },
+                      dateInput: {
+                        opacity:0,
+                        display: 'none'
+                        
+                        }
+                      
+                    }}
+                    onDateChange={(date) => {
+                      setDate(date);
+                      data_sorsi = date
+                      selected = true
+                      getData(date)
+                    }}
+                    
+                  />
+            
         <Menu
         onDismiss={closeMenu}
         visible={visible}
@@ -163,32 +201,7 @@ getData = async (data) =>{
 
         <View style={{  width: "100%", height: "80%", flexDirection:'row', justifyContent: 'center',
               flexWrap: 'wrap', alignItems: 'center', marginTop: 30,}} >
-          <SafeAreaView style={{marginBottom: 30, marginTop: 30}}>
-
-                  <DatePicker
-                    style={styles.datePickerStyle}
-                    mode="date"
-                    placeholder="Seleziona giorno"
-                    format="YYYY-MM-DD"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                      dateIcon: {
-                        marginLeft: 0,
-                      },
-                      dateInput: {
-                        marginLeft: 36,
-                      },
-                    }}
-                    onDateChange={(date) => {
-                      setDate(date);
-                      data_sorsi = date
-                      selected = true
-                      getData(date)
-                    }}
-                  />
-            
-          </SafeAreaView>
+         
        
          {
             selected == false
@@ -324,7 +337,6 @@ getData = async (data) =>{
         padding: 20,
       },
       datePickerStyle: {
-        width: 200,
-        marginTop: 20,
+        width: 50
       },
   });

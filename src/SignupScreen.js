@@ -2,8 +2,9 @@ import React, { Component, useState, useRef, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Alert,BackHandler, Image } from 'react-native';
 import Icon  from 'react-native-vector-icons/FontAwesome';
 import { Var } from './api/Var.js';
-import { api_signup_call } from './api/api';
+import { api_signup_call, exit_app } from './api/api';
 import { useIsFocused , useFocusEffect} from "@react-navigation/native";
+import { Appbar, Provider} from 'react-native-paper'; 
 
 
 
@@ -50,25 +51,40 @@ export const SignUpScreen = ({ navigation }) => {
   const setNameIcon = () => {
     setName(!stato);
   }
+  
+  const backAction = () => {
+    Var.username="";
+    Var.password="";
+    navigation.navigate("Login")
+  };
 
   useFocusEffect(() => {
     console.log("Use effect signup ", isFocused)
-    const backAction = () => {
-      Var.username="";
-      Var.password="";
-      navigation.navigate("Login")
-    };
+
+
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
-      backAction
+      exit_app
     );
+    return () => backHandler.remove();
 
   });
  
 
   return (
      
-      <View  style={{ width: "100%", height: "100%", justifyContent: "center", alignSelf: "center", alignContent: "center", alignItems: "center"}}>
+    <View  style={{  height: "100%"}} >
+    <View style={{ width: "100%", height:'14%', position: 'absolute', zIndex:100}} >
+  <Provider>
+  <Appbar.Header>
+  <Appbar.BackAction onPress={backAction} />
+  
+  <Appbar.Content/>
+  
+    
+</Appbar.Header>
+</Provider>
+</View>
 
      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: "center" }}>
      <View style={{height: "20%", width: "40%"}}>

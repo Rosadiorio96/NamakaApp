@@ -82,10 +82,10 @@ export const GruppiScreen = ({ route, navigation}) => {
 
     const renderItem = ({item}) => {
         console.log("renderItem")
-        
+        console.log(item)
         return (
           <View style={{ flex: 1, justifyContent: 'center', alignContent: "center", alignSelf: "center"}}>
-          <TouchableOpacity style={style.itemRow} onPress={() => {Var.gruppo_pass = item.nome; navigation.navigate('GruppoInfoPage', {'name': item.nome});}}>
+          <TouchableOpacity style={style.itemRow} onPress={() => {Var.gruppo_pass = item.nome; Var.creatore=item.creatore; navigation.navigate('GruppoInfoPage', {'name': item.nome+item.creatore});}}>
           <View style={{ alignItems: "center",width: 150, alignContent: "center", justifyContent: "center", }}>
           <View style={{height: "60%", width: "60%"}}>
             <Image style={style.img} source={{uri: 'https://icons-for-free.com/iconfiles/png/512/person+target+user+icon-1320190816206266307.png'}} />
@@ -142,14 +142,7 @@ export const GruppiScreen = ({ route, navigation}) => {
     </View>
     
           <View style={{ flex: 1, width: "95%", height:"100%", marginLeft: 10, marginTop: "15%", zIndex:99}} onTouchStart={() => closeMenu()}>
-          {
-            data.length == 0
-            ?
-            <View style={{height: "60%", width: "100%", marginTop:"30%"}}>
-            <Image style={style.img} source={require('./img/winner.png')} />
-          </View>
-            :
-            <FlatList
+          <FlatList
             numColumns={2}
             style={style.container}
             data = {data}
@@ -160,7 +153,6 @@ export const GruppiScreen = ({ route, navigation}) => {
             onEndReachedThreshold={0.5}
             extraData={data}
             />
-          }
 
 
 

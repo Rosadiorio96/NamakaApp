@@ -47,7 +47,7 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
         getSignIn().then((signIn)=>{
         if (signIn == 'true'){
           getTokenFromStore().then((dati) => {
-            const apiURL = uri+"getPartecipanti/"+ Var.gruppo_pass
+            const apiURL = uri+"getPartecipanti/"+ Var.gruppo_pass + '/'+Var.creatore
             fetch(apiURL, {
                 method: 'GET',
                 withCredentials: true,
@@ -165,7 +165,7 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
       <Appbar.BackAction onPress={backAction} />
       
       <Appbar.Content/>
-      <Appbar.Action color="white" icon="trophy" onPress={ ()=> {navigation.navigate("VittoriePage", {gruppo: name})} }/>
+      <Appbar.Action color="white" icon="trophy" onPress={ ()=> {navigation.navigate("VittoriePage", {gruppo: Var.gruppo_pass+Var.creatore})} }/>
        <Menu
         onDismiss={closeMenu}
         visible={visibleMenu}
@@ -184,7 +184,7 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
           
             <Image style={style.img} source={{uri: 'http://blog.merkatus360.com/wp-content/uploads/2020/08/2.png'}} />
           
-            <Text style={style.nameGroup}>{name}</Text>
+            <Text style={style.nameGroup}>{Var.gruppo_pass}</Text>
             {
               Object.keys(data).length != 0
               ?
@@ -208,7 +208,7 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
        <Dialog.Container visible={visible}>
           <Dialog.Title>Aggiungi partecipante</Dialog.Title>
           <Dialog.Button label="Indietro" onPress={()=>{ setVisible(false);}} />
-          <Dialog.Button label="Aggiungi" onPress={() => {setVisible(false); creaPartecipante(Var.nomepartecipante,name, navigation) }} />
+          <Dialog.Button label="Aggiungi" onPress={() => {setVisible(false); creaPartecipante(Var.nomepartecipante,name, Var.creatore, navigation) }} />
           <Dialog.Input placeholder="Inserisci nome partecipante" onChangeText={(value) => {Var.nomepartecipante = value; 
 
                          console.log("NOME GRUPPO",Var.nomepartecipante )}} />
