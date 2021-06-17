@@ -90,6 +90,7 @@ export const BorracceScreen = ({ route, navigation }) => {
               }).then((resJson)=>{
                 if(resJson){
                 setData(resJson['borracce']);
+                console.log('****************',data)
                 setDataSearch(resJson['borracce']);
                 setisLoading(false)
                 }
@@ -235,7 +236,7 @@ export const BorracceScreen = ({ route, navigation }) => {
       anchor={
         <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
       }>
-   <Menu.Item icon='account' title={Var.username}/>
+   <Menu.Item icon='account' title={Var.username} onPress={()=>{navigation.navigate("ProfilePage", {'namePage':"BorraccePage"}); closeMenu()}}/>
      <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
       </Menu>
 

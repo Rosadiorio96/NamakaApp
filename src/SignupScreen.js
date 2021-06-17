@@ -28,8 +28,8 @@ const validate_field=(username, password, peso, altezza)=>{
     return false;
   }
 
-  if(isNaN(peso) || isNaN(altezza)){
-    Alert.alert("Attenzione","Il peso o l'altezza non è un numero");
+  if(isNaN(peso) || isNaN(altezza) || peso<30 || altezza<0 ){
+    Alert.alert("Attenzione","Inserire correttamente altezza e peso");
     return false;
   }
   
@@ -45,6 +45,10 @@ export const SignUpScreen = ({ navigation }) => {
   const [hidePass, setHidePass] = useState(true);
 
   const [stato, setName] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [altezza, setAltezza] = useState("");
+  const [peso, setPeso] = useState("");
 
   const isFocused = useIsFocused();
 
@@ -91,8 +95,10 @@ export const SignUpScreen = ({ navigation }) => {
               <Image style={styles.img} source={require('./img/logo.png')} />
             </View>
      <TextInput placeholder={"Inserisci email"}
-        
-        onChangeText={(value) => Var.username=value}
+        value = {username}
+        onChangeText={(value) => {
+          setUsername(value)
+          Var.username=value}}
         style={{height: 42, width: "80%", borderBottomWidth: 1, fontFamily:'monospace'}}
          
         />
@@ -100,9 +106,10 @@ export const SignUpScreen = ({ navigation }) => {
 
       <View style={styles.passSection}>  
         <TextInput placeholder={"Inserisci password"}
+        value = {password}
         secureTextEntry={hidePass ? true : false}
         style={styles.input} 
-        onChangeText={(value) => Var.password = value}
+        onChangeText={(value) => setPassword(value)}
         />  
  
         <Icon style={styles.iconStyle} name={stato ? 'eye' : 'eye-slash'} size={30} color='black' onPress={() => {
@@ -112,15 +119,17 @@ export const SignUpScreen = ({ navigation }) => {
          />
 
       </View>
-
+        
         <TextInput placeholder={"Inserisci altezza in cm"}
-        onChangeText={(value) => Var.altezza = value}
+        value = {altezza}
+        onChangeText={(value) => setAltezza(value)}
         keyboardType='numeric'
         style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%", fontFamily:'monospace'}}
         />       
 
         <TextInput placeholder={"Inserisci peso in kg"}
-        onChangeText={(value) => Var.peso = value}
+         value =  {peso}
+        onChangeText={(value) => setPeso(value)}
         keyboardType='numeric'
         style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%", fontFamily:'monospace'}}
         />       
@@ -129,8 +138,8 @@ export const SignUpScreen = ({ navigation }) => {
           <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
         justifyContent: "center", alignItems: "center", borderRadius: 40,
         backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
-        onPress={() => { if (validate_field(Var.username, Var.password, Var.peso, Var.altezza)){
-          api_signup_call(Var.username, Var.password, Var.altezza, Var.peso, navigation);}
+        onPress={() => { if (validate_field(Var.username,password, peso, altezza)){
+          api_signup_call(Var.username, password, altezza, peso, navigation);}
           }}>
 
             <Text style={{color: "white", fontSize: 16}}> Registrati </Text>

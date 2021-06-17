@@ -81,6 +81,7 @@ export const api_login_call= async (username, password, navigation)=>{
               console.log("Errore salvataggio login!")
             }
             navigation.navigate('HomePage', { name: username })
+            Var.password=""
           } else {
             //alert("Errore Login");
           }
@@ -129,6 +130,7 @@ export const api_signup_call = async (username, password, altezza, peso, navigat
                   AsyncStorage.setItem('@storage_tokenRefresh', resJson["refresh"]);
                   AsyncStorage.setItem('@SignIn', "true");
                   AsyncStorage.setItem('@username', String(username));
+                  Var.password=""
                 } catch (e) {
                   console.log("Errore salvataggio variabili registrazione!")
                 }
@@ -352,6 +354,35 @@ export const api_remove_bottle = async (item, name, navigation)=>{
 }
 
 
+export const modify_fabbisogno = async (username, fabbisogno, navigation)=>{
+    try{
+      await fetch(uri + 'utentefabb/'+ username, {
+        method: 'post',
+        mode: 'no-cors',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          fabbisogno: fabbisogno
+        })
+      }).then((res)=>{
+        console.log("RES", res)
+        if(res['status']==200){
+        console.log("La modifica e' andata buon fine!");
+        
+      }  else{
+        console.log("La modifica non e' andata buon fine!");
+        
+      }});
+    }catch(e){
+      alert("Errore modifica -> server");
+    }
+  
+   }
+
+
+
 export const visualizzaInviti = async ()=>{
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
   const name = await AsyncStorage.getItem('@username'); 
@@ -546,6 +577,7 @@ export const removeItemValue = async (key) =>{
 
 
 export const logout = (navigation)  => {
+  Var.username=""
   set_SignInFalse().then(()=> 
   removeItemValue('@storage_tokenRefresh')).then(()=> 
   removeItemValue('@storage_tokenAccess')).then(()=>navigation.navigate("Login", {name: Var.username}));

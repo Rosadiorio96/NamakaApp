@@ -1,10 +1,10 @@
 import React, { Component,useState, useEffect } from 'react';
-import { StyleSheet, Text, Animated, TextInput, View, SafeAreaView} from 'react-native';
+import { StyleSheet, Text, Animated, TextInput, View, BackHandler} from 'react-native';
 import Svg, {G, Circle} from 'react-native-svg'
 import { useIsFocused } from "@react-navigation/native";
 import { Var } from './api/Var.js';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import {logout} from './api/api.js'
+import {logout, getSignIn, getTokenFromStore, uri, refresh_Access_Token, exit_app} from './api/api.js'
 import { Appbar, Menu, Provider} from 'react-native-paper'; 
 var name;
 
@@ -12,22 +12,75 @@ var name;
 export const MapScreen = ({ route, navigation }) => {
     name = route.params;
     const [visibleMenu, setvisibleMenu] = useState(false);
-
+    const [data, setData]=useState([])
     const openMenu = () => setvisibleMenu(true);
 
     const closeMenu = () => setvisibleMenu(false);
-  
+    const isFocused = useIsFocused();
+
     const backAction = () => {
      navigation.navigate('HomePage', { name: Var.username })
     };
 
-    console.log("MAPPA POS",name["pos"])
-    const found = name["pos"].find(element => element.title === "UTENTE");
-    if(found == undefined){
-      name["pos"].push({"coordinates": {"latitude": Var.lat_user, "longitude": Var.lon_user}, "title": "UTENTE", "pinColor": "#474744"})
-    }
-    console.log("aaaaaaaaaaa",Var.lat_user)
    
+    useEffect(()=>{
+      getData();
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        exit_app
+      );
+  
+      return () => backHandler.remove();
+    }, [isFocused])
+
+
+    getData = async () =>{
+      getSignIn().then((signIn)=>{
+      if (signIn == 'true'){
+        getTokenFromStore().then((dati) => {
+          const apiURL = uri+"allposition/"+Var.username
+          fetch(apiURL, {
+              method: 'GET',
+              withCredentials: true,
+              credentials: 'include',
+              headers: {
+                  'Authorization': dati['Token'],
+                  'Content-Type': 'application/json'
+              }
+              }).then((res)=>{
+                if(res['status']==200){
+                console.log("-- L'utente è loggato! --");
+                return res.json();
+              } else if (res['status'] == 401){
+                  refresh_Access_Token("Grppipage", navigation)
+                  return false;
+              } else{
+                console.log("Impossibile visualizzare i gruppi! Riprova più tardi");
+                return false;
+              }
+            }).then((resJson)=>{
+                  if (resJson){
+                    console.log("Babbb", resJson['borracce'])
+                   
+                    
+                      resJson['borracce'].push({"coordinates": {"latitude": Var.lat_user, "longitude": Var.lon_user}, "title": "UTENTE", "pinColor": "#474744"})
+                    
+                    setData(resJson['borracce']);
+                    
+                   
+              
+                   
+                   
+                  }
+                 
+                })
+              })
+            }
+          
+          }
+          )
+        }
+    
 
      return(
       <View  style={{  height: "100%"}} >
@@ -43,7 +96,7 @@ export const MapScreen = ({ route, navigation }) => {
         anchor={
           <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
         }>
-         <Menu.Item icon='account' title={Var.username}/>
+         <Menu.Item icon='account' title={Var.username} onPress={()=>{navigation.navigate("ProfilePage", {'namePage':"MapPage"}); closeMenu()}}/>
        <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
         </Menu>
     </Appbar.Header>
@@ -53,8 +106,11 @@ export const MapScreen = ({ route, navigation }) => {
         <Text style={styles.textGraph}> Dove sono tue borracce?</Text>
         <View style={styles.container}>
           {
-            name["pos"].length != 0
+            data == undefined
             ?
+            null
+            :
+            
             <MapView
             provider={PROVIDER_GOOGLE} // remove if not using Google Maps
             style={styles.map}
@@ -66,7 +122,7 @@ export const MapScreen = ({ route, navigation }) => {
             }}
           >
               {
-                name["pos"].map((marker, index) => (
+                data.map((marker, index) => (
    
                   <MapView.Marker key={index}
                     coordinate={marker.coordinates}
@@ -77,23 +133,7 @@ export const MapScreen = ({ route, navigation }) => {
                 ))
              }
           </MapView>
-          :
-          <MapView
-          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-          style={styles.map}
-          region={{
-            latitude: Var.lat_user,
-            longitude: Var.longitude, 
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}
-        >
-            <MapView.Marker 
-                  coordinate={{"latitude": Var.lat_user, "longitude": Var.longitude}}
-                  title="UTENTE"
-                  pinColor="#474744"
-                />
-        </MapView>
+          
 
           }
 </View>

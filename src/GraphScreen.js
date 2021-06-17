@@ -1,3 +1,5 @@
+
+  
 import React, { Component,useState, useEffect } from 'react';
 import { StyleSheet, Text, Animated, TextInput, View, SafeAreaView, BackHandler} from 'react-native';
 import Svg, {G, Circle} from 'react-native-svg'
@@ -17,7 +19,8 @@ var max;
 var percentuale;
 var data_sorsi;
 var selected = false;
-
+var today = new Date()
+var oggi = today.getFullYear() +'-'+(today.getMonth()+1)+'-'+today.getDate()
 
 export const GraphScreen = ({ route, navigation }) => {
 
@@ -27,6 +30,7 @@ export const GraphScreen = ({ route, navigation }) => {
     const [data, setData]=useState([])
     const isFocused = useIsFocused();
     const [date, setDate] = useState(false);
+    const [dataSelezionata, setDataSelezionata]=useState(oggi)
     name = route.params;
     const [visible, setVisible] = useState(false);
 
@@ -51,19 +55,12 @@ export const GraphScreen = ({ route, navigation }) => {
     };
     
 
-getData = async (data) =>{
-  if (data == undefined){
-    var today = new Date()
-    var date = today.getFullYear() +'-'+(today.getMonth()+1)+'-'+today.getDate()
-    console.log("Date", date)
-    data_sorsi = date
-    selected = true
-    data = date
-  }
+getData = async () =>{
+  selected =true
   getSignIn().then((signIn)=>{
   if (signIn == 'true'){
     getTokenFromStore().then((dati) => {
-      const apiURL = uri+"grafico/"+ Var.username +'/'+ data
+      const apiURL = uri+"grafico/"+ Var.username +'/'+ dataSelezionata
       fetch(apiURL, {
           method: 'GET',
           withCredentials: true,
@@ -178,10 +175,10 @@ getData = async (data) =>{
                       
                     }}
                     onDateChange={(date) => {
-                      setDate(date);
                       data_sorsi = date
                       selected = true
-                      getData(date)
+                      setDataSelezionata(date)
+                      getData()
                     }}
                     
                   />
@@ -192,7 +189,7 @@ getData = async (data) =>{
         anchor={
           <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
         }>
-        <Menu.Item icon='account' title={Var.username}/>
+        <Menu.Item icon='account' title={Var.username} onPress={()=>{navigation.navigate("ProfilePage", {'namePage':"GraphPage"}); closeMenu()}}/>
        <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
         </Menu>
     </Appbar.Header>
@@ -208,7 +205,7 @@ getData = async (data) =>{
             ?
             <Text style={styles.textGraph}>Nessuna data selezionata</Text>
             :
-            <View style={{ alignContent: "center"}}><Text style={styles.textGraph}>Il giorno selezionato è {data_sorsi}</Text>
+            <View style={{ alignContent: "center"}}><Text style={styles.textGraph}>Il giorno selezionato è {dataSelezionata}</Text>
             <Text style={styles.textGraph}>Il tuo fabbisogno: {Var.fabbisogno} ml</Text>
             <Text style={styles.textGraph}>Quanto hai bevuto oggi: {tot_sorsi} ml</Text>
             <View style={{ flexDirection:'row', justifyContent: 'center',

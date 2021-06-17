@@ -133,7 +133,7 @@ export const GruppiScreen = ({ route, navigation}) => {
           <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
         }>
         
-        <Menu.Item icon='account' title={Var.username}/>
+        <Menu.Item icon='account' title={Var.username} onPress={()=>{navigation.navigate("ProfilePage", {'namePage':"GruppoPage"}); closeMenu()}}/>
        <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
         </Menu>
         

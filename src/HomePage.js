@@ -107,14 +107,7 @@ export const HomePage = ({ route, navigation}) => {
 
   });
 
-  
-  if (Var.username!= undefined){
-    const apiURL2 = uri + "allposition/"+Var.username
-    console.log(apiURL2)
-    fetch(apiURL2).then((res2)=>res2.json()).then((resJson2)=>{
-      Var.mark = resJson2['borracce']
-  })
-  }
+
   
  
  
@@ -132,7 +125,7 @@ export const HomePage = ({ route, navigation}) => {
         anchor={
           <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
         }>
-      <Menu.Item icon='account' title={Var.username}/>
+      <Menu.Item icon='account' title={Var.username} onPress={()=>{navigation.navigate("ProfilePage", {'namePage':"HomePage"}); closeMenu()}}/>
        <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
         </Menu>
     </Appbar.Header>
@@ -142,7 +135,7 @@ export const HomePage = ({ route, navigation}) => {
     <TouchableOpacity style={{borderWidth: 1, height: "100%", width: "50%",
                         justifyContent: "center", alignItems: "center", borderRadius: 7, borderColor: "#D5D5D5",
                         backgroundColor: "white", alignSelf: "center", textAlign: "center", marginTop: 5}}
-                        onPress={() =>  {navigation.navigate('BorraccePage', { name: Var.username })}}>
+                        onPress={() =>  {navigation.navigate('BorraccePage', { name: Var.username }); closeMenu()}}>
                           <View style={{height: "60%", width: "60%"}}>
                             <Image style={style.img} source={{uri: 'https://image.flaticon.com/icons/png/512/217/217655.png'}} />
                           </View>
@@ -155,7 +148,7 @@ export const HomePage = ({ route, navigation}) => {
                         justifyContent: "center", alignItems: "center", borderRadius: 7, borderColor: "#D5D5D5",
                         backgroundColor: "white", alignSelf: "center", textAlign: "center", marginTop: 5}}
                         onPress={() => {                        
-                          navigation.navigate('MapPage', { name: Var.username, pos: Var.mark })}}>
+                          navigation.navigate('MapPage', { name: Var.username, pos: Var.mark }); closeMenu()}}>
                           <View style={{height: "60%", width: "60%"}}>
                             <Image style={style.img} source={{uri: 'https://cdn.icon-icons.com/icons2/426/PNG/512/Map_1135px_1195280_42272.png'}} />
                           </View>
@@ -167,19 +160,18 @@ export const HomePage = ({ route, navigation}) => {
       <TouchableOpacity style={{borderWidth: 1, height: "100%", width: "50%",
                         justifyContent: "center", alignItems: "center", borderRadius: 7, borderColor: "#D5D5D5",
                         backgroundColor: "white", alignSelf: "center", textAlign: "center", marginTop: 5}}
-                        onPress={() => {navigation.navigate('GraphPage', { name: Var.username })}}>
+                        onPress={() => {navigation.navigate('GraphPage', { name: Var.username }); closeMenu()}}>
                           <View style={{height: "60%", width: "60%"}}>
                             <Image style={style.img} source={{uri: 'https://becomebusinessowners.com/wp-content/uploads/2021/03/graph-increase-png-3-Transparent-Images.png'}} />
                           </View>
               <Text style={{color: "black", marginTop: 10, fontSize: 18, fontWeight: "bold"}}> Progressi</Text>
       </TouchableOpacity>
 
-      
   
       <TouchableOpacity style={{borderWidth: 1, height: "100%", width: "50%", marginLeft: 10,
                         justifyContent: "center", alignItems: "center", borderRadius: 7, borderColor: "#D5D5D5",
                         backgroundColor: "white", alignSelf: "center", textAlign: "center", marginTop: 5}}
-                        onPress={() => {navigation.navigate('GruppoPage', { name: Var.username })}}>
+                        onPress={() => {navigation.navigate('GruppoPage', { name: Var.username }); closeMenu()}}>
                           <View style={{height: "60%", width: "60%"}}>
                             <Image style={style.img} source={{uri: 'https://meatloaf-oifc.com/img/other/72/collection-group-work-cliparts-24.jpg'}} />
                           </View>

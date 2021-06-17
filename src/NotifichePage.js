@@ -176,7 +176,7 @@ export const NotificheScreen = ({ route, navigation}) => {
         anchor={
           <Appbar.Action color="white" icon="dots-vertical" onPress={openMenu} />
         }>
-          <Menu.Item icon='account' title={Var.username}/>
+          <Menu.Item icon='account' title={Var.username} onPress={()=>{navigation.navigate("ProfilePage", {'namePage':"NotifichePage"}); closeMenu()}}/>
        <Menu.Item icon = 'logout' title="Logout" onPress={()=>{logout(navigation); closeMenu()}} />
         </Menu>
     </Appbar.Header>

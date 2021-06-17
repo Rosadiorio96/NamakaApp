@@ -43,7 +43,8 @@ export const LoginScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
   const [hidePass, setHidePass] = useState(true);
   const [stato, setName] = useState(false);
-
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const setNameIcon = () => {
     setName(!stato);
   }
@@ -83,8 +84,9 @@ export const LoginScreen = ({ navigation }) => {
       <View style={styles.userSection}>  
       
         <TextInput placeholder={"Inserisci email"}
-        onChangeText={(value) => Var.username=value}
-        
+        onChangeText={(value) => {Var.username=value
+        setUsername(value)}}
+        value = {username}
         style={{height: 42, width: "80%", borderBottomWidth: 1, fontFamily:'monospace'}}
         />
      </View>
@@ -92,7 +94,9 @@ export const LoginScreen = ({ navigation }) => {
        <View style={styles.passSection}>  
         <TextInput placeholder={"Inserisci password"}
          style={styles.input}
-        onChangeText={(value) => Var.password = value}
+         value = {password}
+         
+        onChangeText={(value) => {Var.password = value; setPassword(value)}}
         style={{height: 42, width: "80%", borderBottomWidth: 1, marginTop: "5%"}}
         secureTextEntry={hidePass ? true : false}/>  
  
@@ -110,7 +114,10 @@ export const LoginScreen = ({ navigation }) => {
                             justifyContent: "center", alignItems: "center", borderRadius: 40,
                             backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
                             onPress={() => { if (validate_field(Var.username, Var.password)){
-                            api_login_call(Var.username, Var.password,navigation);}}}>
+                            api_login_call(Var.username, Var.password,navigation)
+                            setUsername("")
+                            setPassword("")
+                            }}}>
                  <Text style={{color: "white", fontSize: 16}}> Login </Text>
           </TouchableOpacity>
 
@@ -119,7 +126,9 @@ export const LoginScreen = ({ navigation }) => {
           <TouchableOpacity style={{borderWidth: 1, height: 42, width: "80%",
                             justifyContent: "center", alignItems: "center", borderRadius: 40,
                             backgroundColor: "black", alignSelf: "center", textAlign: "center"}}
-                            onPress={() => {navigation.navigate('SignUp', { name: Var.username })}}>
+                            onPress={() => {navigation.navigate('SignUp', { name: Var.username })
+                            setUsername("")
+                            setPassword("")}}>
                   <Text style={{color: "white", fontSize: 16}}> Registrati</Text>
           </TouchableOpacity>
 
