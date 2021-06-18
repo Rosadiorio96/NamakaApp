@@ -108,6 +108,7 @@ export const BorracceScreen = ({ route, navigation }) => {
   deleteItemById = (id) =>{
     const filteredData = data.filter(item => item.id_borraccia !== id['id_borraccia']);
     setData(filteredData)
+    setDataSearch(filteredData);
   }
 
   const renderItem = ({item}) => {
@@ -189,6 +190,7 @@ export const BorracceScreen = ({ route, navigation }) => {
       setSearch(text);
   } else {
     console.log("ELSE")
+    
     setData(dataSearch);
     console.log(data);
     setSearch(text);
