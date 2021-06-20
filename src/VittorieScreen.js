@@ -128,7 +128,7 @@ export const VittorieScreen = ({ route, navigation}) => {
     var lista_codici = [];
     for(let i = 0; i< dataCodice.length; i++){
       lista_codici.push(
-        <Text key = {i} style={{fontSize: 18, textAlign:'center'}}>{dataCodice[i].codice}</Text>
+        <Text key = {i} style={{fontSize: 18, textAlign:'center', fontWeight:'bold'}}>{dataCodice[i].codice} dal valore di {dataCodice[i].valore}%</Text>
       );
     }
 
@@ -184,13 +184,13 @@ export const VittorieScreen = ({ route, navigation}) => {
 
 
         <Dialog.Container style={{height:"10%"}} visible={visible}>
-          <Dialog.Title>Complimenti!</Dialog.Title>
+          <Dialog.Title style={{textAlign:'center'}}>Complimenti!</Dialog.Title>
           {
             lista_codici.length == 1
             ?
-            <Dialog.Title> Il tuo codice sconto è</Dialog.Title>
+            <Dialog.Title style={{textAlign:'center'}}> Il tuo codice sconto è</Dialog.Title>
             :
-            <Dialog.Title> I tuoi codici sconto sono </Dialog.Title>
+            <Dialog.Title style={{textAlign:'center'}}> I tuoi codici sconto sono </Dialog.Title>
           }
           <View>{lista_codici}</View>
           <Dialog.Button label="Ok" onPress={() => {setVisible(false); }} />

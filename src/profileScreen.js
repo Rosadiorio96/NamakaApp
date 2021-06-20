@@ -96,10 +96,12 @@ export const profileScreen = ({ route, navigation}) => {
         </Menu>
     </Appbar.Header>
     </Provider>
-    
-    <View  style={{ height: "90%", width:'100%', justifyContent: 'center' }}>
-    <View style={{flexDirection: "row", width: "100%", marginLeft: 12}}>
-    <Text style={{  marginTop:'3.3%', marginLeft:'10%', fontSize:18 }}>Il tuo fabbisogno calcolato e' </Text>
+
+    <View  style={{ height: "90%", width:'100%', justifyContent: 'center'}}>
+    <Text style={{ textAlign:'center', fontWeight:'bold', fontSize:20}} >Ciao </Text> 
+    <Text style={{ textAlign:'center', marginTop:'5%', fontSize:17}}> {Var.username}</Text>
+    <View style={{flexDirection: "row", width: "100%", marginLeft: 12, marginTop:'5%'}}>   
+    <Text style={{  marginTop:'5.3%', marginLeft:'10%', fontSize:16 }}>Il tuo fabbisogno in litri calcolato è </Text>
 
             {   
             data.length!=0
