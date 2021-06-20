@@ -1,4 +1,4 @@
-import React, { Component, useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Alert,BackHandler, Image } from 'react-native';
 import Icon  from 'react-native-vector-icons/FontAwesome';
 import { Var } from './api/Var.js';
@@ -9,12 +9,6 @@ import { Appbar, Provider} from 'react-native-paper';
 
 
 const validate_field=(username, password, peso, altezza)=>{
-  console.log("------------------------")
-  console.log("username", username);
-  console.log("password", password);
-  console.log("peso", peso);
-  console.log("altezza", altezza);
-  console.log("------------------------")
 
   if((username == "" || username==undefined) || (password =="" || password==undefined) || 
       (peso==""|| peso == undefined) || (altezza=="" || altezza==undefined)){
@@ -187,16 +181,7 @@ input: {
     borderBottomWidth: 1, 
     marginTop: "5%"
 },
-container: {
-  flex: 1,
-},
-scrollView: {
-  backgroundColor: 'pink',
-  marginHorizontal: 20,
-},
-text: {
-  fontSize: 42,
-},
+
 img:{
   flex: 1, 
   width: null, 

@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image  } from 'react-native';
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
 import { Var } from './api/Var.js';
 import BackgroundTimer from 'react-native-background-timer';
-import {uri, getSignIn, logout, api_modify_position, exit_app} from './api/api.js'
+import { getSignIn, logout, api_modify_position} from './api/api.js'
 import { Appbar, Menu, Provider } from 'react-native-paper'; 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-var stringify;
-var myJSON;
-var savedBottle;
-var name;
+
 var navigation2;
 
 
@@ -26,8 +22,6 @@ const position_user = async ()=>{
           payload["longitudine"] = position["coords"]["longitude"];
           Var.lat_user = position["coords"]["latitude"];
           Var.lon_user = position["coords"]["longitude"];
-          console.log("AAAAAAAA", Var.lat_user);
-          console.log("BBBBBBBB", Var.lon_user);
           api_modify_position(payload, navigation2);
         },
         (error) => {
@@ -59,9 +53,7 @@ const find_position_user = async ()=>{
 
 
   const timer = BackgroundTimer.runBackgroundTimer(() => { 
-  
     find_position_user();
-  
 },300000);
 
 
@@ -189,41 +181,7 @@ export const HomePage = ({ route, navigation}) => {
 
 
 const style = StyleSheet.create({
-  cointainer:{
-    marginTop:20,
-    backgroundColor: '#f5fcff',
-    flex: 1,
-     paddingBottom: 5 
-  },
-  itemRow: {
-    borderBottomColor: '#ccc',
-    marginBottom:10,
-    borderBottomWidth:1
-  },
 
-  buttonBottle: {
-    paddingBottom: 20,
-    alignItems: 'center',
-},
-titleBorracce:{
-  fontSize: 20,
-  fontWeight: "bold",
-  paddingBottom: 20,
-  textAlign: 'center',
-},
-loader:{
-marginTop: 10,
-alignItems: 'center'
-},
-
-textInputStyle: {
-  height: 50,
-  borderWidth: 1,
-  paddingLeft: 20,
-  margin: 5,
-  borderColor: '#009688',
-  backgroundColor: 'white'
-},
 img:{
   flex: 1, 
   width: null, 

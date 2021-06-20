@@ -1,4 +1,4 @@
-import React, { useState, setState,  useRef, useEffect} from 'react';
+import React, { useState} from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, BackHandler, Image } from 'react-native'
 import Icon  from 'react-native-vector-icons/FontAwesome';
 import { Var } from './api/Var.js';
@@ -6,7 +6,7 @@ import { api_login_call } from './api/api';
 import { useIsFocused , useFocusEffect} from "@react-navigation/native";
 
 const validate_field=(username, password)=>{
-  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/; //aggiunta claudia
+  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/; 
   console.log("username",username);
   console.log("password",password);
   console.log("regex",reg.test(username))

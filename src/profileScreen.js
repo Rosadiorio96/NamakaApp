@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, TextInput  } from 'react-native';
+import { Text, TouchableOpacity, View, Alert, TextInput  } from 'react-native';
 import {Var} from './api/Var.js'
-import { useIsFocused, useFocusEffect } from "@react-navigation/native";
-import {refresh_Access_Token, uri, getTokenFromStore, logout, getSignIn, exit_app, modify_fabbisogno} from './api/api.js'
+import { useIsFocused } from "@react-navigation/native";
+import {refresh_Access_Token, uri, getTokenFromStore, logout, getSignIn, modify_fabbisogno} from './api/api.js'
 import { Appbar, Menu, Provider} from 'react-native-paper'; 
 
 
@@ -38,14 +38,13 @@ export const profileScreen = ({ route, navigation}) => {
 
     useEffect(() => {
         getData();
-        console.log(data)
     }, [isFocused]);
 
     getData = async () =>{
         getSignIn().then((signIn)=>{
         if (signIn == 'true'){
           getTokenFromStore().then((dati) => {
-            const apiURL = uri+"utente/"+ Var.username
+            const apiURL = uri+"api/utente/"+ Var.username
             fetch(apiURL, {
                 method: 'GET',
                 withCredentials: true,
@@ -59,7 +58,7 @@ export const profileScreen = ({ route, navigation}) => {
                   console.log("-- L'utente è loggato! --");
                   return res.json();
                 } else if (res['status'] == 401){
-                    refresh_Access_Token("Grppipage", navigation)
+                    refresh_Access_Token("Gruppipage", navigation)
                     return false;
                 } else{
                   console.log("Impossibile visualizzare i gruppi! Riprova più tardi");

@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React, { useState, useEffect } from 'react';
 import { Var } from "./api/Var";
-import { useIsFocused, useFocusEffect } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 import {uri, getSignIn, getTokenFromStore, logout, exit_app} from './api/api.js'
 import { StyleSheet, BackHandler, TouchableOpacity,Image, FlatList, ActivityIndicator  } from 'react-native';
 import Dialog from "react-native-dialog";
@@ -10,6 +10,7 @@ import { Appbar, Menu, Provider} from 'react-native-paper';
 export const VittorieScreen = ({ route, navigation}) => {
 
     gruppo = route.params["gruppo"];
+
     const [dataVittorie, setDataVittorie]=useState([])
     const [dataSconti, setSconti]=useState([])
     const [dataCodice, setCodice]=useState([])
@@ -34,7 +35,7 @@ export const VittorieScreen = ({ route, navigation}) => {
         getSignIn().then((signIn)=>{
         if (signIn == 'true'){
           getTokenFromStore().then((dati) => {
-            const apiURL = uri+"vittorie/"+ Var.username + "/" + gruppo
+            const apiURL = uri+"socialApp/vittorie/"+ Var.username + "/" + gruppo
             fetch(apiURL, {
                 method: 'GET',
                 withCredentials: true,
@@ -44,11 +45,8 @@ export const VittorieScreen = ({ route, navigation}) => {
                     'Content-Type': 'application/json'
                 }
                 }).then((res)=>res.json()).then((resJson)=>{
-                   
                     setDataVittorie(resJson['Listavittorie']);
                     setSconti(resJson['numeroSconti'])
-                    console.log(resJson['Listavittorie'])
-                    console.log(resJson['numeroSconti'])
                     
                   })
                 })
@@ -62,19 +60,18 @@ export const VittorieScreen = ({ route, navigation}) => {
     getCodice = async () =>{
       getSignIn().then((signIn)=>{
       if (signIn == 'true'){
-        getTokenFromStore().then((dati) => {
-          const apiURL = uri+"sconti/"+ Var.username
+        getTokenFromStore().then((dataV) => {
+          const apiURL = uri+"socialApp/sconti/"+ Var.username
           fetch(apiURL, {
               method: 'GET',
               withCredentials: true,
               credentials: 'include',
               headers: {
-        
-                  'Content-Type': 'application/json'
+                  'Content-Type': 'application/json',
+                  'Authorization': dataV['Token'],
               }
               }).then((res)=>res.json()).then((resJson)=>{
                   setCodice(resJson['ListaSconti'])
-                  console.log(resJson['ListaSconti'])
                 })
               })
             }

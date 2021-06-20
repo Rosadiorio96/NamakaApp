@@ -1,10 +1,10 @@
-import React, { Component,useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button, FlatList, BackHandler, RefreshControl, ActivityIndicator, Image, Alert } from 'react-native';
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList, BackHandler, ActivityIndicator, Image, Alert } from 'react-native';
+import { useIsFocused } from "@react-navigation/native";
 import {uri, api_remove_bottle, logout, getSignIn, getTokenFromStore, refresh_Access_Token} from './api/api.js'
 import { Appbar, Menu, Provider} from 'react-native-paper'; 
-import { SearchBar } from 'react-native-elements';
 import { Var } from './api/Var.js';
+
 var name;
 
 export const BorracceScreen = ({ route, navigation }) => {
@@ -39,7 +39,6 @@ export const BorracceScreen = ({ route, navigation }) => {
     getData()
 
     const backAction2 = () => {
-      console.log("Back 2")
     Alert.alert("Attenzione!", "Sei sicuro di voler uscire?", [
       {
         text: "Indietro",
@@ -67,7 +66,7 @@ export const BorracceScreen = ({ route, navigation }) => {
     getSignIn().then((signIn)=>{
     if (signIn == 'true'){
       getTokenFromStore().then((dati) => {
-        const apiURL = uri+"borracciaprop/"+ dati['name']
+        const apiURL = uri+"api/borracciaprop/"+ dati['name']
         fetch(apiURL, {
             method: 'GET',
             withCredentials: true,
@@ -78,7 +77,7 @@ export const BorracceScreen = ({ route, navigation }) => {
             }
             }).then((res)=>{
               if(res['status']==200){
-                console.log("-- L'utente è loggatto! --");
+                console.log("-- L'utente è loggato! --");
                 return res.json();
               } else if (res['status'] == 401){
                   refresh_Access_Token("Borracce", navigation)
@@ -90,7 +89,6 @@ export const BorracceScreen = ({ route, navigation }) => {
               }).then((resJson)=>{
                 if(resJson){
                 setData(resJson['borracce']);
-                console.log('****************',data)
                 setDataSearch(resJson['borracce']);
                 setisLoading(false)
                 }
@@ -175,11 +173,7 @@ export const BorracceScreen = ({ route, navigation }) => {
 
   
   const searchFilter=(text)=>{
-    console.log(search);
-    console.log("Ok");
-    console.log(text)
     if(text != ''){
-      
       const newData = data.filter((item)=>{
         const itemData = item.id_borraccia ? 
                     item.id_borraccia.toUpperCase(): ''.toUpperCase();
@@ -189,10 +183,7 @@ export const BorracceScreen = ({ route, navigation }) => {
       setData(newData);
       setSearch(text);
   } else {
-    console.log("ELSE")
-    
     setData(dataSearch);
-    console.log(data);
     setSearch(text);
   }
 }
@@ -277,12 +268,6 @@ export const BorracceScreen = ({ route, navigation }) => {
 }
 
 const style = StyleSheet.create({
-    cointainer:{
-      marginTop:20,
-      backgroundColor: '#f5fcff',
-      flex: 1,
-       paddingBottom: 5 
-    },
     itemRow: {
       borderRadius: 5,
       marginBottom:10,

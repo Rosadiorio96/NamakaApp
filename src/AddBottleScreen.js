@@ -1,13 +1,13 @@
-import { WebView } from 'react-native-webview';
 import React, { useState,useEffect } from 'react';
-import { StyleSheet, Text, TextInput, BackHandler, TouchableOpacity, View, Button } from 'react-native';
-import { useIsFocused, useFocusEffect } from "@react-navigation/native";
+import { StyleSheet, Text, BackHandler, View } from 'react-native';
+import { useIsFocused } from "@react-navigation/native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Geolocation from 'react-native-geolocation-service';
 import { PermissionsAndroid } from 'react-native';
 import { api_add_Bottle, logout, exit_app } from './api/api';
 import {Var} from './api/Var.js'
 import { Appbar, Menu, Provider } from 'react-native-paper'; 
+
 var name;
 var navigation2;
 
@@ -111,9 +111,5 @@ flex: 1,
 fontSize: 18,
 padding: 32,
 color: '#777'
-},
-textBold: {
-fontWeight: '500',
-color: '#000'
-},
+}
 });

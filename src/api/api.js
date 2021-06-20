@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import { BackHandler } from 'react-native';
 import { createAnimatedPropAdapter } from 'react-native-reanimated';
 
-export const uri = 'http://192.168.1.17:8081/api/'
+export const uri = 'http://192.168.1.17:8081/'
 
 export const getTokenAccess = async ()=>{
   try {
@@ -56,7 +56,7 @@ export const api_login_call= async (username, password, navigation)=>{
     console.log(username);
     console.log(password);
       try{
-        await fetch( uri +'login', {
+        await fetch( uri +'api/login', {
           method: 'post',
           mode: 'no-cors',
           headers:{
@@ -98,7 +98,7 @@ export const api_signup_call = async (username, password, altezza, peso, navigat
         console.log(username);
         console.log(password);
           try{
-            await fetch(uri + 'registrazione', {
+            await fetch(uri + 'api/registrazione', {
               method: 'post',
               mode: 'no-cors',
               headers:{
@@ -149,7 +149,7 @@ export const refresh_Access_Token = async (stringa, navigation)=>{
   const tokenRefresh = await AsyncStorage.getItem('@storage_tokenRefresh'); 
   const signiIn = await AsyncStorage.getItem('@SignIn'); 
   try{
-    await fetch( uri +'token/refresh/', {
+    await fetch( uri +'api/token/refresh/', {
       method: 'post',
       mode: 'no-cors',
       headers:{
@@ -217,7 +217,7 @@ export const refresh_Access_Token = async (stringa, navigation)=>{
      
 
 export const api_add_Bottle = async (payload, navigation)=>{
-  var url = uri + "borracciaprop/"+ String(Var.username);
+  var url = uri + "api/borracciaprop/"+ String(Var.username);
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
   try{
     await fetch(url, {
@@ -254,7 +254,7 @@ export const api_add_Bottle = async (payload, navigation)=>{
 
 export const api_modify_position = async (payload, navigation)=>{
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
-  var url = uri + "utenteposizione/"+ String(Var.username);
+  var url = uri + "api/utenteposizione/"+ String(Var.username);
   try{
     await fetch(url, {
       method: 'post',
@@ -285,7 +285,7 @@ export const api_modify_position = async (payload, navigation)=>{
 export const check_token = async ()=>{
   console.log("check token Access")
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
-  var url = uri + "api/token/verify/"
+  var url = uri + "api/api/token/verify/"
   try{
     await fetch(url, {
       method: 'post',
@@ -323,7 +323,7 @@ export const api_remove_bottle = async (item, name, navigation)=>{
   console.log("name", name);
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
     try{
-      await fetch(uri + 'remove', {
+      await fetch(uri + 'api/remove', {
         method: 'post',
         mode: 'no-cors',
         headers:{
@@ -356,7 +356,7 @@ export const api_remove_bottle = async (item, name, navigation)=>{
 
 export const modify_fabbisogno = async (username, fabbisogno, navigation)=>{
     try{
-      await fetch(uri + 'utentefabb/'+ username, {
+      await fetch(uri + 'api/utentefabb/'+ username, {
         method: 'post',
         mode: 'no-cors',
         headers:{
@@ -387,7 +387,7 @@ export const visualizzaInviti = async ()=>{
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
   const name = await AsyncStorage.getItem('@username'); 
   try{
-    await fetch(uri + 'inviti/'+ name, {
+    await fetch(uri + 'socialApp/inviti/'+ name, {
       method: 'get',
       mode: 'no-cors',
       headers:{
@@ -432,7 +432,7 @@ export const modificaStatoInvito = async (NEWSTATO, mittente, gruppo, creatore, 
   const name = await AsyncStorage.getItem('@username'); 
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
   try{
-    await fetch(uri + 'modificaStatoInvito/'+ name, {
+    await fetch(uri + 'socialApp/modificaStatoInvito/'+ name, {
       method: 'post',
       mode: 'no-cors',
       headers:{
@@ -472,7 +472,7 @@ export const creaGruppo = async (gruppo, navigation)=>{
   const name = await AsyncStorage.getItem('@username'); 
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
   try{
-    await fetch(uri + 'creaGruppo/'+ name, {
+    await fetch(uri + 'socialApp/creaGruppo/'+ name, {
       method: 'post',
       mode: 'no-cors',
       headers:{
@@ -512,7 +512,7 @@ export const creaPartecipante = async (nomepartecipante, namegruppo,creatore, na
   const name = await AsyncStorage.getItem('@username'); 
   const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
   try{
-    await fetch(uri + 'invita', {
+    await fetch(uri + 'socialApp/invita', {
       method: 'post',
       mode: 'no-cors',
       headers:{

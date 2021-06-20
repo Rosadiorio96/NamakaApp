@@ -1,9 +1,8 @@
 
   
-import React, { Component,useState, useEffect } from 'react';
-import { StyleSheet, Text, Animated, TextInput, View, SafeAreaView, BackHandler} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, Animated, TextInput, View, BackHandler} from 'react-native';
 import Svg, {G, Circle} from 'react-native-svg'
-import { useIsFocused } from "@react-navigation/native";
 import { Var } from './api/Var.js';
 import Icon  from 'react-native-vector-icons/Fontisto';
 import DatePicker from 'react-native-datepicker';
@@ -28,7 +27,6 @@ export const GraphScreen = ({ route, navigation }) => {
     LogBox.ignoreAllLogs();//Ignore all log notifications
 
     const [data, setData]=useState([])
-    const isFocused = useIsFocused();
     const [date, setDate] = useState(false);
     const [dataSelezionata, setDataSelezionata]=useState(oggi)
     name = route.params;
@@ -60,7 +58,7 @@ getData = async () =>{
   getSignIn().then((signIn)=>{
   if (signIn == 'true'){
     getTokenFromStore().then((dati) => {
-      const apiURL = uri+"grafico/"+ Var.username +'/'+ dataSelezionata
+      const apiURL = uri+"api/grafico/"+ Var.username +'/'+ dataSelezionata
       fetch(apiURL, {
           method: 'GET',
           withCredentials: true,
@@ -82,7 +80,6 @@ getData = async () =>{
           }
           }).then((resJson)=>{
             if(resJson){
-              console.log("DAAAA", date)
                 tot_sorsi = resJson['info'][0]['totale']
                 Var.fabbisogno = resJson['info'][0]['fabbisogno'] * 1000;          
                 setData(resJson['info']);        
@@ -114,6 +111,9 @@ getData = async () =>{
 
     useEffect(()=>{
       getData()
+        if(tot_sorsi> Var.fabbisogno){
+          tot_sorsi  = Var.fabbisogno
+        }
         animation(tot_sorsi);
         animatedValue.addListener(v => {
             if(circleRef?.current){
@@ -320,12 +320,6 @@ getData = async () =>{
         fontSize: 18,
         fontWeight: "bold",
         textAlign: 'center',
-      },
-      container: {
-        flex: 1,
-        padding: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
       },
       title: {
         textAlign: 'center',

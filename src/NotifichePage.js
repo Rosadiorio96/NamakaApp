@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, Button, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator  } from 'react-native';
-import { useIsFocused, useFocusEffect } from "@react-navigation/native";
+import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, FlatList, ActivityIndicator  } from 'react-native';
+import { useIsFocused } from "@react-navigation/native";
 import {refresh_Access_Token, uri, getTokenFromStore, modificaStatoInvito, logout, getSignIn, exit_app} from './api/api.js'
 import { Var } from './api/Var.js';
 import { Appbar, Menu, Provider } from 'react-native-paper'; 
@@ -28,7 +28,7 @@ export const NotificheScreen = ({ route, navigation}) => {
       getSignIn().then((signIn)=>{
         if (signIn == 'true'){
           getTokenFromStore().then((dataV) =>{
-            const apiURL = uri+"inviti/"+ Var.username
+            const apiURL = uri+"socialApp/inviti/"+ Var.username
             fetch(apiURL, {
               method: 'GET',
             withCredentials: true,
@@ -50,7 +50,6 @@ export const NotificheScreen = ({ route, navigation}) => {
               }
             }).then((resJson)=>{
               if (resJson){
-                console.log("AAAAAAAAAAAAAA-----", resJson)
                 setData(resJson['inviti']);
               }
             })
@@ -78,7 +77,6 @@ export const NotificheScreen = ({ route, navigation}) => {
    
 
     const renderItem = ({item}) => {
-        console.log("ITEM", item.creatore)
         return (
           <View>
             { item.stato == "VISUALIZZATO"
@@ -161,7 +159,6 @@ export const NotificheScreen = ({ route, navigation}) => {
         setisLoading(true)
       }
 
-      console.log("dati notifiche", data)
     return (
       <View  style={{  height: "100%"}} >
       <View style={{ width: "100%", height:'14%', position: 'absolute', zIndex:100}} >
@@ -202,53 +199,18 @@ export const NotificheScreen = ({ route, navigation}) => {
 
 
 const style = StyleSheet.create({
-    cointainer:{
-      marginTop:20,
-      backgroundColor: '#f5fcff',
-      flex: 1,
-       paddingBottom: 5 
-    },
-    itemRow: {
-      borderRadius: 5,
-      marginBottom:10,
-      borderRadius: 7, 
-      borderColor: "#D5D5D5",
-      backgroundColor: "white",
-      height: 100,
-      flexDirection: "row",
-      alignItems: "center",
-    },
+
   loader:{
   marginTop: 10,
   alignItems: 'center'
   },
   
-  textInputStyle: {
-    height: 50,
-    borderWidth: 1,
-    paddingLeft: 20,
-    margin: 5,
-    borderColor: '#009688',
-    backgroundColor: 'white',
-    fontSize: 18,
-    
-  },
   info:{
     fontSize: 18,
     fontWeight: "bold",
     color: "black"
   },
-  infoVis:{
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "red"
-  },
-  img:{
-    flex: 1, 
-    width: null, 
-    height: null, 
-    resizeMode: 'contain'
-  },
+ 
   button:{
         borderWidth: 1, height: 42, width: "30%", marginTop: 10,
         justifyContent: "center", alignItems: "center", borderRadius: 10,

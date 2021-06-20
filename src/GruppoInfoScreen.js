@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator } from 'react-native';
-import { useIsFocused, useFocusEffect, NavigationContainer } from "@react-navigation/native";
+import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Image, FlatList, ActivityIndicator } from 'react-native';
+import { useIsFocused } from "@react-navigation/native";
 import {creaPartecipante} from './api/api.js'
 import { Var } from './api/Var.js';
 import Dialog from "react-native-dialog";
 import {uri, logout, getSignIn, refresh_Access_Token, getTokenFromStore, exit_app} from './api/api.js'
-
 import { Appbar, Menu, Provider} from 'react-native-paper';
+
 var name;
-var numero;
+
 
 export const GruppoInfoScreen = ({ route, navigation}) => {
     name = route.params['name'];
+
     const [visible, setVisible] = useState(false);
     const [data, setData]=useState([])
     const [isLoading, setisLoading]=useState(false)
@@ -34,11 +35,7 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
             "hardwareBackPress",
             exit_app
           );
-      
           return () => backHandler.remove();
-
-
-
         },[isFocused]
     
       );
@@ -47,7 +44,7 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
         getSignIn().then((signIn)=>{
         if (signIn == 'true'){
           getTokenFromStore().then((dati) => {
-            const apiURL = uri+"getPartecipanti/"+ Var.gruppo_pass + '/'+Var.creatore
+            const apiURL = uri+"socialApp/getPartecipanti/"+ Var.gruppo_pass + '/'+Var.creatore
             fetch(apiURL, {
                 method: 'GET',
                 withCredentials: true,
@@ -73,7 +70,6 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
                       Var.numpartecipanti = Object.keys(resJson['partecipanti']).length
                      setisLoading(false)
                     }
-                   
                   })
                 })
               }
@@ -90,7 +86,6 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
       };
 
       const renderItem = ({item}) => {
-        console.log("renderItem", item)
         return (
 
             <View style={{ flex: 1, justifyContent: 'center', width: "100%"}}>
@@ -152,8 +147,6 @@ export const GruppoInfoScreen = ({ route, navigation}) => {
         setisLoading(true)
       }
 
-      console.log("lunghezzaaaaaaa", Var.numpartecipanti);
-      console.log("data", data)
 
     
     return(

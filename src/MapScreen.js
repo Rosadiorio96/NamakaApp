@@ -1,9 +1,8 @@
-import React, { Component,useState, useEffect } from 'react';
-import { StyleSheet, Text, Animated, TextInput, View, BackHandler} from 'react-native';
-import Svg, {G, Circle} from 'react-native-svg'
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, BackHandler} from 'react-native';
 import { useIsFocused } from "@react-navigation/native";
 import { Var } from './api/Var.js';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import {logout, getSignIn, getTokenFromStore, uri, refresh_Access_Token, exit_app} from './api/api.js'
 import { Appbar, Menu, Provider} from 'react-native-paper'; 
 var name;
@@ -38,7 +37,7 @@ export const MapScreen = ({ route, navigation }) => {
       getSignIn().then((signIn)=>{
       if (signIn == 'true'){
         getTokenFromStore().then((dati) => {
-          const apiURL = uri+"allposition/"+Var.username
+          const apiURL = uri+"api/allposition/"+Var.username
           fetch(apiURL, {
               method: 'GET',
               withCredentials: true,
@@ -60,17 +59,8 @@ export const MapScreen = ({ route, navigation }) => {
               }
             }).then((resJson)=>{
                   if (resJson){
-                    console.log("Babbb", resJson['borracce'])
-                   
-                    
                       resJson['borracce'].push({"coordinates": {"latitude": Var.lat_user, "longitude": Var.lon_user}, "title": "UTENTE", "pinColor": "#474744"})
-                    
-                    setData(resJson['borracce']);
-                    
-                   
-              
-                   
-                   
+                      setData(resJson['borracce']);
                   }
                  
                 })

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image, FlatList, ActivityIndicator, TouchableHighlight } from 'react-native';
-import { useIsFocused, useFocusEffect } from "@react-navigation/native";
+import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Image, FlatList, ActivityIndicator } from 'react-native';
+import { useIsFocused } from "@react-navigation/native";
 import {refresh_Access_Token, uri, getTokenFromStore, creaGruppo, logout, getSignIn, exit_app} from './api/api.js'
-import Icon  from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { Appbar, Menu, Provider} from 'react-native-paper';
 import { Var } from './api/Var.js';
 import Dialog from "react-native-dialog";
+
 var name;
+
 export const GruppiScreen = ({ route, navigation}) => {
     name = route.params;
     const [data, setData]=useState([])
@@ -25,10 +25,10 @@ export const GruppiScreen = ({ route, navigation}) => {
     const backAction = () => {
      navigation.navigate('HomePage', { name: Var.username })
     };
+
     const showDialog = () => {
       setVisible(true);
     };
-
 
     useEffect(()=>{
       console.log("UseEffect Gruppo page")
@@ -39,7 +39,6 @@ export const GruppiScreen = ({ route, navigation}) => {
         "hardwareBackPress",
         exit_app
       );
-  
       return () => backHandler.remove();
   
     }, [isFocused])
@@ -49,7 +48,7 @@ export const GruppiScreen = ({ route, navigation}) => {
       const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
       const name = await AsyncStorage.getItem('@username'); 
       try{
-        await fetch(uri + 'checkinviti/'+ name, {
+        await fetch(uri + 'socialApp/checkinviti/'+ name, {
           method: 'get',
           mode: 'no-cors',
           headers:{
@@ -68,18 +67,14 @@ export const GruppiScreen = ({ route, navigation}) => {
               console.log("Impossibile visualizzare gli inviti! Riprova più tardi");
               return false;
           }}).then((resJson)=>{
-          console.log("NUMERO INVITIIIIIIIIII",resJson['number']);
           if(resJson['number']==0){
             setcolorBell("white")
-            console.log("Campanella bianca", n)
         } else {
           setcolorBell("red")
-          console.log("Campanella rossa", n)
         }
           return true
         });
       }catch(e){
-        console.log("erroreeee");
         console.log(e);
       }
     }
@@ -90,7 +85,7 @@ export const GruppiScreen = ({ route, navigation}) => {
     getSignIn().then((signIn)=>{
     if (signIn == 'true'){
       getTokenFromStore().then((dati) => {
-        const apiURL = uri+"getGruppoByUtente/"+ dati['name']
+        const apiURL = uri+"socialApp/getGruppoByUtente/"+ dati['name']
         fetch(apiURL, {
             method: 'GET',
             withCredentials: true,
@@ -104,7 +99,7 @@ export const GruppiScreen = ({ route, navigation}) => {
               console.log("-- L'utente è loggato! --");
               return res.json();
             } else if (res['status'] == 401){
-                refresh_Access_Token("Grppipage", navigation)
+                refresh_Access_Token("Gruppipage", navigation)
                 return false;
             } else{
               console.log("Impossibile visualizzare i gruppi! Riprova più tardi");
@@ -126,8 +121,6 @@ export const GruppiScreen = ({ route, navigation}) => {
   
 
     const renderItem = ({item}) => {
-        console.log("renderItem")
-        console.log(item)
         return (
           <View style={{ flex: 1, justifyContent: 'center', alignContent: "center", alignSelf: "center"}}>
           <TouchableOpacity style={style.itemRow} onPress={() => {Var.gruppo_pass = item.nome; Var.creatore=item.creatore; navigation.navigate('GruppoInfoPage', {'name': item.nome+item.creatore});}}>
@@ -143,9 +136,6 @@ export const GruppiScreen = ({ route, navigation}) => {
       }
 
       const renderFooter = () =>{
-        //console.log("renderFooter")
-        //console.log(isFocused)
-        
         return (
           isLoading ? 
         <View style = {style.loader}>
@@ -222,13 +212,6 @@ export const GruppiScreen = ({ route, navigation}) => {
 
 
 const style = StyleSheet.create({
-    cointainer:{
-      marginTop:20,
-      backgroundColor: '#f5fcff',
-      flex: 1,
-      paddingBottom: 5,
-      zIndex: 70 
-    },
     itemRow: {
       marginBottom:10,
       borderRadius: 100, //100 cerchi
@@ -249,16 +232,6 @@ const style = StyleSheet.create({
   alignItems: 'center'
   },
   
-  textInputStyle: {
-    height: 50,
-    borderWidth: 1,
-    paddingLeft: 20,
-    margin: 5,
-    borderColor: '#009688',
-    backgroundColor: 'white',
-    fontSize: 18,
-    
-  },
   info:{
     fontSize: 16,
     fontWeight: "bold",
