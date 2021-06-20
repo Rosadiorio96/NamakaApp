@@ -3,6 +3,7 @@ import { StyleSheet, Text, BackHandler, TouchableOpacity, View, Alert, Image, Fl
 import { useIsFocused, useFocusEffect } from "@react-navigation/native";
 import {refresh_Access_Token, uri, getTokenFromStore, creaGruppo, logout, getSignIn, exit_app} from './api/api.js'
 import Icon  from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Appbar, Menu, Provider} from 'react-native-paper';
 import { Var } from './api/Var.js';
@@ -15,6 +16,7 @@ export const GruppiScreen = ({ route, navigation}) => {
     const [visible, setVisible] = useState(false);
     const isFocused = useIsFocused();
     const [visibleMenu, setvisibleMenu] = useState(false);
+    const [colorBell, setcolorBell] = useState("white");
 
     const openMenu = () => setvisibleMenu(true);
 
@@ -32,6 +34,7 @@ export const GruppiScreen = ({ route, navigation}) => {
       console.log("UseEffect Gruppo page")
       setisLoading(true)
       getData()
+      checkInviti()
       const backHandler = BackHandler.addEventListener(
         "hardwareBackPress",
         exit_app
@@ -41,6 +44,48 @@ export const GruppiScreen = ({ route, navigation}) => {
   
     }, [isFocused])
   
+
+    const checkInviti = async ()=>{
+      const tokenAccess = await AsyncStorage.getItem('@storage_tokenAccess');
+      const name = await AsyncStorage.getItem('@username'); 
+      try{
+        await fetch(uri + 'checkinviti/'+ name, {
+          method: 'get',
+          mode: 'no-cors',
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': tokenAccess
+          }
+        }).then((res)=>{
+          if(res['status']==200){
+              console.log("-- Inviti trovati! --");
+              return res.json();
+          } else if (res['status'] == 401){
+              refresh_Access_Token("Inviti", navigation)
+              return false;
+          } else{
+              console.log("Impossibile visualizzare gli inviti! Riprova più tardi");
+              return false;
+          }}).then((resJson)=>{
+          console.log("NUMERO INVITIIIIIIIIII",resJson['number']);
+          if(resJson['number']==0){
+            setcolorBell("white")
+            console.log("Campanella bianca", n)
+        } else {
+          setcolorBell("red")
+          console.log("Campanella rossa", n)
+        }
+          return true
+        });
+      }catch(e){
+        console.log("erroreeee");
+        console.log(e);
+      }
+    }
+    
+
+
   getData = async () =>{
     getSignIn().then((signIn)=>{
     if (signIn == 'true'){
@@ -124,7 +169,7 @@ export const GruppiScreen = ({ route, navigation}) => {
       <Appbar.BackAction onPress={backAction} />
       
       <Appbar.Content/>
-      <Appbar.Action color="white" icon="bell" onPress={() => {navigation.navigate('NotifichePage')}} > </Appbar.Action>
+      <Appbar.Action color={colorBell} icon="bell" onPress={() => {navigation.navigate('NotifichePage')}} > </Appbar.Action>
         <Menu
         style={{ position:'absolute', zIndex:300}}
         onDismiss={closeMenu}
